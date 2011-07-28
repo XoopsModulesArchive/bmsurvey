@@ -16,7 +16,7 @@
 	$result = mysql_query($sql);
 	if (mysql_num_rows($result) < 1) {
 		mysql_free_result($result);
-		echo mkerror(_('Invalid survey ID.'));
+		echo mkerror(_GT_Invalid_survey_ID);
 		return;
 	}
 	$name = mysql_result($result, 0, 0);
@@ -32,7 +32,7 @@
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdesign'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this survey'))) {
+				!auth_no_access(_GT_to_access_this_survey)) {
 			return;
 		}
 	} else {
@@ -43,7 +43,7 @@
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdata'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this survey'))) {
+				!auth_no_access(_GT_to_access_this_survey)) {
 			return;
 		}
 	}
@@ -54,9 +54,9 @@
 	if($type == 'dbf') {
 		$file = "$name.dbf";
 		if(extension_loaded('dbase')) {
-			echo mkerror(_('DBF download not yet implemented.'));
+			echo mkerror(_GT_DBF_download_not_yet);
 		} else {
-			echo mkerror(_('The PHP dBase Extension is not installed.'));
+			echo mkerror(_GT_The_PHP_dBase);
 		}
 		return;
 	}

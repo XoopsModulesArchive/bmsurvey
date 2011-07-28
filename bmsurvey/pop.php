@@ -50,7 +50,6 @@ if (isset($_GET['img'])) {
 
 // mb_関数が使えない場合http://www.spencernetwork.org/にて漢字コード変換(簡易版)を入手して下さい
 //if (file_exists("jcode-LE.php")) require_once("./jcode-LE.php");
-
 $host = bmsurveyUtils::getXoopsModuleConfig('MAILSERVER');
 $user = bmsurveyUtils::getXoopsModuleConfig('MAILUSER');
 $pass = bmsurveyUtils::getXoopsModuleConfig('MAILPWD');
@@ -60,7 +59,7 @@ if (!$host || !$user || !$pass || !$mail){
 	echo "No Preferences. Set from admin.";
 	return false;
 }
-$admin = $_GET['admin'];
+$admin = isset($_GET['admin']) ? $_GET['admin'] : NULL;
 
 // Connect start!!!
 //$sock = fsockopen($host, 110, $err, $errno, 10) or error_output("Can't connect to POP Server.");
@@ -236,7 +235,7 @@ for($j=1;$j<=$num;$j++) {
 			//$content = str_replace("\n", "<br />", $content);
 			if ($write) {
 				// Delete phone number
-				$content = eregi_replace("([[:digit:]]{11})|([[:digit:]\-]{13})", "", $content);
+				//$content = eregi_replace("([[:digit:]]{11})|([[:digit:]\-]{13})", "", $content);
 				// Delete under line
 				$content = eregi_replace($del_ereg, "", $content);
 				// Delete mac //mac削除
@@ -462,16 +461,25 @@ function TxtInterface( $key='', $cmd = '',  $content, $from, $now ){
 	$debug=0;
 
 	if (!$key) return false;
+	if ($debug) echo $content;
 	$blah = explode("\n", $content);
 	reset($blah);
 	$l_stack = array();
 	while (list($n,$lstr) = each($blah)) {
+		if ($debug) echo $lstr."<br />";
+		//preg_match("/^(.*)\:(.*)/", $lstr, $sepline);
 		$sepline = explode(':', $lstr);
 		$sepline[0] = ereg_replace("^&gt;","",$sepline[0]);	// delete replay simbol
 		$sepline[0] = trim($sepline[0]);					// delete space
 		$sepline[0] = eregi_replace("^q","",$sepline[0]);	// delete question simbol
+		/*if (preg_match("/(.*)\[\d{1,2}\:\d{1,2}\]/",$sepline[1])){
+			$sepline[1] = preg_replace("/\:/", "",$sepline[1]);
+		}*/
+		if ( count($sepline)>2 ){
+			$sepline[1] = $sepline[1].$sepline[2];
+		}
 		if ($debug) print_r($sepline);
-		if ($sepline[1]){
+		if ( count($sepline)>1 ){
 			if (preg_match("/[\d]\.\((.*)/", $sepline[1])) {
 				// For single choice
 				$cmdstr = explode(" ", $sepline[1]);
@@ -511,9 +519,10 @@ function TxtInterface( $key='', $cmd = '',  $content, $from, $now ){
 		print_r($l_stack);
 	}
 	if (preg_match("/M|Re:M/i",$key,$reg)){
-		$msg = member_ctl($cmd,$l_stack,$from,$now);	// Member Ctl.
+		$msg = member_ctl($l_stack,$from,$now);	// Member Ctl.
 	}elseif (preg_match("/Q|Re:Q/i",$key,$reg)){
 		if ($debug) echo "qreturn_ctl($cmd,$l_stack,$from,$now)";
+		$msg = member_ctl($l_stack,$from,$now);	// Member Ctl.
 		$msg = qreturn_ctl($cmd,$l_stack,$from,$now);	// Question return
 	}
 	return $msg;
@@ -521,31 +530,35 @@ function TxtInterface( $key='', $cmd = '',  $content, $from, $now ){
 //
 // Member Control Section
 //
-function member_ctl($cmd, $l_stack, $from, $now) {
+function member_ctl($l_stack, $from, $now) {
 	global $xoopsDB;
 	$unm = $l_stack['u'];	// User name
-	$fnm = $l_stack['f'];	// First name
-	$lnm = $l_stack['l'];	// Last name
-	$sid = $l_stack['s'];	// Last name
-	$exd = $l_stack['d'];	// Expire date
-	$exdates= explode("/",$exd);
+	$fnm = isset($l_stack['f']) ? $l_stack['f'] : "";	// First name
+	$lnm = isset($l_stack['l']) ? $l_stack['l'] : "";	// Last name
+	$sid = $l_stack['s'];	// Survey ID
+	if ( isset($l_stack['d']) ){
+		$exd = $l_stack['d'];	// Expire date
+		$exdates= explode("/",$exd);
+		$expDate = sprintf("%04d-%02d-%02d %02d:%02d:%02d",$exdates[0],$exdates[1],$exdates[2],23,59,59);
+	}else{
+		$expDate = NULL;
+	}
 	$dates = getdate($now);
 	$ret = '';
 	$sqlDate =sprintf("%04d-%02d-%02d %02d:%02d:%02d",$dates['year'],$dates['mon'],$dates['mday'],$dates['hours'],$dates['minutes'],$dates['seconds']);
-	$expDate =sprintf("%04d-%02d-%02d %02d:%02d:%02d",$exdates[0],$exdates[1],$exdates[2],23,59,59);
-	switch ($cmd){
-		case "NEW": //Entry with User Name.
-			$sql = sprintf("select count(*) from %s where username = '%s'",TABLE_RESPONDENT, $unm);
-			if( list($num)=$xoopsDB->fetchRow($xoopsDB->query($sql)) ){
-				if ( $num > 0 ) return _MD_POP_MNEW_AREADY;
-			} else {
-				return 'SQL Error';
-			}
+	$sql = sprintf("select count(*) from %s where username = '%s'",TABLE_RESPONDENT, $unm);
+	if( list($num)=$xoopsDB->fetchRow($xoopsDB->query($sql)) ){
+		if ( $num == 0 ){
 			$sql = sprintf("insert into %s(username,email,fname,lname,survey_id,changed,expiration) values('%s','%s','%s','%s','%u','%s','%s')"
 				,TABLE_RESPONDENT,$unm,$from,$fnm,$lnm,$sid,$sqlDate,$expDate);
-			$res = sprintf(_MD_POP_MNEW_ENTRY,$unm);
-			break;	// Request From with survey name
+		}elseif ( $num > 0 ){
+			$sql = sprintf("update %s set email='%s',fname='%s',lname='%s',survey_id='%u',changed='%s',expiration='%s' where username = '%s'"
+				,TABLE_RESPONDENT,$from,$fnm,$lnm,$sid,$sqlDate,$expDate,$unm);
+		}
+	} else {
+		return 'SQL Error';
 	}
+	$res = sprintf(_MD_POP_MNEW_ENTRY,$unm);
 	if(!empty($sql)){
 		bmsurveyUtils::log($sql);
 		if ($ret=$xoopsDB->queryF($sql)) return $res;
@@ -627,7 +640,9 @@ function make_timestamp_for_post($datereg) {
 }
 function ret_result_mail($to,$key,$cmd,$subject,$message='') {
 	global $xoopsConfig,$SurveyCNF;
+	$debug = 0;
 
+	if ($debug) echo sprintf("to:%s|key:%s|cmd:%s|subject:%s|message:%s<br />",$to,$key,$cmd,$subject,$message);
 	if (preg_match("/M|Re:M/i",$key,$reg)){
 		$keymsg = _MD_POP_KEY_M;
 	}elseif (preg_match("/Q|Re:Q/i",$key,$reg)){
@@ -642,19 +657,21 @@ function ret_result_mail($to,$key,$cmd,$subject,$message='') {
 		case "INP": $cmdmsg = _MD_POP_CMD_INP; break;
 		case "DEL": $cmdmsg = _MD_POP_CMD_DEL; break;
 	}
-	$xoopsMailer =& getMailer();
-	$xoopsMailer->useMail();
-	$xoopsMailer->setTemplateDir($SurveyCNF['path']."language/".$xoopsConfig['language']."/mail_template/");
+	$tempdir = $SurveyCNF['path']."language/".$xoopsConfig['language']."/mail_template/";
+	if ($debug) echo $tempdir;
+    $xoopsMailer =& getMailer();
+    $xoopsMailer->useMail();
+    $xoopsMailer->setToEmails($to);
+    $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+    $xoopsMailer->setFromName($xoopsConfig['sitename']);
+	$xoopsMailer->setTemplateDir($tempdir);
 	$xoopsMailer->setTemplate("mail_results.tpl");
-	$xoopsMailer->setToEmails($to);
 	$xoopsMailer->assign("KEY", $keymsg);
 	$xoopsMailer->assign("COMMAND", $cmdmsg);
 	$xoopsMailer->assign("MESSAGE", $message);
 	$xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
 	$xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
 	$xoopsMailer->assign("SITEURL", $xoopsConfig['xoops_url']."/");
-	$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-	$xoopsMailer->setFromName($xoopsConfig['sitename']);
 	if (eregi("DELETE:RID",$message)){
 		$subj = "Q,DEL;".$subject;
 	}else{
@@ -663,7 +680,9 @@ function ret_result_mail($to,$key,$cmd,$subject,$message='') {
 	if ( function_exists('mb_encode_mimeheader') )
 		$subj = mb_encode_mimeheader( $subj, bmsurveyUtils::get_mailcode(), "B" );
 	$xoopsMailer->setSubject($subj);
-	$xoopsMailer->send();
+	if (!$xoopsMailer->send()) {
+		echo $xoopsMailer->getErrors();
+		return false;
+	}
 }
-
 ?>

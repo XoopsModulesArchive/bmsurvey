@@ -1,5 +1,5 @@
 <?php
-# $Id: espresponse.inc,v 0.84 2008/02/08 17:25:00 yoshis Exp $
+# $Id: espresponse.inc,v 0.96 2008/11/25 16:31:00 yoshis Exp $
 //
 // Modified by Y.Sakai @ bluemooninc.biz
 // Since 2004/5/27 Maninly add for attach
@@ -128,8 +128,8 @@ function response_check_required($sid, $section) {
 
 	if(count($missing) > 0) {
 		// missing required variables
-		//$message = mb_('You are missing the following required questions:') ."<br>\n";
-		$message = mb_(_MD_MISSING_REQUIRED) ."<br>\n";
+		//$message = _GT_You_are_missing_the_following_required_questions ."<br>\n";
+		$message = _GT_You_are_missing_the_following_required_questions ."<br>\n";
 		while(list($qid,$content)=each($missing)) {
 			if($GLOBALS['ESPCONFIG']['DEBUG'])
 				$message .= "<!-- ${qid} -->";
@@ -471,7 +471,7 @@ function response_select($sid, $rid, $col = null, $qids = null,$order = null, $m
 		$qid = array_shift($row);
 		$val = array_pop($row);
 		$values[$qid] = $row;
-		array_push($values["$qid"], ($val == 'Y') ? mb_('Yes') : mb_('No'), $val);
+		array_push($values["$qid"], ($val == 'Y') ? _GT_Yes : _GT_No, $val);
 	}
 	mysql_free_result($result);
 
@@ -609,9 +609,10 @@ function response_select_human($sid, $rid, $qids = null) {
 		$val = null;
 		if (strstr($qid, '_')) {
 			// rank or other
+			//   Those parameter will picked it up by non $sub array
 			list($qid, $sub) = explode('_', $qid);
 			if ($arr[0] != 8)
-				continue; // other
+				continue;
 			// rank
 			$key = $arr[1];
 			if ($arr[3] < 0)
@@ -639,7 +640,7 @@ function response_select_human($sid, $rid, $qids = null) {
 				if (ereg("^!other", $subarr[2])) {
 					$tmpv = preg_replace(array("/^!other=/","/^!other/"),
 							array('', 'Other'), $subarr[2]);
-					$tmp = preg_replace("/^other/", $qid, $subarr[3]);
+					$tmp = $qid ."_". preg_replace("/^other/", $qid, $subarr[3]);
 					if (isset($res[$tmp]))
 						$tmpv .= ': '. $res[$tmp][2];
 					array_push($val, $tmpv);
@@ -652,7 +653,7 @@ function response_select_human($sid, $rid, $qids = null) {
 			if (ereg("^!other", $arr[2])) {
 				$val = preg_replace(array("/^!other=/","/^!other/"),
 						array('', 'Other'), $arr[2]);
-				$tmp = preg_replace("/^other/", $qid, $arr[3]);
+				$tmp = $qid ."_". preg_replace("/^other/", $qid, $arr[3]);
 				if (isset($res[$tmp]))
 					$val .= ': '. $res[$tmp][2];
 			} else {
@@ -844,31 +845,41 @@ function make_multipart($url,$fnm,$boundary,$mail_charset) {
 		//."--" .$boundary."\n";
 	return $message;
 }
+function fnm2mime($fnm) {
+	$fnamedotpos = strrpos($fnm,'.');
+	$fext = strtolower(substr($fnm,$fnamedotpos+1));
+	switch($fext) {
+		case "pdf": $attach_mimetype = "application/pdf"; break;
+		case "doc": $attach_mimetype = "applicaion/msword"; break;
+		case "xls": $attach_mimetype = "application/excel"; break;
+		case "ppt": $attach_mimetype = "application/powerpoint"; break;
+		case "jpg": case "jpeg": $attach_mimetype = "image/jpeg"; break;
+		case "gif": $attach_mimetype = "image/gif"; break;
+		case "png": $attach_mimetype = "image/png"; break;
+		case "txt": $attach_mimetype = "text/plain"; break;
+		default: $attach_mimetype = "application/octet-stream"; break;
+	}
+	return $attach_mimetype;
+}
 
 function send_email_with_attach($from,$to,$subject,$message,$headers,$attach,$cc='',$bcc='') {
 	global $xoopsConfig;
 
 	if (!$to) return;
-
 	$mail_charset = $GLOBALS['ESPCONFIG']['mail_charset'];
-
 	if (!$from) $from = bmsurveyUtils::getXoopsModuleConfig('MAILADDR');
 	if (!$from) $from = $xoopsConfig['adminmail'];
-	$boundary = "----------". uniqid( rand() );
 	$attach_flag = FALSE;
 	$mpstr = '';
+	/*
+	$boundary = "----------". uniqid( rand() );
 	foreach ($attach as $att) {
 		$fnm=$att['fnm'];
 		$url=$att['url'];
 		$mpstr .= make_multipart($url,$fnm,$boundary,$mail_charset);
 		$attach_flag = TRUE;
 	}
-
-	if ( function_exists('mb_encode_mimeheader') )
-		$subject = mb_encode_mimeheader( $subject, $mail_charset, "B" );
-
 	$mimetype = ($attach_flag ? "multipart/mixed;\n\tboundary=\"$boundary\"" : "text/plane;charset=\"".$mail_charset."\"" );
-
 	$chgheader = 
 		"From: ". $from ."\n" . 
 		"Reply-To: ". $from . "\n" . 
@@ -879,14 +890,15 @@ function send_email_with_attach($from,$to,$subject,$message,$headers,$attach,$cc
 	$chgheader .= $cc ? "cc:" . $cc . "\n" : "";
 	$chgheader .= $bcc ? "bcc:" . $bcc . "\n" : "";
 	$chgheader .= $attach_flag ? "Status:   \n\nThis is multipart message.\n\n" : "";
-
-
 	if( $attach_flag ) {
 		$message = "--" .$boundary . "\n".
 			"Content-Type: text/plain; charset = \"".$mail_charset."\"\n".
 			"Content-Transfer-Encoding: 7bit\n\n".
 			$message."\n\n".$mpstr;
 	}
+	*/
+	if ( function_exists('mb_encode_mimeheader') )
+		$subject = mb_encode_mimeheader( $subject, $mail_charset, "B" );
 	$message = cnv_mbstr( $message, $mail_charset);
 	$message = preg_replace("/\x0D\x0A|\x0D|\x0A/","\n",$message);
 	//ini_set("sendmail_name", $from);
@@ -894,7 +906,24 @@ function send_email_with_attach($from,$to,$subject,$message,$headers,$attach,$cc
 	//	return mb_send_mail($to, $subject, $message, $chgheader, "-f ".$from);
 	//else
 	//return mail($to, $subject, $message, $chgheader, "-f ".$from); //Will not work PHP safe mode
-	return mail($to, $subject, $message, $chgheader);
+	//return mail($to, $subject, $message, $chgheader);
+	$xoopsMailer =& getMailer();
+	$xoopsMailer->useMail();
+	$xoopsMailer->setToEmails($to);
+	$xoopsMailer->setFromEmail($from);
+	$xoopsMailer->setFromName($xoopsConfig['sitename']);
+	$xoopsMailer->setSubject($subject);
+	$xoopsMailer->setBody($message);
+	for($i=0;$i<count($attach);$i++) {
+		$res = $xoopsMailer->multimailer->AddAttachment($attach[$i]['url'],$attach[$i]['fnm'],"base64",fnm2mime($attach[$i]['fnm']));
+		echo $attach[$i]['fnm'] . " Source Attached(".(($res)?ok:error).")<br />";
+	}
+	if ( $cc ) $xoopsMailer->AddCC($cc);
+	if ( $bcc ) $xoopsMailer->AddBCC($bcc);
+	if ( !$xoopsMailer->send() )
+		echo "Send failed to " . $to;
+	else
+		echo "Sent to " . $to;
 }
 //
 // Get mailto info from section text
@@ -927,15 +956,16 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 	if ($GLOBALS['ESPCONFIG']['allow_email']==0) {
 		return true;
 	}
+	if ($debug) echo sprintf("%u %u %s %s<br />",$sid,$rid,$uname,$rs_addr);
 	//
 	// Load Survey Information
 	//
 	$sql = "SELECT name,title,info,email,from_option FROM ".TABLE_SURVEY." WHERE id='${sid}'";
-	if ($debug) $sql;
 	$result = mysql_query($sql);
 	list($name, $title, $info, $qs_addr, $from_option) = mysql_fetch_row($result);
 	mysql_free_result($result);
-	if(empty($qs_addr)) return(false);
+	if(empty($qs_addr)) return(false);	// $qs_addr = $xoopsConfig['adminmail'];
+	if ($debug) echo $sql."<br />";
 	//
 	// load survey questions for mailto option
 	//
@@ -974,7 +1004,6 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 			}
 		}
 	}
-
 	//lets check to see if user wants human readable email
 	if ($GLOBALS['ESPCONFIG']['human_email']) {
 		$answers = response_select_human($sid, $rid," ORDER BY q.position");
@@ -987,7 +1016,7 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 		$isep = ',';
 		$end = "\n";
 	}
-	if($xoopsUser){
+	if( !$rs_addr && $xoopsUser ){
 		$userHander = new XoopsUserHandler($xoopsDB);
 		$tUser = $userHander->get($xoopsUser->uid());
 		$uname = $tUser->uname();
@@ -1001,9 +1030,9 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 		$rs_addr = $qs_addr;
 	}
 	if ($debug){
-		echo "<br>Questioner:".$qs_addr;
-		echo "<br>uname:".$uname;
-		echo "<br>rs_addr:".$rs_addr;
+		echo "<br />Questioner:".$qs_addr;
+		echo "<br />uname:".$uname;
+		echo "<br />rs_addr: $rs_addr <br />";
 	}
 	$user = array('survey.id' => $sid);
 	//'S'.$sid.'R'.$rid.':'. mb_(_MD_MAIL_TITLE) ." $name [$rid]";
@@ -1113,18 +1142,20 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 	//
 	// Send to mailto info in section text. If fill in $mailto.
 	//
+	//print_r($mailtoparam);
 	if (isset($mailtoparam['to']) && isset($mailtoparam['subject']) && isset($mailtoparam['body'])){
 		$from = $cc = $bcc = "";
 		if ( isset($mailtoparam['mailfromset']) && isset($mailtoparam['from'] ) ){
 			if(function_exists('mberegi')){
-				if ( mberegi($mailtoparam['mailfromset'],mb_('Yes')) ) $from=$mailtoparam['from'];
+				if ( mberegi($mailtoparam['mailfromset'],_GT_Yes) ) $from=$mailtoparam['from'];
 			}else{
-				if ( preg_match($mailtoparam['mailfromset'],mb_('Yes')) ) $from=$mailtoparam['from'];
+				if ( preg_match($mailtoparam['mailfromset'],_GT_Yes) ) $from=$mailtoparam['from'];
 			}
 		}
 		if (isset($mailtoparam['name'])) $mailtoparam['body'].="\n".$mailtoparam['name'];
 		if (isset($mailtoparam['cc'])) $cc = $mailtoparam['cc'];
 		if (isset($mailtoparam['bcc'])) $bcc = $mailtoparam['bcc'];
+		//echo $from . $mailtoparam['to'] . $mailtoparam['subject']."<br>";
 		send_email_with_attach($from,$mailtoparam['to'],$mailtoparam['subject'],$mailtoparam['body'],$headers,$attach,$cc,$bcc);
 	}
 	if (!isset($mailfrom) && $mailtoparam['from']) $mailfrom=$mailtoparam['from'];
@@ -1135,13 +1166,14 @@ function response_send_email($sid, $rid,$uname='',$rs_addr='') {
 		$message = $mailfrom;	// Change Message to Mail address for mailing list
 		// Deny to mail sending
 		if(function_exists('mberegi')){
-			if ( mberegi($mailtoparam['to_mailinglist'],mb_('No')) ) $mailto = '';
+			if ( mberegi($mailtoparam['to_mailinglist'],_GT_No) ) $mailto = '';
 		}else{
-			if ( preg_match($mailtoparam['to_mailinglist'],mb_('No')) )  $mailto = '';
+			if ( preg_match($mailtoparam['to_mailinglist'],_GT_No) )  $mailto = '';
 		}
 	}
-	//print("from=$mailfrom,to=$mailto");
+	if ($debug) print(" from = $mailfrom,to = $mailto");
 
+	//echo $mailfrom.$mailto.$blogid.$subject."<br>";
 	return send_email_with_attach($mailfrom,$mailto,$blogid.$subject,$message,$headers,$attach);
 }
 /* }}} */
@@ -1212,10 +1244,10 @@ function response_import_sec($sid, $rid, $sec, $varr = null) {
 /******************************************************************************
 Pickup data from answer mail
 ******************************************************************************/
-function resmail_insert($uname,$sid,$l_stack,$section=1,$rid) {
+function resmail_insert($uname,$sid,$l_stack,$section=1,$rid=null) {
 	$debug = 0;
 
-	if(empty($rid)) {
+	if(is_null($rid)) {
 		// create a uniqe id for this response
 		$sql = "INSERT INTO ".TABLE_RESPONSE." (survey_id,username) VALUES ( '${sid}','${uname}' )";
 		$result = mysql_query($sql);

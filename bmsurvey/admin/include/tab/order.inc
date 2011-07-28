@@ -72,7 +72,7 @@
 	$max = mysql_num_rows($result);
 	$sec = $num = 0;
 ?>
-<?php mb_echo('Change the order that questions are presented by choosing the desired position from the list.'); ?>
+<?php echo(_GT_Change_the_order); ?>
 <hr>
 <script language="javascript">
 <!-- // comment
@@ -133,12 +133,12 @@
 				echo($content);
 			else {
 				++$sec;
-				echo('<b>'.mb_('----- Section Break -----').'</b>');
+				echo('<b>'._GT_Section_Break.'</b>');
 			}
 ?>
 		</td>
-		<td><input type="button" value="<?php mb_echo('Remove'); ?>" onclick="javascript:remove(<?php echo($num); ?>);"></td>
-		<td><?php if($tid != 99) { ?><input type="button" value="<?php mb_echo('Edit'); ?>" onclick="javascript:editq(<?php echo($num-$sec); ?>);"><?php } ?></td>
+		<td><input type="button" value="<?php echo(_GT_Remove); ?>" onclick="javascript:remove(<?php echo($num); ?>);"></td>
+		<td><?php if($tid != 99) { ?><input type="button" value="<?php echo(_GT_Edit); ?>" onclick="javascript:editq(<?php echo($num-$sec); ?>);"><?php } ?></td>
 	</tr>
 <?php
 		}
@@ -146,4 +146,4 @@
 ?>
 </table>
 <hr>
-<input type="submit" name="addbreak" value="<?php mb_echo('Add Section Break'); ?>">
+<input type="submit" name="addbreak" value="<?php echo(_GT_Add_Section_Break); ?>">

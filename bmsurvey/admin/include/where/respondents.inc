@@ -77,14 +77,14 @@
 	
 	$bg = $ESPCONFIG['bgalt_color2'];
 ?>
-<h2><?php mb_echo('Manage Respondent Accounts'); ?></h2>
-<p><?php mb_echo('Click on a username to edit, or click on add new user below.'); ?></p>
+<h2><?php echo(_GT_Manage_Respondent_Accounts); ?></h2>
+<p><?php echo(_GT_Click_on_a_username_to_edit); ?></p>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="<?php echo($bg); ?>">
-		<th align="left"><a href="<?php echo($base . $u); ?>"><?php mb_echo('Username'); ?></a></th>
-		<th align="left"><a href="<?php echo($base . $f); ?>"><?php mb_echo('First Name'); ?></a></th>
-		<th align="left"><a href="<?php echo($base . $l); ?>"><?php mb_echo('Last Name'); ?></a></th>
-		<th align="left"><a href="<?php echo($base . $g); ?>"><?php mb_echo('Group'); ?></a></th>
+		<th align="left"><a href="<?php echo($base . $u); ?>"><?php echo(_GT_Username); ?></a></th>
+		<th align="left"><a href="<?php echo($base . $f); ?>"><?php echo(_GT_First_Name); ?></a></th>
+		<th align="left"><a href="<?php echo($base . $l); ?>"><?php echo(_GT_Last_Name); ?></a></th>
+		<th align="left"><a href="<?php echo($base . $g); ?>"><?php echo(_GT_Group); ?></a></th>
 		<th align="left">&nbsp;</th>
 	</tr>
 <?php
@@ -92,7 +92,7 @@
 		if($d == 'N')
 			$d = '&nbsp;';
 		else
-			$d = '('. mb_('disabled') .')';
+			$d = '('. _GT_disabled .')';
 		
 		if (empty($fname)) $fname = '&nbsp;';
 		if (empty($lname)) $lname = '&nbsp;';
@@ -124,12 +124,12 @@
 				<tr>
 					<th>
 					<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=admrespondent"); ?>">
-						<?php mb_echo('Add a new Respondent'); ?>
+						<?php echo(_GT_Add_a_new_Respondent); ?>
 					</a>
 					</th>
 					<th>
 					<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=upload&account_type=respondents"); ?>">
-						<?php mb_echo('Bulk Upload Respondents'); ?>
+						<?php echo(_GT_Bulk_Upload_Respondents); ?>
 					</a>
 					</th>
 				</tr>
@@ -137,4 +137,4 @@
 		</th>
 	</tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

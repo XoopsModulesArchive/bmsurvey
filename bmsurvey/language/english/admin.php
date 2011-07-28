@@ -66,6 +66,7 @@ define("_AM_BMSURVEY_SENDQUESTIONNOW","When you click here, send questions.");
 define("_AM_BMSURVEY_SENDQUESTIONUSAGE","(If new questions are transmitted, the ticket number will updated, and old questions becomes irrecoverable. )\n<p>If following URL is called with Wget and the scheduler, it is possible to automate it. <p>%s\n<p>When '&hide=1' is specified, the question sentence is omitted. ");
 define("_AM_BMSURVEY_CHECKRESPONSENOW","When you click here, check the response mail.");
 define("_AM_BMSURVEY_CHECKRESPONSEUSAGE","If following URL is called with Wget and the scheduler, it is possible to automate it. \n<p>%s");
+
 define("_AM_BMSURVEY_SEEARESULT","See a result");
 define('_AM_BMSURVEY_COPYQUESTION','Copy question from survey');
 define('_AM_BMSURVEY_SELECTSTATUS','Select Status');

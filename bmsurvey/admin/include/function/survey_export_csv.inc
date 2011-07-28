@@ -1,13 +1,14 @@
 <?php
 
-# $Id: survey_export_csv.inc,v 1.2 2005/10/04 11:12:12 yoshis Exp $
+# $Id: survey_export_csv.inc,v 0.94 2008/10/23 17:01:12 yoshis Exp $
 
 // Original by James Flemer <jflemer@alum.rpi.edu>
 // Modified by Yoshi Sakai <webmaster@bluemooninc.biz>
 
 function cnv_mbstr($str, $encto) {
+	// _CHARSET is XOOPS defined char setting
 	if (extension_loaded('mbstring')){
-		return  mb_convert_encoding($str,$encto,mb_internal_encoding());
+		return  mb_convert_encoding($str,$encto,_CHARSET);
 	} else {
 		return $str;
 	}

@@ -32,7 +32,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 		if(empty($_POST['name']) || empty($_POST['title'])
 				|| empty($_POST['realm'])) {
 			$tab = "general";
-			$errstr = mb_('Sorry, please fill out the name, group, and title before proceeding.');
+			$errstr = _GT_Sorry_please_fill_out_the_name;
 			return(0);
 		}
 
@@ -51,7 +51,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 		$result = @mysql_query ($sql);
 		if(!$result) {
 			$tab = "general";
-			$errstr = mb_('Sorry, name already in use. Pick a new name.') .' [ ' .mysql_errno().': '.mysql_error().' ]';
+			$errstr = _GT_Sorry_name_already_in_use .' [ ' .mysql_errno().': '.mysql_error().' ]';
 			return(0);
 		}
 
@@ -75,7 +75,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 			if(empty($_POST['name']) || empty($_POST['title'])
 					|| empty($_POST['realm'])) {
 				$tab = "general";
-				$errstr = mb_('Sorry, please fill out the name, group, and title before proceeding.');
+				$errstr = _GT_Sorry_please_fill_out_the_name;
 				return(0);
 			}
 			$fields = array('name','realm','title','subtitle','email','from_option','response_id','theme','thanks_page','thank_head','thank_body','info');
@@ -92,7 +92,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 				mysql_free_result($result);
 				if($count != 0) {
 					$tab = "general";
-					$errstr = mb_('Sorry, that name is already in use.');
+					$errstr = _GT_Sorry_that_name_is_already_in_use;
 					return(0);
 				}
 			}
@@ -105,7 +105,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 			$result = mysql_query($sql);
 			if(!$result) {
 				$tab = "general";
-				$errstr = mb_('Warning, error encountered.') .' [ '.mysql_errno().': '.mysql_error().' ]';
+				$errstr = _GT_Warning_error_encountered .' [ '.mysql_errno().': '.mysql_error().' ]';
 				return(0);
 			}
 			return(1);
@@ -146,7 +146,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 			if(empty($_POST['content'])) {
 				$tab = 'questions';
 				$dont_clear = 1;
-				$errstr = mb_('Please enter text for this question.');
+				$errstr = _GT_Please_enter_text;
 				return(0);
 			}
 			// constraint: fieldname must be not empty
@@ -171,12 +171,12 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 			if(empty($_POST['type_id'])) {
 				$tab = 'questions';
 				$dont_clear = 1;
-				$errstr= mb_('Sorry, you must select a type for this question.');
+				$errstr= _GT_Sorry_you_must_select_a_type_for_this_question;
 				return(0);
 			}
 
 			// constraint: qid must be int or empty
-			if( strcmp($_POST['q'],mb_('New Field')) == 0 )
+			if( strcmp($_POST['q'],_GT_New_Field) == 0 )
 				$qid = '';
 			$qid = intval($_POST['id']);	# curr_q_id
 			// constraint: can not change between question w/ answer choices and one w/o
@@ -190,7 +190,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 					$tab = "questions";
 					$_POST['type_id'] = $old_type_id;
 					$dont_clear = 1;
-					$errstr = mb_('Sorry, you cannot change between those types of question. Create a new question instead.');
+					$errstr = _GT_Sorry_you_cannot_change_between_those_types_of_question;
 					return(0);
 				}
 			}
@@ -272,7 +272,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 			if(!$result) {
 				$tab = 'questions';
 				$dont_clear = 1;
-				$errstr = mb_('Warning, error encountered.') .' [ '.mysql_errno().': '.mysql_error().' ]';
+				$errstr = _GT_Warning_error_encountered .' [ '.mysql_errno().': '.mysql_error().' ]';
 				return(0);
 			}
 
@@ -308,7 +308,7 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 						if(!$result) {
 							$tab = 'questions';
 							$dont_clear = 1;
-							$errstr = mb_('Warning, error encountered.') .' [ '.mysql_errno().': '.mysql_error().' ]';
+							$errstr = _GT_Warning_error_encountered .' [ '.mysql_errno().': '.mysql_error().' ]';
 							return(0);
 						}
 					}
@@ -316,8 +316,8 @@ function survey_update(&$survey_id, &$tab, $old_tab, &$copy_question) {
 				if(!$count && !isset($_POST['extra_choices'])) {
 					$tab = 'questions';
 					$dont_clear = 1;
-					$errstr = mb_('Sorry, you need at least one answer option for this question type.') .
-						' [ '. mb_('ID') .': '. $_POST['type_id'] .' ]';
+					$errstr = _GT_Sorry_you_need_at_least_one_answer_option_for_this_question_type .
+						' [ '. _GT_ID .': '. $_POST['type_id'] .' ]';
 					return(0);
 				}
 			}

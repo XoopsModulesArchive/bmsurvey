@@ -258,7 +258,7 @@ class bmsurveyUtils {
 		$result = mysql_query($sql);
 		if(!mysql_query($sql)) {
 			/* unsucessfull -- abort */
-			echo 'Cannot delete account. '.$username.' ('. mysql_error() .')';
+			echo _GT_Cannot_delete_account .$username.' ('. mysql_error() .')';
 		}
 	}
 	function update_respondent( $respondent ){

@@ -9,7 +9,7 @@
 	if(!empty($_GET['sids'])) {
 		$sid = intval($_GET['sids']);
 		if($_GET['test']) {
-			echo("<p><b>". mb_('Testing Survey...') .'</b> ('. mb_('SIDS') ." = ". $_GET['sids'] .")</p>\n");
+			echo("<p><b>". _GT_Testing_Survey .'</b> ('. _GT_SIDS ." = ". $_GET['sids'] .")</p>\n");
 		}
 
 		/* check ACLs for permissions ...
@@ -27,7 +27,7 @@
 				echo("<font color=\"". $ESPCONFIG['error_color'] ."\">$ret</font>\n");
 ?>
 </td></tr></table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php
 		}
 		return;
@@ -71,8 +71,8 @@ function merge(box) {
 		sids = sidsArray.join("+");
 		location.href = "<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=merge"); ?>&sids="+sids;
 	} else {
-		windowTitle="<?php mb_echo('Error!'); ?>";
-		errMsg="<?php mb_echo('You need to select at least two surveys!'); ?>";
+		windowTitle="<?php echo(_GT_Error); ?>";
+		errMsg="<?php echo(_GT_You_need_to_select_at_least_two_surveys); ?>";
 		windowOpener(windowTitle,errMsg);
 	}
 }
@@ -109,13 +109,13 @@ function BumpUp(box)  {
 }
 // End -->
 </SCRIPT>
-<h2><?php mb_echo('Merge Survey Results'); ?></h2>
-<?php mb_echo('Pick Surveys to Merge'); ?>
+<h2><?php echo(_GT_Merge_Survey_Results); ?></h2>
+<?php echo(_GT_Pick_Surveys_to_Merge); ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th width="33%"><?php mb_echo('List of Surveys'); ?></th>
+		<th width="33%"><?php echo(_GT_List_of_Surveys); ?></th>
 		<th width="34%">&nbsp;</th>
-		<th width="33%"><?php mb_echo('Surveys to Merge'); ?></th>
+		<th width="33%"><?php echo(_GT_Surveys_to_Merge); ?></th>
 	</tr>
 	<tr>
 		<td align="center">
@@ -136,4 +136,4 @@ function BumpUp(box)  {
 		</td>
 	</tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

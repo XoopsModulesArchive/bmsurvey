@@ -1,7 +1,6 @@
 <?php
 include '../../../include/cp_header.php';
 include_once('../class/bmsurveyUtils.php');
-
 if(
 	(!defined('XOOPS_ROOT_PATH')) || 
 	(!is_object($xoopsUser)) || 
@@ -19,20 +18,22 @@ if(isset($_POST['send'])) {
 		$xoopsMailer->setFromEmail(bmsurveyUtils::getXoopsModuleConfig('MAILADDR'));
 		$xoopsMailer->setFromName($xoopsConfig['sitename']);
 		$xoopsMailer->setSubject($Respondent['subject']);
-		$body = $Respondent['message'];
+		$body = $Respondent['subject'] . "\r\n" . $Respondent['message'];
 		$body .= "\n"._DATE." ".formatTimestamp(time(), 'm', $xoopsConfig['default_TZ']);
 		$xoopsMailer->setBody($body);
-		$xoopsMailer->send();
+		if ( !$xoopsMailer->send() )
+			echo "Send failed to " . $Respondent['email'];
+		else
+			echo "Sent to " . $Respondent['email'];
 	}
 }
-
 xoops_cp_header();
 include 'adminmenu.php';
 	echo "<div style='float: left; width:100%;'>";
 	/*
 	**	Invitation mail Section
 	*/
-	echo "<form method='post' action='castsurvey.php'>";
+	echo "<form method='post' action='resister.php'>";
 	echo "<p><table width='100%' border='0' cellspacing='1' class='outer'>";
 	echo "<tr><td class='head' colspan=2><b>"._AM_BMSURVEY_INVITATION."</b></td></tr>";
 	echo "<td class='odd' align='right'>"._AM_BMSURVEY_EMAIL."</td><td class='even'>";

@@ -75,7 +75,7 @@ d:[]アンケートに回答頂く最終日を設定ください。
 define('_AM_BMSURVEY_CHOSESURVEY','送信するアンケートの選択');
 define('_AM_BMSURVEY_SENDQUESTION','アンケートの送信');
 define('_AM_BMSURVEY_CONFIRM','回答者の確認');
-define('_AM_BMSURVEY_SENDQUESTIONNOW','ここをクリックするとアンケートを送信します');
+define('_AM_BMSURVEY_SENDQUESTIONNOW','ここをクリックすると対象者全員にアンケートを送信します');
 define('_AM_BMSURVEY_SENDQUESTIONUSAGE','（新しいアンケートを送信するとチケット番号が更新され、古いアンケートは回収不能となります。）
 <p>Wgetとスケジューラで以下URLを呼び出せば自動化できます。<p>%s<p>&hide=1をURLに追加指定すると質問文を省略します');
 define('_AM_BMSURVEY_CHECKRESPONSENOW','ここをクリックするとアンケートを受信用のメールボックスをチェックします');

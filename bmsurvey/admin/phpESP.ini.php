@@ -43,7 +43,7 @@ $ESPCONFIG['base_url'] = XOOPS_URL.'/modules/bmsurvey/';
 $ESPCONFIG['image_url'] = $ESPCONFIG['base_url'] . 'images/';
 
 // URL of the automatic survey publisher
-$ESPCONFIG['autopub_url'] = $ESPCONFIG['base_url'] . 'public/survey.php';
+$ESPCONFIG['autopub_url'] = $ESPCONFIG['base_url'] . 'survey.php';
 
 // URL of the CSS directory (for themes)
 $ESPCONFIG['css_url'] = $ESPCONFIG['base_url'] . 'public/css/';
@@ -172,14 +172,12 @@ require_once($ESPCONFIG['include_path'] . '/lib/espi18n' . $ESPCONFIG['extension
 esp_setlocale_ex($ESPCONFIG['default_lang']);
 
 if (!file_exists($ESPCONFIG['include_path']. '/funcs'. $ESPCONFIG['extension'])) {
-    printf('<b>'. mb_('Unable to find the phpESP %s directory.
-			Please check %s to ensure that all paths are set correctly.') .
+    printf('<b>'. _GT_Unable_to_find_the_phpESP_directory .
 			'</b>', 'include', 'phpESP.ini.php');
     exit;
 }
 if (!file_exists($ESPCONFIG['css_path'])) {
-    printf('<b>'. mb_('Unable to find the phpESP %s directory.
-			Please check %s to ensure that all paths are set correctly.') .
+    printf('<b>'. _GT_Unable_to_find_the_phpESP_directory .
 			'</b>', 'css', 'phpESP.ini.php');
     exit;
 }

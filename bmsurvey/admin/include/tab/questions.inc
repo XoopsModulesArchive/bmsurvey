@@ -41,7 +41,7 @@
 	} else {
 		if(empty($_POST['q']))
 			$_POST['q'] = $curr_q;
-		if($_POST['q'] == mb_('New Field'))
+		if($_POST['q'] == _GT_New_Field)
 			$_POST['q'] = 0;
 		if($_POST['q']<0 || $_POST['q']>$total_num_q)
 			$_POST['q'] = 1;
@@ -103,22 +103,27 @@ function clearTextInputs() {
 	<input type="hidden" name="id" value="<?php echo($curr_q_id); ?>">
 	<p>
 <?php 
-	mb_echo('Edit this field, or click the number of the field you would like to edit:'); 
+	echo(_GT_Edit_this_field); 
 	echo "</p>";
 	$qnumbers = "";
 	for($i=1; $i<$total_num_q+1; ++$i) {
 		$qnumbers .= ' <input type="submit" name="q" value="'.$i.'">';
 	}
-	$qnumbers .= ' <input type="submit" name="q" value="'.mb_('New Field').'">';
+	$qnumbers .= ' <input type="submit" name="q" value="'._GT_New_Field.'">';
 	echo $qnumbers . "<hr><b>";
 	if(!$curr_q) {
-		mb_echo('New Field');
+		echo(_GT_New_Field);
 	} else {
-		mb_echo('Field'." $curr_q");
+		echo(_GT_Field ." $curr_q");
 	}
 	echo '</b><table border="0"><tr>';
 	printf("<th>%s</th><th>%s</th><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr>",
-			_AM_BMSURVEY_QUESTIONNUMBER,mb_('Field Name')._AM_BMSURVEY_FILEDNAME_DESC,mb_('Type'),mb_('Length'),mb_('Precision'),mb_('Required'));
+		_AM_BMSURVEY_QUESTIONNUMBER,
+		_GT_Field_Name ._AM_BMSURVEY_FILEDNAME_DESC,
+		_GT_Type,
+		_GT_Length,
+		_GT_Precision,
+		_GT_Required);
 	echo '<tr><td align="center">'.$curr_n.'</td><td align="center">'.mktext('name',12).'</td>';
 	echo '<td align="center">';
 	if($updated && empty($_POST['type_id'])) $_POST['type_id'] = 2;
@@ -126,7 +131,7 @@ function clearTextInputs() {
 	$result = mysql_query($sql);
 	$arr = array();
 	while(list($key, $val) = mysql_fetch_row($result)) {
-		$arr["$key"] = mb_($val);
+		$arr["$key"] = $val;
 	}
 	echo(mkselect('type_id',$arr));
 ?>
@@ -142,8 +147,8 @@ function clearTextInputs() {
 			<td align="center"><?php
 				if(empty($_POST['required'])) $_POST['required'] = 'N';
 				echo(mkselect("required",array(
-					"Y" => mb_('Yes') . '               ',
-					"N" => mb_('No')
+					"Y" => _GT_Yes . '               ',
+					"N" => _GT_No
 				))); ?></td>
 		</tr>
 		<tr>

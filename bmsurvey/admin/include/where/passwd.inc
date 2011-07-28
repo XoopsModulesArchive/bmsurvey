@@ -8,7 +8,7 @@
 
 	/* ACL: everyone is allowed to change her own password */
 ?>
-<h2><?php mb_echo('Change Password'); ?></h2>
+<h2><?php echo(_GT_Change_Password); ?></h2>
 <?php
 	if(isset($_POST['newpass1']) &&
 		$_POST['newpass1'] == $_POST['newpass2'] &&
@@ -17,42 +17,42 @@
 				$xoopsUser->uid(),
 				_addslashes($_POST['oldpass']),
 				_addslashes($_POST['newpass1']))) {
-			mb_echo('Your password has been successfully changed.') ."<br>\n");
-			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+			echo(_GT_Your_password_has_been_successfully_changed) ."<br>\n");
+			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 			return;
 		} else {
-			echo(mkerror(_('Password not set, check your old password.'));
+			echo(mkerror(_GT_Password_not_set));
 		}
 	} else if(isset($_POST['newpass1'])) {
-		echo(mkerror(_('New passwords do not match or are blank.')));
+		echo(mkerror(_GT_New_passwords_do_not_match_or_are_blank));
 	}
 ?>
 <input type="hidden" name="where" value="passwd">
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>">
 <tr>
 	<th align="right" bgcolor="<?php echo($ESPCONFIG['bgalt_color2']); ?>">
-	<?php mb_echo('Username'); ?></th>
+	<?php echo(_GT_Username); ?></th>
 	<td bgcolor="<?php echo($ESPCONFIG['bgalt_color1']); ?>">
 	<?php echo('<tt>'. $xoopsUser->uid() .'</tt>'); ?></td>
 </tr><tr>
 	<th align="right" bgcolor="<?php echo($ESPCONFIG['bgalt_color2']); ?>">
-	<?php mb_echo('Old Password'); ?></th>
+	<?php echo(_GT_Old_Password); ?></th>
 	<td bgcolor="<?php echo($ESPCONFIG['bgalt_color1']); ?>">
 	<?php echo(mkpass('oldpass')); ?></td>
 </tr><tr>
 	<th align="right" bgcolor="<?php echo($ESPCONFIG['bgalt_color2']); ?>">
-	<?php mb_echo('New Password'); ?></th>
+	<?php echo(_GT_New_Password); ?></th>
 	<td bgcolor="<?php echo($ESPCONFIG['bgalt_color1']); ?>">
 	<?php echo(mkpass('newpass1')); ?></td>
 </tr><tr>
 	<th align="right" bgcolor="<?php echo($ESPCONFIG['bgalt_color2']); ?>">
-	<?php mb_echo('Confirm New Password'); ?></th>
+	<?php echo(_GT_Confirm_New_Password); ?></th>
 	<td bgcolor="<?php echo($ESPCONFIG['bgalt_color1']); ?>">
 	<?php echo(mkpass('newpass2')); ?></td>
 </tr><tr>
 	<th colspan="2" bgcolor="<?php echo($ESPCONFIG['bgalt_color2']); ?>">
-	<input type="submit" value="<?php mb_echo('Change Password'); ?>">
+	<input type="submit" value="<?php echo(_GT_Change_Password); ?>">
 	</th>
 </tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

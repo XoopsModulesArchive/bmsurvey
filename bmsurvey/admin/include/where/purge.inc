@@ -10,8 +10,8 @@
 // <jflemer@alum.rpi.edu>
 
 	if($_SESSION['acl']['superuser'] != 'Y') {
-		echo(mkerror(_('Only superusers allowed.'))."<br>\n");
-		echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+		echo(mkerror(_GT_Only_superusers_allowed)."<br>\n");
+		echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 		return;
 	}
 
@@ -30,34 +30,34 @@
 
 	$bg = $ESPCONFIG['bgalt_color2'];
 ?>
-<h2><?php mb_echo('Purge Surveys'); ?></h2>
+<h2><?php echo(_GT_Purge Surveys); ?></h2>
 
-<p><?php mb_echo('This page is not directly on the main menu because it is dangerous. This <b>completely</b> removes everything about a survey from the database <b>forever</b>. All question info, general info, results, etc. are purged from the database. Do not do anything here that you are not completely certain about. There is no confirmation, there is no turning back.'); ?></p>
+<p><?php echo(_GT_This_page_is_not_directly); ?></p>
 
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="<?php echo($bg); ?>">
 		<td>&nbsp;</td>
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo("# Q's"); ?></th>
-		<th align="left"><?php mb_echo('Status'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Qs); ?></th>
+		<th align="left"><?php echo(_GT_Status); ?></th>
 	</tr>
 <?php
 	while(list($sid,$name,$title,$status,$owner,$realm,$qnum) = mysql_fetch_row($result)) {
 		if($status & STATUS_DELETED) {
-			$stat = mb_('Archived');
+			$stat = _GT_Archived;
 		} elseif($status & STATUS_DONE) {
-			$stat = mb_('Ended');
+			$stat = _GT_Ended;
 		} elseif($status & STATUS_ACTIVE) {
-			$stat = mb_('Active');
+			$stat = _GT_Active;
 		} elseif($status & STATUS_TEST) {
-			$stat = mb_('Testing');
+			$stat = _GT_Testing;
 		} else {
-			$stat = mb_('Editing');
+			$stat = _GT_Editing;
 		}
 		
 		if($bg != $ESPCONFIG['bgalt_color1'])
@@ -86,9 +86,9 @@
     <tr bgcolor="<?php echo($bg); ?>">
 		<td colspan="8" align="center">
 			<input type="hidden" name="where" value="purge">
-			<input type="reset" name="reset" value="<?php mb_echo('Clear Checkboxes'); ?>">
-			<input type="submit" name="submit" value="<?php mb_echo('Purge Surveys'); ?>">
+			<input type="reset" name="reset" value="<?php echo(_GT_Clear_Checkboxes); ?>">
+			<input type="submit" name="submit" value="<?php echo(_GT_Purge Surveys); ?>">
 		</td>
 	</tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

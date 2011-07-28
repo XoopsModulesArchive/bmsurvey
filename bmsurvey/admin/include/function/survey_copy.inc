@@ -26,7 +26,7 @@ function survey_copy($sid) {
 	$survey['id'] = '';
 	$survey['changed'] = '';
 	$survey['owner'] = $_SESSION['acl']['username'];
-	$survey['name'] .= '_'. mb_('copy');
+	$survey['name'] .= '_copy';
 	$survey['status'] = 0;
 
 	// check for 'name' conflict, and resolve

@@ -73,7 +73,7 @@
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdesign'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this form'))) {
+				!auth_no_access(_GT_to_access_this_form)) {
 			return;
 		}
 	}
@@ -82,13 +82,13 @@
 	 * edit/create _any_ survey */
 	if($_SESSION['acl']['superuser'] != 'Y' &&
 			count($_SESSION['acl']['pdesign']) < 1 &&
-			!auth_no_access(_('to access this form'))) {
+			!auth_no_access(_GT_to_access_this_form)) {
 		return;
 	}
 		
 
 	if(empty($ESPCONFIG['tabs'])) {
-		echo('<b>'. mb_('No tabs defined. Please check your INI settings.'). '</b>');
+		echo('<b>'. _GT_No_tabs_defined . '</b>');
 		return;
 	}
 	
@@ -130,7 +130,7 @@
 	if(!file_exists($GLOBALS['ESPCONFIG']['include_path'].'/tab/'.$tab.$GLOBALS['ESPCONFIG']['extension']))
 		$tab = 'general';
 	if(!file_exists($GLOBALS['ESPCONFIG']['include_path'].'/tab/'.$tab.$GLOBALS['ESPCONFIG']['extension'])) {
-		echo('<b>'. mb_('Unable to open include file. Check INI settings. Aborting.'). '</b>');
+		echo('<b>'. _GT_Unable_to_open_include_file. '</b>');
 		exit;
 	}
 	
@@ -142,7 +142,7 @@
 <?php 
 if(!empty($errstr)) echo(mkerror($errstr)."<br>\n"); ?>
 <font size="+2">
-<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php mb_echo('Help'); ?></a>
+<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php echo(_GT_Help); ?></a>
 </font>
 
 <input type="hidden" name="where" value="tab">
@@ -152,11 +152,11 @@ if(!empty($errstr)) echo(mkerror($errstr)."<br>\n"); ?>
     <td>
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<tr>
-		  <td><input type="image" style="border:none" alt="<?php mb_echo('General'); ?>"   name="general"   src="<?php echo($ESPCONFIG['image_url']); ?>general_<?php $a='d'; if($tab == 'general') $a='a'; echo($a); ?>.gif" ></td>
-		  <td><input type="image" style="border:none" alt="<?php mb_echo('Questions'); ?>" name="questions" src="<?php echo($ESPCONFIG['image_url']); ?>questions_<?php $a='d'; if($tab == 'questions') $a='a'; echo($a); ?>.gif" ></td>
-		  <td><input type="image" style="border:none" alt="<?php mb_echo('Order'); ?>"     name="order"     src="<?php echo($ESPCONFIG['image_url']); ?>order_<?php $a='d'; if($tab == 'order') $a='a'; echo($a); ?>.gif" ></td>
-		  <td><input type="image" style="border:none" alt="<?php mb_echo('Preview'); ?>"   name="preview"   src="<?php echo($ESPCONFIG['image_url']); ?>preview_<?php $a='d'; if($tab == 'preview') $a='a'; echo($a); ?>.gif" ></td>
-		  <td><input type="image" style="border:none" alt="<?php mb_echo('Finish'); ?>"    name="finish"    src="<?php echo($ESPCONFIG['image_url']); ?>finish_<?php $a='d'; if($tab == 'finish') $a='a'; echo($a); ?>.gif" ></td>
+		  <td><input type="image" style="border:none" alt="<?php echo(_GT_General); ?>"   name="general"   src="<?php echo($ESPCONFIG['image_url']); ?>general_<?php $a='d'; if($tab == 'general') $a='a'; echo($a); ?>.gif" ></td>
+		  <td><input type="image" style="border:none" alt="<?php echo(_GT_Questions); ?>" name="questions" src="<?php echo($ESPCONFIG['image_url']); ?>questions_<?php $a='d'; if($tab == 'questions') $a='a'; echo($a); ?>.gif" ></td>
+		  <td><input type="image" style="border:none" alt="<?php echo(_GT_Order); ?>"     name="order"     src="<?php echo($ESPCONFIG['image_url']); ?>order_<?php $a='d'; if($tab == 'order') $a='a'; echo($a); ?>.gif" ></td>
+		  <td><input type="image" style="border:none" alt="<?php echo(_GT_Preview); ?>"   name="preview"   src="<?php echo($ESPCONFIG['image_url']); ?>preview_<?php $a='d'; if($tab == 'preview') $a='a'; echo($a); ?>.gif" ></td>
+		  <td><input type="image" style="border:none" alt="<?php echo(_GT_Finish); ?>"    name="finish"    src="<?php echo($ESPCONFIG['image_url']); ?>finish_<?php $a='d'; if($tab == 'finish') $a='a'; echo($a); ?>.gif" ></td>
 		</tr>
 	  </table>
     </td>
@@ -174,18 +174,18 @@ if(!empty($errstr)) echo(mkerror($errstr)."<br>\n"); ?>
 <?php 
 if($tab=='finish') {echo('&nbsp;'); return;} 
 if($_SESSION['new_survey']) { 
-	mb_echo('Click cancel to cancel this survey, or click continue to proceed to the next tab.'); 
+	echo(_GT_Click_cancel_to_cancel); 
 	echo '<br><input type="submit" name="where" value="Cancel">';
 	if($tab=='preview') { 
 		echo '<input type="submit" name="tab" value="Finish">';
 		return; 
 	}
-	echo '<input type="submit" name="tab" value="Continue &gt;">';
+	echo '&nbsp;<input type="submit" name="tab" value="Continue &gt;">';
 	return; 
 }
 ?>
-<p><?php mb_echo('The survey title and other general fields are on the <b>General</b> tab. Individual survey questions are added and modified on the <b>Questions</b> tab. Questions may be re-ordered or deleted from the <b>Order</b> tab. You may see a preview of your survey at any time, by going to the <b>Preview</b> tab. If you have no further changes click <b>Finish</b> to go back to the Management Interface.'); ?><br>
-<a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php mb_echo('Click here to open the Help window.'); ?></a></p>
+<p><?php echo(_GT_The_survey_title_and_other); ?><br>
+<a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php echo(_GT_Click_here_to_open_the_Help_window); ?></a></p>
 <input type="submit" name="tab" value="General">
 <input type="submit" name="tab" value="Questions">
 <input type="submit" name="tab" value="Order">

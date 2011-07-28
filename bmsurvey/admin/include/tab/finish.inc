@@ -17,24 +17,24 @@
 
 ?>
 <br>
-<b><?php mb_echo('Survey Design Completed'); ?></b>
+<b><?php echo(_GT_Survey_Design_Completed); ?></b>
 <div align="left">
-	<p><?php mb_echo('You have completed this survey design.'); ?></p>
+	<p><?php echo(_GT_You_have_completed_this_survey_design); ?></p>
 
-	<p><?php mb_echo('To insert this survey into your web page, copy the text below, and paste it into the HTML of your page.'); ?></p>
+	<p><?php echo(_GT_To_insert_this_survey_into_your_web_page); ?></p>
 
 <blockquote><tt>
 	&lt;?php $sid=<?php echo($_SESSION['survey_id']); ?>;
 	include("<?php echo($ESPCONFIG['handler']); ?>");?&gt;
 </tt></blockquote>
 
-	<p><?php mb_echo('Once activated you can also access the survey directly from the following URL.'); ?></p>
+	<p><?php echo(_GT_Once_activated_you_can_also_access_the_survey_directly_from_the_following_URL); ?></p>
 <blockquote><tt>
 	<?php echo($ESPCONFIG['autopub_url']."?name=".$survey_name); ?>
 </tt></blockquote>
 
-	<p><?php mb_echo('You must activate this survey before you can collect results. Once a survey is active, you may no longer make any changes to it. You may activate this survey by choosing <b>Change the Status of an Existing Survey</b> from the Management Interface.'); ?></p>
+	<p><?php echo(_GT_You_must_activate_this_survey); ?></p>
 </div>
 
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <br>&nbsp;

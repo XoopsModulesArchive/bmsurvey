@@ -32,6 +32,14 @@ if(
 	(!$xoopsUser->isAdmin()) ){
 	exit();
 }
+$sid = isset($_POST['sid']) ? intval($_POST['sid']) : 0;
+
+if ( $_POST['selectuser'] && $_POST['username'] ){
+	$url = XOOPS_URL."/modules/".$xoopsModule->dirname()."/cast.php?key="
+		.bmsurveyUtils::getXoopsModuleConfig('CAST_KEY')."&sid=".$sid."&admin=1&username=".htmlspecialchars( $_POST['username'], ENT_QUOTES );
+	redirect_header($url,1,_AM_BMSURVEY_SENDQUESTION);
+
+}
 
 xoops_cp_header();
 include 'adminmenu.php';
@@ -39,7 +47,6 @@ include 'adminmenu.php';
 	/*
 	**	Question Section
 	*/
-	$sid = isset($_POST['sid']) ? ($_POST['sid']) : 0;
 	echo "<p>";
 	echo "<form method='post' action='castsurvey.php'>";
 	echo "<p><table width='100%' border='0' cellspacing='1' class='outer'>";
@@ -48,7 +55,7 @@ include 'adminmenu.php';
 	echo "<td class='odd' align='left'>"._AM_BMSURVEY_RESPONDENTS." "._AM_BMSURVEY_SURVEYID.":".$sid."</td></tr>";
 	echo "<tr><td class='even' valign='top'>";
 
-	echo "<select name='sid' size=20 style='width: 200px;'>";
+	echo "\n<select name='sid' size=20 style='width: 200px;'>";
 	$sql = "SELECT * FROM ".TABLE_SURVEY." WHERE status = 1 ORDER BY id";
 	if (!$result = $xoopsDB->query($sql)){
 		echo"</td></tr></table></div>";
@@ -56,7 +63,9 @@ include 'adminmenu.php';
 		exit();
 	}
 	while ($row = $xoopsDB->fetchArray($result)){
-		echo "<option value=".$row['id'].">".$row['id'].": ".$row['title']."</option>";
+		echo "<option value=".$row['id'];
+		if ($row['id']==$sid) echo " selected='selected'";
+		echo ">".$row['id'].": ".$row['title'] . "</option>\n";
 	}
 	echo "</td><td class='odd' align='center'></select><p><input type=submit name='confirm' value='"._AM_BMSURVEY_CONFIRM."' /></td>";
 
@@ -77,6 +86,7 @@ include 'adminmenu.php';
 	</select>
 	<p>
 	<?php
+	echo "<input type=submit name='selectuser' value='"._AM_BMSURVEY_SENDQUESTION."' />";
 	echo "</td></tr>";
 	echo "<tr><td class='odd' colspan=3 align='center'>";
 	if (!$sid) $sid="ALL";

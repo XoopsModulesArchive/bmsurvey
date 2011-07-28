@@ -26,7 +26,7 @@
 //  ------------------------------------------------------------------------ //
 // The name of this module
 define("_MI_SURVEY_NAME","BmSurvey");
-define("_MI_SURVEY_ADMIN","Administration");
+define("_MI_SURVEY_ADMIN","Management");
 // A brief description of this module
 define("_MI_SURVEY_BNAME1","Survey Form");
 define("_MI_SURVEY_DESC","Bluemoon.Multi-Survey");
@@ -59,6 +59,8 @@ define('_MI_MSURVEY_CASTKEY', 'Cast Key');
 define('_MI_MSURVEY_CASTKEY_DESC', 'Set key strings for cast.php.');
 define('_MI_MSURVEY_MANAGEGROUP', 'Management Groups');
 define('_MI_MSURVEY_MANAGEGROUP_DESC', 'Set groups for survey management');
+define('_MI_MSURVEY_MGPSTATUS', 'Manage group status');
+define('_MI_MSURVEY_MGPSTATUS_DESC', 'For group permission to edit,activate and end.');
 define('_MI_MSURVEY_BLOCKLIST', 'Block list number');
 define('_MI_MSURVEY_BLOCKLIST_DESC', 'Number of list at block');
 define('_MI_MSURVEY_ADDINFO', 'Add info to response');

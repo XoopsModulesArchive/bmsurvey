@@ -64,7 +64,7 @@
 
 	echo "<div id='buttonbar'>";
 	echo "<ul>";
-	echo "<li id='".$tblCol[0]."'><a href='manage.php'><span>"._AM_BMSURVEY_MANAGE."</span></a></li>";
+	echo "<li id='".$tblCol[0]."'><a href='../manage.php'><span>"._AM_BMSURVEY_MANAGE."</span></a></li>";
 	echo "<li id='".$tblCol[1]."'><a href='respondent.php'><span>"._AM_BMSURVEY_RESPONDENT."</span></a></li>";
 	echo "<li id='".$tblCol[2]."'><a href='castsurvey.php'><span>"._AM_BMSURVEY_CASTSURVEY."</span></a></li>";
 	echo "<li id='".$tblCol[3]."'><a href='recievecheck.php'><span>"._AM_BMSURVEY_CHECKRESPONSE."</span></a></li>";

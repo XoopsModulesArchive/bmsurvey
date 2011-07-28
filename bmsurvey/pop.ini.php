@@ -32,7 +32,7 @@ $log_dir = './log/';					// Log folder
 $log = $log_dir.'maillog.cgi';			// log file ( Change the 'maillog' strings for sequrity ¡Ë
 $denylog = $log_dir.'deny.cgi';			// Deny log file ( Change the 'deny' strings for sequrity ¡Ë
 $denylog_save = 1;				// Save the deny log (0:No, 1:Yes)
-$head_save = 1;					// Save the header infomation (0:No, 1:Yes)
+$head_save = 0;					// Save the header infomation (0:No, 1:Yes)
 $head_prefix = 'head_';			// Mail header prefix ( Change the 'head' strings for sequrity ¡Ë
 $maxline = 500;							// Max saving log numbers
 $adminUid = 1;					// Notice to admin for request new blog. ( null = not notify )

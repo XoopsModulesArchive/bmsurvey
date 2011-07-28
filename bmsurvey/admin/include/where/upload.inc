@@ -57,7 +57,7 @@
                        		return;
 			}
 			elseif(count($exceptions) > 1) {
-				$errstr .= mkerror(_('An error occurred during upload.  Rows that failed are listed below.'));
+				$errstr .= mkerror( _GT_An_error_Rows_that_failed );
 				$exception_table = ("<table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"4\" align=\"center\" bgcolor=".$ESPCONFIG['active_bgcolor']."\">\n");
 				$bg = $ESPCONFIG['bgalt_color2'];
 	 			$exception_table .= "<tr bgcolor=\"$bg\">\n";
@@ -83,19 +83,19 @@
 				$exception_table .= "</tr>\n</table>";
 			}
 			else {
-				$errstr .= mkerror(_('An error occurred during upload.  Please check the format of your text file.'));
+				$errstr .= mkerror(_GT_An_error_Please_check_the_format);
 			}
 		}
 		else {
-				$errstr .= mkerror(_('An error occurred during upload.  Please complete all form fields.'));
+				$errstr .= mkerror(_GT_An_error_Please_complete_all_form_fields);
 		}
 	}
 ?>
-<h2><?php mb_echo('Upload Account Information'); ?></h2>
-<p><?php mb_echo('All fields are required') ?></p>
+<h2><?php echo(_GT_Upload_Account_Information); ?></h2>
+<p><?php echo(_GT_All_fields_are_required) ?></p>
 <?php if(!empty($errstr)) echo("<p>$errstr</p>\n"); ?>
 <font size="+2">
-<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php mb_echo('Help'); ?></a>
+<a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=help"); ?>" target="_blank"><?php echo(_GT_Help); ?></a>
 </font>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>">
 <form enctype="multipart/form-data" method="Post" action="<?php echo ($GLOBALS['ESPCONFIG']['ME']); ?>">
@@ -105,9 +105,9 @@
 <input type="hidden" name="where" value="upload">
 <input type="hidden" name="account_type" value="<?php echo($account_type); ?>">
 <?php
-		echo("<tr>\n<th bgcolor=\"$bg2\" align=\"right\">"._('File Type')."</th>\n");
-		echo("<td bgcolor=\"$bg1\">\n".mkselect('upload_type',array('tab' => mb_('Tab Delimited')))."</td>\n</tr>");
-		echo("<tr>\n<th bgcolor=\"$bg2\" align=\"right\">"._('File to upload')."</th>\n");
+		echo("<tr>\n<th bgcolor=\"$bg2\" align=\"right\">". _GT_File_Type ."</th>\n");
+		echo("<td bgcolor=\"$bg1\">\n".mkselect('upload_type',array('tab' =>_GT_Tab_Delimited ))."</td>\n</tr>");
+		echo("<tr>\n<th bgcolor=\"$bg2\" align=\"right\">". _GT_File_to_upload ."</th>\n");
 		echo("<td bgcolor=\"$bg1\">\n".mkfile('upload_file')."\n"."</td>\n</tr>");
 ?>
 <tr>
@@ -118,5 +118,5 @@
  </table>
 <?php if(!empty($exception_table)) echo("<p>$exception_table</p>\n"); ?>
 <?php
-echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 ?>

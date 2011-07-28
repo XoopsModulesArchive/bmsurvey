@@ -33,9 +33,9 @@ function other_check(name)
 }
 // End -->
 </script>
-<?php mb_echo('This is a preview of how this survey will look. In the preview the survey navigation buttons are inactive, use the section number buttons to view different sections. Some navigation buttons may not appear on your final survey, depending on what access it is assigned. The survey will use the background color of the document in which it is embedded. If you have no further changes click <b>Finish</b> at the bottom of this page.'); ?>
+<?php echo(_GT_This_is_a_preview); ?>
 <?php	if($num_sections > 1) { ?>
-<br><b><?php mb_echo('Section'); ?>:</b>
+<br><b><?php echo(_GT_Section); ?>:</b>
 <?php		for($i=0;$i<$num_sections;$i++) {	?>
 <input type="submit" name="section" value="<?php echo($i+1); ?>">
 <?php		}
@@ -64,14 +64,14 @@ function other_check(name)
 
 	if ($ESPCONFIG['auth_response']) {
 		if ($_POST['section'] > 1) {
-        	echo('<input type="button" value="' . mb_('Previous Page'). '"> ');
+        	echo('<input type="button" value="' . _GT_Previous_Page . '"> ');
         }
-	    echo ('<input type="button" value="'. mb_('Save') .'"> ');
+	    echo ('<input type="button" value="'. _GT_Save .'"> ');
 	}
 	if($_POST['section'] != $num_sections) {
-		echo('<input type="button" value="'. mb_('Next Page') .'"> ');
+		echo('<input type="button" value="'. _GT_Next_Page .'"> ');
 	} else {
-		echo('<input type="button" value="'. mb_('Submit Survey') .'">');
+		echo('<input type="button" value="'. _GT_Submit_Survey .'">');
 	}
 ?>
 		</td>

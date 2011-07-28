@@ -14,8 +14,8 @@ else
 $bg = '';
 
 ?>
-<h2><?php mb_echo('Export Data'); ?></h2>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<h2><?php echo(_GT_Export_Data); ?></h2>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <table border="0" align="center" cellspacing="0" cellpadding="4" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 <?php
 
@@ -25,13 +25,13 @@ $bg = '';
 if(!$sid) {
 ?>
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo('Status'); ?></th>
-		<th align="left" colspan="2"><?php mb_echo('Format'); ?></td>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Status); ?></th>
+		<th align="left" colspan="2"><?php echo(_GT_Format); ?></td>
 	</tr>
 <?php
 	/* load names and titles of all surveys available to
@@ -52,17 +52,17 @@ if(!$sid) {
 	$result = mysql_query($sql);
 
 	while(list($sid,$name,$title,$status,$owner,$realm) = mysql_fetch_row($result)) {
-		$stat = mb_('Editing');
+		$stat = _GT_Editing;
 
 		if($status & STATUS_DELETED) {
-			$stat = mb_('Archived');
+			$stat = _GT_Archived;
 			continue;
 		} elseif($status & STATUS_DONE) {
-			$stat = mb_('Ended');
+			$stat = _GT_Ended;
 		} elseif($status & STATUS_ACTIVE) {
-			$stat = mb_('Active');
+			$stat = _GT_Active;
 		} elseif($status & STATUS_TEST) {
-			$stat = mb_('Testing');
+			$stat = _GT_Testing;
 		}
 
 		if($bg != $ESPCONFIG['bgalt_color1'])
@@ -78,20 +78,20 @@ if(!$sid) {
 		<td><?php echo($realm); ?></td>
 		<td><?php echo($stat); ?></td>
 		<td><?php
-			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=csv&sid=$sid\">" . mb_('CSV') . "</a>"); ?>
+			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=csv&sid=$sid\">" . _GT_CSV . "</a>"); ?>
 			(<?php
-			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=csv&sid=$sid\">" . mb_('download') . '</a>'); ?>)
+			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=csv&sid=$sid\">" . _GT_download . '</a>'); ?>)
 			<!--</td><td>-->
 			&nbsp;
-			<!-- <?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=dbf&sid=$sid\">" . mb_('DBF') . "</a>"); ?>  -->
-			<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=html&sid=$sid\">" . mb_('HTML') . "</a>"); ?>
+			<!-- <?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=dbf&sid=$sid\">" . _GT_DBF . "</a>"); ?>  -->
+			<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=html&sid=$sid\">" . _GT_HTML . "</a>"); ?>
 		</td>
 	</tr>
 <?php
 	}
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php
 	return;
 	}
@@ -112,10 +112,10 @@ if(!$sid) {
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdesign'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this survey'))) {
+				!auth_no_access(_GT_to_access_this_survey)) {
 			return;
 		}
-		echo("<p><b>". mb_('Testing Survey...') ."</b> (". mb_('SID') ." = $sid)</p>\n");
+		echo("<p><b>". _GT_Testing_Survey ."</b> (". _GT_SID ." = $sid)</p>\n");
 	} else {
 		/* check ACL to see if user is allowed to export
 		 * _this_ survey */
@@ -124,7 +124,7 @@ if(!$sid) {
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdata'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this survey'))) {
+				!auth_no_access(_GT_to_access_this_survey)) {
 			return;
 		}
 	}
@@ -138,7 +138,7 @@ if(!$sid) {
 			$ret = survey_export_dbf($sid, $file);
 		} else {
 			$ret = 0;
-			echo("<tr><td>" . mkerror(_('The PHP dBase Extension is not installed.')) . "</td></tr>");
+			echo("<tr><td>" . mkerror(_GT_The_PHP_dBase) . "</td></tr>");
 		}
 	} else {
 		$csv_charset = $GLOBALS['ESPCONFIG']['csv_charset'];
@@ -148,14 +148,14 @@ if(!$sid) {
 
 	echo("<tr><td>");
 	if(isset($_GET['test'])) {
-		echo("<p><b>". mb_('Testing Survey...') ."</b> (". mb_('SID') ." = $sid)</p>\n");
+		echo("<p><b>". _GT_Testing_Survey ."</b> (". _GT_SID ." = $sid)</p>\n");
 	}
 	if($ret) {
-		echo(mb_('Survey exported as:') . " <tt>$file</tt>");
+		echo(_GT_Survey_exported_as . " <tt>$file</tt>");
 	} else {
-		echo(mkwarn(_('Error exporting survey as:') . " <tt>$file</tt>"));
+		echo(mkwarn(_GT_Error_exporting_survey_as . " <tt>$file</tt>"));
 	}
 	echo("</td></tr></table>\n");
-	echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+	echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 
 ?>

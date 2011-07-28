@@ -19,7 +19,7 @@
 				!in_array($srealm, array_intersect(
 						$_SESSION['acl']['pdesign'],
 						$_SESSION['acl']['pall'])) &&
-				!auth_no_access(_('to access this form'))) {
+				!auth_no_access(_GT_to_access_this_form)) {
 			return;
 		}
 ?>
@@ -32,8 +32,8 @@
 ?>
 </td></tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=report\">" . mb_('Go back to Report Menu') . "</a>\n"); ?><br>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=report\">" . _GT_Go_back_to_Report_Menu . "</a>\n"); ?><br>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php
 		return;
 	}
@@ -60,15 +60,15 @@
 	$result = mysql_query($sql);
 
 ?>
-<h2><?php mb_echo('View Form Report'); ?></h2>
-<?php mb_echo('Pick Form to View'); ?>
+<h2><?php echo(_GT_View_Form_Report); ?></h2>
+<?php echo(_GT_Pick_Form_to_View); ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
 	</tr>
 <?php
     $bg = '';
@@ -91,4 +91,4 @@
 	}
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

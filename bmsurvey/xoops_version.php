@@ -1,5 +1,5 @@
 <?php
-// $Id: xoops_version.php,v 0.85 2008/04/25 10:32:22 yoshis Exp $
+// $Id: xoops_version.php,v 0.97 2009/01/10 17:58:22 yoshis Exp $
 //  ------------------------------------------------------------------------ //
 //                      BmSurvey - Bluemoon Multi-Survey                     //
 //                   Copyright (c) 2005 - 2007 Bluemoon inc.                 //
@@ -34,7 +34,7 @@ $modhandler = &xoops_gethandler('module');
 $xoopsMSModule = &$modhandler->getByDirname("bmsurvey");
 
 $modversion['name'] = _MI_SURVEY_NAME;
-$modversion['version'] = 0.85;
+$modversion['version'] = 0.97;
 $modversion['description'] = _MI_SURVEY_DESC." (Irene)";
 $modversion['author'] = "Yoshi Sakai";
 $modversion['credits'] = "Copright(c) Bluemoon inc. "
@@ -89,7 +89,7 @@ if (is_object($xoopsUser) && isset($xoopsModuleConfig['MANAGERS'])){
 //print_r   ($xoopsModuleConfig['MANAGERS']);
         if (array_intersect($xoopsModuleConfig['MANAGERS'], $groups)){
 			$modversion['sub'][1]['name'] = _MI_SURVEY_ADMIN;
-			$modversion['sub'][1]['url'] = "admin/manage.php";
+			$modversion['sub'][1]['url'] = "manage.php";
         }
     }
 }
@@ -212,6 +212,14 @@ $modversion['config'][] = array(
 	'formtype'    => 'group_multi',
 	'valuetype'   => 'array',
 	'default'     => array(1)
+);
+$modversion['config'][] = array(
+	'name'        => 'PSTATUS',
+	'title'       => '_MI_MSURVEY_MGPSTATUS',
+	'description' => '_MI_MSURVEY_MGPSTATUS_DESC',
+	'formtype'    => 'yesno',
+	'valuetype'   => 'int',
+	'default'     => 1
 );
 $modversion['config'][] = array(
 	'name'        => 'BLOCKLIST',

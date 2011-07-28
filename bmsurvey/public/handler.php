@@ -39,12 +39,12 @@ global $_SERVER;
         $status = 0;
 
 	if($status & ( STATUS_DONE | STATUS_DELETED )) {
-		echo("handler.php[38]".mkerror(_('Error processing survey: Survey is not active.')));
+		echo("handler.php[38]".mkerror( _GT_Survey_is_not_active ));
 		return;
 	}
 	if(!($status & STATUS_ACTIVE)) {
 		if(!(isset($test) && $test && ($status & STATUS_TEST))) {
-			echo("handler.php[43]".mkerror(_('Error processing survey: Survey is not active.')));
+			echo("handler.php[43]".mkerror( _GT_Survey_is_not_active ));
 			return;
 		}
 	}
@@ -128,8 +128,8 @@ global $_SERVER;
 		}
 	}
 	if($_POST['sec'] == $num_sections)	{
-		$xoopsTpl->assign('formfooter', array('name' =>'submit','value'=>_MD_SUBMIT_SURVEY));	// mb_('Submit Survey')
+		$xoopsTpl->assign('formfooter', array('name' =>'submit','value'=>_MD_SUBMIT_SURVEY));
  	} else {
-		$xoopsTpl->assign('formfooter', array('name' =>'next','value'=>_MD_NEXT_PAGE));	//mb_('Next Page')
+		$xoopsTpl->assign('formfooter', array('name' =>'next','value'=>_MD_NEXT_PAGE));
 	}
 ?>

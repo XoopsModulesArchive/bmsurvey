@@ -63,8 +63,19 @@ V0.81 2007/09/06 Support MySQL after V4.1. Change password length 16 to 41 at my
 V0.82 2007/12/04 Supported group permission for private survey.
 V0.83 2008/01/08 Bugfix for guest goes to blank page at click survey on main menu.
 V0.84 2008/02/09 Support CSV download as https protocal with IE6. Bugfix CSV check box numbering.
-v0.85 2008/04/25 Security update for XSS Vulnerability at download.php.
-
+v0.85 2008/04/10 Update for XSS Vulnerability at download.php.
+v0.86 2008/04/14 Added Label,Class to survey_render.inc(line 114,115,116,126,142,153). You can use CSS style to the radio button and check box.
+v0.87 2008/07/01 Survey management has group permission.
+v0.88 2008/07/20 Security update as XSS vulnerability on handler-prefix.php.
+v0.89 2008/07/28 Advanced Mail send receive functions. It works with PHPfeather.
+v0.90 2008/07/29 Bugfix for Mail receive function for get time strings such like "10:30".
+v0.91 2008/08/05 Added numeric symbol when cast survey by email.
+v0.92 2008/08/19 Permitted group can use the manage menu when xoops module management off. At "Change Access To a Survey", The group user cannot change.
+v0.93 2008/08/21 Added Manage group status at module admin.
+V0.94 2008/10/23 Changed on CSV download. mb_internal_encording() to _CHARSET "As XOOPS default char setting".
+V0.95 2008/11/15 Supported SMTPauth,SMTP,sendmail ( using xoopsMailer )
+V0.96 2008/11/26 Bugfix: In the selection item with other strings, it is included with the response mail. 
+V0.97 2009/01/10 SAY BYE-BYE TO THE GetText liblary. alpha-1.
 
 *********************************
 Release notes. (Old versions)
