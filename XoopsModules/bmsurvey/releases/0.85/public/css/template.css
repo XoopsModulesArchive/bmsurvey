@@ -1,0 +1,178 @@
+ /* $Id: template.css,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $ */
+.headerGraphic {
+	background-image: url(../../images/surveyimages/phpespHeader2.jpg);
+	background-repeat: no-repeat;
+	width: 100%;
+	border: none;
+}
+.image {
+	height:32;
+	width:100%;
+}
+.surveyTitle {
+	font-family: "‚l‚r ƒSƒVƒbƒN", Courier, mono;
+	font-size: large;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-transform: capitalize;
+	color: black;
+	background-color: #f5f5f5;
+	text-decoration: underline;
+	text-align: center;
+	vertical-align: default;
+}
+.surveySubtitle {
+	font-family: "‚l‚r –¾’©", Courier, mono;
+	font-size: large;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-transform: none;
+	color: black;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: default;
+}
+.surveyPage {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        font-variant: small-caps;
+        text-transform: none;
+        color: #CC0000;
+        text-decoration: none;
+        text-align: center;
+}	
+.addInfo {
+	font-family: "‚l‚r ƒSƒVƒbƒN", Courier, mono;
+	font-size: x-small;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-transform: lowercase;
+	color: black;
+	text-align: left;
+	vertical-align: default;
+}
+.message {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-variant: small-caps;
+	font-weight: bold;
+	color: #CC0000;
+	text-align: center;
+}
+.reqQuestion {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 600;
+	font-variant: small-caps;
+	text-transform: none;
+	color: #CC0000;
+	text-decoration: none;
+	text-align: center;
+}
+.mainTable {
+	background-color: #f5f5f5;
+	background-image: url((URL));
+	background-repeat: repeat-y;
+	cell-sapcing: 0;
+	width: 90%;
+	border: 0;
+}
+body {
+	background-color: #f5f5f5;
+	margin: 0px;
+}
+.preQuestionBorder {
+	width: 500px;
+	margin: 0px auto;
+	text-align: center;
+	padding: 0px;
+	border:1px none #999999;
+	background-color: orange;
+	height: 1px;
+	vertical-align: text-top;
+}
+.qnOuterTable {
+	width: 100%;
+	border: none;
+	background-color: #f0f0f0;
+	cell-spacing: 1;
+}
+.qnInnerTable {
+	width: 100%;
+	border: none;
+	background-color:  #cfcfcf;
+	cell-spacing: 1;
+}
+.qnInnerTd {
+	background-color: #cfcfcf;
+	text-align: right;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-variant: small-caps;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+	width: 24px;
+	vertical-align: text-top;
+}
+.qnInner {
+	background-color: #cfcfcf;
+	width: 120;
+	height: 20;
+	vertical-align: top;
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-style: normal;
+	font-variant: small-caps;
+	text-transform: none;
+	text-decoration: none;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.qnType {
+	height: auto;
+	background-color: #ffffff;
+	vertical-align: middle;
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-style: normal;
+	font-variant: small-caps;
+	text-transform: none;
+	text-decoration: none;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+.thankHead {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-variant: small-caps;
+	color: #CCCCCC;
+}
+.thankBody {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-variant: small-caps;
+	color: #000000;
+}
+.returnLink {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	font-variant: small-caps;
+	color: #000000;
+	text-decoration: underline;
+}
+INPUT, TEXTAREA, SELECT, OPTION {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-small;
+	color: #000000;
+	background-color: #FFFFFF;
+}

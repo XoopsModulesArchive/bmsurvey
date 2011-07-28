@@ -1,0 +1,35 @@
+    function esp_init_db() {
+        $_ext = 'mysql.so';
+        if (substr(PHP_OS, 0, 3) == 'WIN') {
+            $_ext = 'php_mysql.dll';
+        }
+        if (!extension_loaded('mysql') && !ini_get('safe_mode')
+            && ini_get('enable_dl') && !@dl($_ext)) {
+            echo "<b>FATAL: Unable to load the PHP mysql extension ($_ext). Aborting.</b>";
+            exit;
+        }
+        unset($_ext);
+    
+        $cfg =& $GLOBALS['ESPCONFIG'];
+        if (isset($cfg['db_conn']))
+            return;
+
+        $cfg['db_conn'] = @mysql_connect(
+                $cfg['db_host'], $cfg['db_user'], $cfg['db_pass']);
+        if ($cfg['db_conn'] !== false) {
+            if (mysql_select_db($cfg['db_name'], $cfg['db_conn']) === false) {
+                mysql_close($cfg['db_conn']);
+                $cfg['db_conn'] = false;
+            }
+        }
+        if ($cfg['db_conn'] === false) {
+            header('HTTP/1.0 503 '. mb_('Service Unavailable'));
+            echo('<html><head><title>HTTP 503 '. mb_('Service Unavailable') .'</title></head>');
+            echo('<body><h1>HTTP 503 '. mb_('Service Unavailable') .'</h1>');
+            echo(mkerror(_('Connection to database failed. Please check configuration.')));
+            if ($cfg['DEBUG'])
+                echo("<br>\n". mkerror(mysql_errno().": ".mysql_error()));
+            echo('</body></html>');
+            exit;
+        }
+    }
