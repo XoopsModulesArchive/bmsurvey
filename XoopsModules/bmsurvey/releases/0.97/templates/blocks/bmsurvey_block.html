@@ -1,0 +1,28 @@
+<!-- begin of popnup blog block -->
+<table  width="90%" class="outer" cellspacing="1">
+  <tr>
+    <{if ($xoops_isuser)}>
+    <th><{$block._MB_BMSURVEY_LIST_CHECKED}></th>
+    <{/if}>
+    <th><{$block._MB_BMSURVEY_LIST_TITLE}></th>
+    <th><{$block._MB_BMSURVEY_LIST_SUBTITLE}></th>
+    <!--<th><{$block._MB_BMSURVEY_LIST_UNAME}></th>-->
+    <th><{$block._MB_BMSURVEY_LIST_DATE}></th>
+  </tr>
+<{foreach item=list from=$block.survey}>
+  <tr class="<{cycle values="even,odd"}>">
+    <{if ($xoops_isuser)}>
+    <td align="center">
+      <{if ($list.submitted)}>
+        <img src="<{$xoops_url}>/modules/bmsurvey/images/checked.png" alt="Checked" title="<{$list.submitted|date_format:'%Y-%m-%d %H:%M'}>" />
+      <{/if}>
+    </td>
+    <{/if}>
+    <td><a href='<{$list.url}>'><{$list.title}></a></td>
+    <td><{$list.subtitle}></td>
+    <!--<td><{$list.uname}></td>-->
+    <td><{$list.last_update_s}></td>
+  </tr>
+<{/foreach}>
+</table>
+<!-- end of popnup blog block -->

@@ -1,0 +1,400 @@
+<?php
+// $Id: main.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+//  ------------------------------------------------------------------------ //
+//                Bluemoon.Multi-Survey                                      //
+//                    Copyright (c) 2005 Yoshi.Sakai @ Bluemoon inc.         //
+//                       <http://www.bluemooninc.biz/>                       //
+// ------------------------------------------------------------------------- //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+
+define('_MD_BMSURVEY_LIST_CHECKED', '済');
+define('_MD_BMSURVEY_LIST_TITLE', 'フォーム名');
+define('_GT_From_Option','差出人アドレス');
+define('_MD_FROM_OPTION','回答結果を送信する時の差出人アドレス（サーベイのアドレスはモジュール管理の一般設定で設定します）');
+define('_MD_FROM_OPTION_0','サーベイのアドレス');
+define('_MD_FROM_OPTION_1','登録ユーザのアドレス');
+define('_MD_FROM_OPTION_2',"アンケート中の'email'欄");
+define('_GT_Default_Response','回答の初期値');
+define('_MD_FROM_DEFRES',"入力初期値のレスポンスID（初期値不要の場合は空欄にします）");
+define('_MD_BMSURVEY_LIST_DATE', '登録日付');
+define('_MD_BMSURVEY_LIST_SUBTITLE', '備考');
+define('_MD_BMSURVEY_THANKS_ENTRY', 'フォームへの記入ありがとうございました。');
+define('_MD_BMSURVEY_CAN_WRITE_USER_ONLY', 'ゲストユーザはフォームを編集することはできません。');
+define('_MD_ASTERISK_REQUIRED', 'アスタリスク（<font color="#FF0000">＊</font>）付の項目は入力必須項目です。');
+define('_MD_MAIL_TITLE', '入力フォーム：');
+define('_MD_DENYRESULT','この投稿を無効にする');
+define('_MD_DENYRESULTSURE','この投稿を無効にします。よろしいですか？');
+define('_MD_DENYRESULTDONE','この投稿を無効にしました。');
+define('_MD_DEFAULTRESULT','この投稿を入力初期値にセットする');
+define('_MD_DEFAULTRESULTDONE','この投稿を入力初期値にセットしました。');
+define('_MD_RESPONDENT','投稿者名');
+define('_MD_QUESTION_OTHER','その他');
+define('_MD_BMSURVEY_FORMATERR', ' は正しく入力されていません');
+define('_MD_BMSURVEY_DIGITERR', ' は半角で数字を入力してください');
+define('_MD_BMSURVEY_MAXOVER', 'は、%u項目以上チェックできません');
+define('_MD_BMSURVEY_CHECKANY', '（複数選択可）');
+define('_MD_BMSURVEY_CHECKLIMIT', '（%uつまで選択可）');
+define('_MD_BMSURVEY_CHECKRESET', '選択解除');
+define('_MD_SUBMIT_SURVEY', '送信');
+define('_MD_NEXT_PAGE', '次ページ');
+
+define('_MD_POP_KEY_M','メンバー');
+define('_MD_POP_KEY_U','使い方');
+define('_MD_POP_KEY_Q','アンケート');
+define('_MD_POP_KEY_ERR','POP-Key Error');
+define('_MD_POP_CMD_NEW','新規登録');
+define('_MD_POP_CMD_INP','回答');
+define('_MD_POP_CMD_DEL','削除');
+define('_MD_POP_MNEW_ENTRY','ログイン名 %s でユーザ登録しました。');
+define('_MD_POP_MNEW_AREADY','そのログイン名は既に登録されています。別の名前で登録してください。');
+define('_MD_POP_QINP_HEADER','返信メールを作成し、[]または()の中に入力して送信下さい。
+1行に複数ある[]()はチェック項目です。[]は複数、()は1つだけ任意の1文字を入力ください。
+1行に1つだけの[]はテキスト入力項目です。文字列を入力下さい。
+----
+
+');
+define('_MD_POP_QINP_FAILEDLOGIN','ユーザ名か認証コードが違います。');
+define('_MD_POP_QINP_SUCCEEDED','%s さんの回答を登録しました。');
+define('_MD_POP_QINP_DELETEIT','このアンケートは既に回答済みです。このメールに返信すると消去できます。');
+define('_MD_POP_QDEL_SUCCEEDED','%s さんの回答を削除しました。');
+
+define('_AM_BMSURVEY_SEEARESULT','回答を見る');
+define('_AM_BMSURVEY_COPYQUESTION','サーベイから質問をコピー');
+define('_AM_BMSURVEY_SELECTSTATUS','状態を選択');
+define('_AM_BMSURVEY_RATECOUNT','カウント表示');
+define('_AM_BMSURVEY_NORESPONSE','無回答');
+define('_AM_BMSURVEY_TOTAL','合計');
+define('_AM_BMSURVEY_QUESTIONNUMBER','設問<BR>番号');
+define('_AM_BMSURVEY_FILEDNAME_DESC','<small><BR>※半角英数</small>');
+define('_AM_BMSURVEY_ARCHIVED','アーカイブ');
+define('_AM_BMSURVEY_TEST','テスト');
+define('_AM_BMSURVEY_EXPIRATION','終了');
+define('_AM_BMSURVEY_ACTIVE','アクティブ');
+define('_AM_BMSURVEY_EDIT','編集');
+
+//
+// From /locale/messages.po
+//
+define("_GT_Unable_to_open_include_file","設定ファイルが開けませんでした。INIファイルの設定を確認してください。中断します。");
+define("_GT_Service_Unavailable","サービスを利用できません");
+define("_GT_Your_progress_has_been_saved","あなたの入力中のデータを保存しました。 あなたはいつでも、戻って、この調査を終了できます。そうするには、以下のリンクをブックマークに追加してください。また、再開するにはログインする必要があります。");
+define("_GT_Resume_survey","サーベイの再開");
+define("_GT_Invalid_argument","不正な引数です");
+define("_GT_Error_opening_survey","サーベイが開けませんでした");
+define("_GT_Error_opening_surveys","1個以上のサーベイが開けませんでした");
+define("_GT_No_responses_found","No responses found.");
+define("_GT_TOTAL","合計");
+define("_GT_No_questions_found","設問が1つもありません");
+define("_GT_Page_d_of_d","ページ %d / %d");
+define("_GT_Yes","はい");
+define("_GT_No","いいえ");
+define("_GT_1","1");
+define("_GT_2","2");
+define("_GT_3","3");
+define("_GT_4","4");
+define("_GT_5","5");
+define("_GT_N/A","N/A");
+define("_GT_Page","ページ");
+define("_GT_of","の");
+define("_GT_Error_system_table_corrupt","不正なシステムテーブルです");
+define("_GT_Table","テーブル");
+define("_GT_Report_for","レポート");
+define("_GT_ID","ID");
+define("_GT_Num","#");
+define("_GT_Req_d","必須");
+define("_GT_Public","パブリック");
+define("_GT_Content","コンテンツ");
+define("_GT_Previous","前へ");
+define("_GT_Next","次へ");
+define("_GT_Navigate_Individual_Respondent_Submissions","調査結果の一件別表示");
+define("_GT_Error_cross_analyzing_Question_not_valid_type","質問は有効な形ではありません");
+define("_GT_Cross_analysis_on_QID","クロス分析 QID:");
+define("_GT_Sorry_please_fill_out_the_name","実行前に名前、グループ、タイトルの項目を埋めてください。");
+define("_GT_Sorry_name_already_in_use","すでにその名前は使われています。他の名前を使ってください。");
+define("_GT_Sorry_that_name_is_already_in_use.","すでにその名前は使われています。");
+define("_GT_Warning_error_encountered","エラーが発生しました。");
+define("_GT_Please_enter_text_for_this_question","この設問事項に対する説明を入力してください");
+define("_GT_Sorry_you_must_select_a_type_for_this_question","この設問事項に対する方を選択しなければなりません。");
+define("_GT_New_Field","新しいフィールド");
+define("_GT_Sorry_you_cannot_change_between_those_types_of_question","ご指定のサーベイタイプには変更できません。新しい設問を作成してください。");
+define("_GT_Sorry_you_need_at_least_one_answer_option_for_this_question_type","すみません、あなたは少なくとも1つの答えオプションをこの質問タイプに必要とします。");
+define("_GT_Error_cross_tabulating","クロスタブ・エラーです。");
+define("_GT_Error_same_question","行と列の選択に同じ質問を選択していないか確認してください。");
+define("_GT_Error_column_and_row","行と列の両方を選択しているか確認してください。");
+define("_GT_Error_analyse_and_tabulate","解析とクロスタブを同時に実行することは出来ません。");
+define("_GT_Error_processing_survey_Security_violation","エラー：セキュリティ違反");
+define("_GT_Unable_to_execute_query_for_access","アクセス用のクエリを実行できません。");
+define("_GT_Unable_to_execute_query_respondents","回答者用のクエリを実行できません。");
+define("_GT_Unauthorized","未認証");
+define("_GT_Incorrect_User_ID_or_Password","ユーザーIDとパスワードが間違っていまるか、アカウントが使用不可か期限切れになっています");
+define("_GT_Your_account_has_been_disabled","あなたのアカウントが無効にされたか、またはあなたは既にこの調査を終了しました。");
+define("_GT_Unable_to_load_ACL","ACLをロードすることができません");
+define("_GT_Management_Interface","管理画面");
+define("_GT_This_account_does_not_have_permission","このアカウントは許可されていません");
+define("_GT_Go_back_to_Management_Interface","管理画面に戻る");
+define("_GT_Submit","送信");
+define("_GT_Rank","ランク");
+define("_GT_Response","レスポンス");
+define("_GT_Average_rank","平均ランク");
+define("_GT_You_are_missing_the_following_required_questions","以下の項目が記入されていません。");
+define("_GT_Survey_Design_Completed","サーベイデザイン完成");
+define("_GT_You_have_completed_this_survey_design","サーベイデザインが完成しました");
+define("_GT_To_insert_this_survey_into_your_web_page","このサーベイをPHPソースに挿入するには、下のテキストをコピーし貼り付けてください。");
+define("_GT_Once_activated_you_can_also_access_the_survey_directly_from_the_following_URL","一度アクティブにした後は、以下のURLからサーベイに直接アクセスできます。");
+define("_GT_You_must_activate_this_survey","サーベイを使用するにはステータスを「アクティブ」にする必要があります。ステータスの変更は“サーベイの状態を変更する”ページより行って下さい。「アクティブ」にした後は一切の変更が不可能になります。");
+define("_GT_The_information_on_this_tab_applies_to_the_whole_survey","このタブで設定した情報はサーベイ全体に反映されます。このタブを設定した後、各タブで個々設定を行ってください。");
+define("_GT_Name","名前");
+define("_GT_Required","必須項目");
+define("_GT_Survey_filename","ファイルネーム");
+define("_GT_This_is_used_for_all_further_access_to_this_survey","このサーベイのファイルネーム。");
+define("_GT_no_spaces","スペース使用不可");
+define("_GT_alpha_numeric_only","英数字のみ");
+define("_GT_Owner","オーナー");
+define("_GT_User_and_Group_that_owns_this_survey","このサーベイを所有するユーザーとグループ");
+define("_GT_Title","タイトル");
+define("_GT_Title_of_this_survey","サーベイのタイトル");
+define("_GT_This_appears_at","サーベイページのトップに常に表示されます");
+define("_GT_free_form_including_spaces","空白を含む文字列可");
+define("_GT_Subtitle","サブタイトル");
+define("_GT_Subtitle_of_this_survey","サーベイのサブタイトル");
+define("_GT_Appears_below_the_title","タイトルの下に表示されます");
+define("_GT_Additional_Info","付加情報");
+define("_GT_Text_to_be_displayed_on_this_survey_before_any_fields","入力項目の前に表示される文章（説明文章等ＨＴＭＬ可）");
+define("_GT_Confirmation_Page","確認ページ");
+define("_GT_URL","(URL)");
+define("_GT_The_URL_to_which_a_user_is_redirected_after_completing_this_survey","このサーベイを完了した後にリダイレクトさせるＵＲＬを設定");
+define("_GT_OR","もしくは");
+define("_GT_heading_text","(ヘッダ文字列)");
+define("_GT_body_text","(本文)");
+define("_GT_Heading_in_bold","サーベイ完成後に表示される「確認」ページ用です。これは太字で表示されます。");
+define("_GT_URL_if_present","URLを記入した場合は、確認のテキスト文字の上に表示されます。");
+define("_GT_Email","電子メール");
+define("_GT_Sends_a_copy","回答結果を送信するメールアドレス（空欄の場合は送信無し）");
+define("_GT_Theme","テーマ");
+define("_GT_Select_a_theme","このサーベイで使用するテーマ（CSS）を選択してください");
+define("_GT_Options","オプション");
+define("_GT_Allow_to_save","回答者への保存・再開の許可(ログインが必要)");
+define("_GT_Allow_to_forward","回答者へサーベイ区切りを移動する許可");
+define("_GT_Change_the_order","リストの番号を変更することにより、質問の順番を並び替えることができます。");
+define("_GT_Section_Break","-----空きセクション-----");
+define("_GT_Remove","削除");
+define("_GT_Edit","編集");
+define("_GT_Add_Section_Break","空きセクションの追加");
+define("_GT_This_is_a_preview","サーベイのプレビューです。「次のページ」ボタンおよび「投稿する」ボタンは使用できません。サーベイの背景には、サーベイを挿入するページの背景が適用されます。変更のない場合はFinishタブより編集を終了し、管理画面に戻ってください。");
+define("_GT_Section","セクション");
+define("_GT_Previous_Page","前のページ");
+define("_GT_Save","保存");
+define("_GT_Next_Page","次のページ");
+define("_GT_Submit_Survey","投稿する");
+define("_GT_Edit_this_field","このフィールドを編集するか、編集したいフィールドの番号をクリックしてください：");
+define("_GT_Field","フィールド");
+define("_GT_Field_Name","フィールドネーム");
+define("_GT_Type","タイプ");
+define("_GT_Length","入力文字数");
+define("_GT_Precision","入力文字制限");
+define("_GT_Enter_the_possible_answers","選択項目の質問の場合は、回答を以下に用意します。最後の質問事項に空欄を作成するには %s を入れます。");
+define("_GT_Add_another_answer_line","回答項目の追加");
+define("_GT_Please_select_a_group","グループを選んでください");
+define("_GT_Private","プライベート");
+define("_GT_Survey_Access","サーベイアクセス");
+define("_GT_This_lets_you_control","フォームへのアクセスの設定を行えます。「パブリック」は誰でもアクセスが可能です。「プライベート」は設定したグループしかアクセスできません。");
+define("_GT_Note","ノート");
+define("_GT_You_must_use","プライベートサーベイでは %s を使用しなければなりません。");
+define("_GT_Group","グループ");
+define("_GT_Max_Responses","最大レスポンス");
+define("_GT_Save_Restore","保存／再開");
+define("_GT_Back_Forward","戻る／進む");
+define("_GT_Add","追加");
+define("_GT_Make_Public","パブリックに変更");
+define("_GT_Make_Private","プライベートに変更");
+define("_GT_to_access_this_group","このグループにアクセスする");
+define("_GT_Cannot_delete_account","アカウントを削除できません");
+define("_GT_Username_are_required.","ユーザーネーム、パスワード、およびグループが必要です");
+define("_GT_Error_adding_account","アカウント追加エラー");
+define("_GT_Cannot_change_account_data","アカウントデータを変更できません");
+define("_GT_Account_not_found","アカウントが見つかりませんでした");
+define("_GT_Designer_Account_Administration","デザイナーアカウント管理");
+define("_GT_Username","ユーザーネーム");
+define("_GT_Password","パスワード");
+define("_GT_First_Name","名");
+define("_GT_Last_Name","姓");
+define("_GT_Expiration","終了");
+define("_GT_year","年");
+define("_GT_month","月");
+define("_GT_day","日");
+define("_GT_Disabled","使用不可");
+define("_GT_Update","アップデート");
+define("_GT_Cancel","キャンセル");
+define("_GT_Delete","削除");
+define("_GT_Design_Surveys","デザインサーベイ");
+define("_GT_Change_Survey_Status","サーベイステータスを変更");
+define("_GT_Activate_End","活性化／終了");
+define("_GT_Export_Survey_Data","サーベイデータをエクスポート");
+define("_GT_Group_Editor","グループエディタ");
+define("_GT_may_edit","指定した場合、グループでの編集が可能になります。");
+define("_GT_Administer_Group_Members","グループメンバーを管理");
+define("_GT_Administer_Group_Respondents","グループ回答者を管理");
+define("_GT_Respondent_Account_Administration","回答者アカウントの管理");
+define("_GT_to_access_this_survey","このサーベイへのアクセス");
+define("_GT_Error_copying_survey","サーベイのコピーエラー");
+define("_GT_Copy_Survey","コピーサーベイ");
+define("_GT_Choose_a_survey","コピーを作りたいサーベイを選んでください。コピーしたサーベイは編集可能です。使用前には動作確認を行ってください。");
+define("_GT_Status","ステータス");
+define("_GT_Archived","アーカイブ");
+define("_GT_Ended","終了");
+define("_GT_Active","アクティブ");
+define("_GT_Testing","テスト");
+define("_GT_Editing","編集");
+define("_GT_You_are_attempting","解析とクロスタブ表示を一度に実行する事はできません。");
+define("_GT_Only_superusers_allowed","スーパーユーザーのみ利用可能です。");
+define("_GT_No_survey_specified","サーベイが指定されていません");
+define("_GT_Manage_Web_Form_Designer_Accounts","フォームデザイナーの管理");
+define("_GT_Click_on_a_username_to_edit","ユーザ名をクリックして編集するか、以下に新しいユーザー追加します。");
+define("_GT_disabled","使用不可");
+define("_GT_Add_a_new_Designer","新しいデザイナーを追加してください");
+define("_GT_Bulk_Upload_Designers","アカウントとグループ情報のアップロード");
+define("_GT_Invalid_survey_ID","無効のサーベイIDです");
+define("_GT_DBF_download_not_yet_implemented","DBFダウンロードは未開発です。");
+define("_GT_The_PHP_dBase_Extension_is_not_installed","dBase拡張はインストールされてません");
+define("_GT_Edit_a_Survey","サーベイ編集");
+define("_GT_Pick_Survey_to_Edit","編集したいサーベイを選択");
+define("_GT_Export_Data","エクスポートデータ");
+define("_GT_Format","フォーマット");
+define("_GT_CSV","CSV");
+define("_GT_download","ダウンロード");
+define("_GT_DBF","DBF");
+define("_GT_HTML","HTML");
+define("_GT_Testing_Survey","テストサーベイ…");
+define("_GT_SID","SID");
+define("_GT_Survey_exported_as","サーベイのエクスポート：");
+define("_GT_Error_exporting_survey_as:","サーベイのエクスポートに失敗しました。");
+define("_GT_to_access_this_form","このフォームへアクセスします。");
+define("_GT_Error_adding_group","グループの追加エラー");
+define("_GT_Error_deleting_group","グループの削除エラー");
+define("_GT_Group_is_not_empty","グループは空ではありません。");
+define("_GT_Manage_Groups","グループ管理");
+define("_GT_Description","説明");
+define("_GT_Members","メンバー");
+define("_GT_Users_guide_not_found","ユーザーズ・ガイドは見つかりませんでした");
+define("_GT_Log_back_in","ログ・バック");
+define("_GT_Superuser","スーパーユーザー");
+define("_GT_Choose_a_function","機能を選んでください");
+define("_GT_Create_a_New_Survey","新しいサーベイを作る");
+define("_GT_Edit_an_Existing_Survey","サーベイを編集する");
+define("_GT_Test_a_Survey","サーベイをテストする");
+define("_GT_Copy_an_Existing_Survey","既存のサーベイをコピーする");
+define("_GT_Change_the_Status_of_a_Survey","サーベイの状態を変更する");
+define("_GT_active_end_delete","(アクティブ/終了/アーカイブ)");
+define("_GT_Change_Access_To_a_Survey","サーベイのアクセス権を変更する");
+define("_GT_Limit_Respondents","回答者制限");
+define("_GT_View_Results_from_a_Survey","サーベイの結果を見る");
+define("_GT_Cross_Tabulate_Survey_Results","サーベイ結果のクロスタブ表示");
+define("_GT_View_a_Survey_Report","サーベイの内容をみる");
+define("_GT_Export_Data_to_CSV","CSVデータを見る");
+define("_GT_Change_Your_Password","あなたのパスワードを変更してください");
+define("_GT_Manage_Designer_Accounts","デザイナーアカウントの管理");
+define("_GT_Manage_Respondent_Accounts","回答者アカウントの管理");
+define("_GT_View_the_list_of_things_still_to_do","まだしていることのリストを見てください。");
+define("_GT_development_goals","（開発のゴール）");
+define("_GT_View_the_User_Administrator_Guide","ユーザー&管理者ガイドを見る");
+define("_GT_Log_out","ログアウト");
+define("_GT_SIDS","SIDS");
+define("_GT_Error!","エラー！");
+define("_GT_You_need_to_select_at_least_two_surveys!","最低2つのサーベイを選んでください！");
+define("_GT_Merge_Survey_Results","サーベイ結果のマージ");
+define("_GT_Pick_Surveys_to_Merge","マージするために、サーベイを選んでください");
+define("_GT_List_of_Surveys","サーベイのリスト");
+define("_GT_Surveys_to_Merge","マージするサーベイ");
+define("_GT_Change_Password","パスワードの変更");
+define("_GT_Your_password_has_been_successfully_changed","あなたのパスワードは変更されました");
+define("_GT_Password_not_set","パスワードはセットされません。今までのパスワードを確認下さい。");
+define("_GT_New_passwords_do_not_match_or_are_blank","新しいパスワードは正しくないか空白です。");
+define("_GT_Old_Password","ふるいのん");
+define("_GT_New_Password","あたらしいのん");
+define("_GT_Confirm_New_Password","もっかい");
+define("_GT_Purge_Surveys","サーベイの消去");
+define("_GT_This_page_is_not_directly","このページは危険なのでメインメニューから直接呼び出すことは出来ません。ここで消去した場合、調査結果を含めデータベースから完全に消去されます。確信の無い場合はこの画面では何も操作しないでください。消去ボタンを押した場合、再確認無く実行され復旧の手段はありません。");
+define("_GT_Qs","# 質問の");
+define("_GT_Clear_Checkboxes","チェックボックスをクリア");
+define("_GT_README_not_found","READMEが見つかりません");
+define("_GT_Go_back_to_Report_Menu","リポートメニューに戻って下さい");
+define("_GT_View_Form_Report","サーベイの内容を見る");
+define("_GT_Pick_Form_to_View","内容を見たいサーベイを選択");
+define("_GT_Add_a_new_Respondent","新しい回答者を追加してください");
+define("_GT_Bulk_Upload_Respondents","新しい回答者を追加してください");
+define("_GT_Cross_Tabulation","クロスタブ");
+define("_GT_Test_Survey","テストサーベイ");
+define("_GT_Reset","リセット");
+define("_GT_Cross_Tabulate","クロス・タブ");
+define("_GT_View_Survey_Results","サーベイ結果を見る");
+define("_GT_Pick_Survey_to_View","結果を見たいサーベイを選択");
+define("_GT_Pick_Survey_to_Cross_Tabulate","クロスタブに表示するサーベイを選択");
+define("_GT_Respondent","回答者");
+define("_GT_Resp","レスポンス");
+define("_GT_Can_not_set_survey_status","サーベイステータスを設定できません。");
+define("_GT_Survey_Status","サーベイステータス");
+define("_GT_Test_transitions","<b>「テスト」</b>…テストモードです。サーベイのテストや結果の表示が可能です。テストモード時はサーベイを編集することができません。");
+define("_GT_Activate_transitions","<b>「アクティブ」</b>…アクティブモードです。このモード実行中はサーベイが実際に稼動しています。テストモード時のサーベイ結果は反映されません。アクティブモード実行後、サーベイの編集は一切できません。");
+define("_GT_End_transitions","<b>「終了」</b>…稼動中のサーベイを終了します。このモード実行後はサーベイを取ることができません。結果は管理メニューから表示可能です。");
+define("_GT_Archive_removes","<b>「アーカイブ」</b>…サーベイを削除します。データはデータベースに残りますが、以後一切の操作が不可能になります。また、アーカイブされたサーベイの結果は見ることができません。");
+define("_GT_Test","テスト");
+define("_GT_Activate","アクティブ");
+define("_GT_End","終了");
+define("_GT_Archive","アーカイブ");
+define("_GT_No_tabs_defined_Please_check_your_INI_settings","無効なタブ。INI設定をチェックしてください");
+define("_GT_Help","ヘルプ");
+define("_GT_General","総合");
+define("_GT_Questions","質問");
+define("_GT_Order","オーダー");
+define("_GT_Preview","プレビュー");
+define("_GT_Finish","終了");
+define("_GT_Click_cancel_to_cancel","このサーベイをキャンセルする場合は「Cancel」をクリックしてください。隣のタブに進む場合は「Continue」をクリックしてください。");
+define("_GT_The_survey_title_and_other","サーベイタイトルおよび他の一般情報のフィールドは、<b>「General」</b>タブにあります。 <b>「Questions」</b>タブより質問の追加、修正をすることができます。 <b>「Oeder」</b>タブからは質問の編集、削除を行えます。<b>「Preview」</b>タブは作成したサーベイのプレビューを行えます。変更のない場合は<b>「Finish」</b>タブより編集を終了し、管理画面に戻ってください。");
+define("_GT_Click_here_to_open_the_Help_window","ヘルプウィンドウを開く");
+define("_GT_View_Results","結果を見る");
+define("_GT_Pick_Survey_to_Test","テストするサーベイを選択");
+define("_GT_Export","エクスポート");
+define("_GT_Results","結果");
+define("_GT_Todo_list_not_found","Todoリストは見つかりませんでした");
+define("_GT_An_error_Rows_that_failed_are_listed_below","以下リストのアップロードエラーです。");
+define("_GT_An_error_Please_check_the_format_of_your_text_file","アップロード中にエラーが発生しました。テキストファイルのフォーマットを確認してください。");
+define("_GT_An_error_Please_complete_all_form_fields","アップロード中にエラーが発生しました。全てのフォームフィールドに記入ください。");
+define("_GT_Upload_Account_Information","アカウント情報をアップロードしました。");
+define("_GT_All_fields_are_required","マークの質問は必須項目です。");
+define("_GT_File_Type","ファイルタイプ");
+define("_GT_Tab_Delimited","タブ区切り");
+define("_GT_File_to_upload","アップロードファイル");
+define("_GT_Thank_You_For_Completing_This_Survey","ご記入ありがとうございました。");
+define("_GT_Please_do_not_use_the_back_button","ブラウザの戻るボタンを押さないで下さい");
+define("_GT_Unable_to_find_the_phpESP_%s_directory_\t\t\tPlease_check_%s_to_ensure_that_all_paths_are_set_correctly","");
+define("_GT_Gettext_Test_Failed","GetTextのエラーです");
+define("_GT_Error_processing_survey:_Survey_not_specified","エラー：サーベイが選択されていません");
+define("_GT_Error_processing_survey:_Survey_is_not_active","エラー：サーベイはアクティブではありません");
+define("_GT_Sorry_the_account_request_form_is_disabled","アカウント処理は現在禁止されています。");
+define("_GT_Please_complete_all_required_fields","全ての必須入力の項目に回答下さい。");
+define("_GT_Passwords_do_not_match","パスワードが違います");
+define("_GT_Request_failed,_please_choose_a_different_username","リクエスト失敗。違うユーザーを選択下さい。");
+define("_GT_Your_account_has_been_created","あなたのアカウントは作成されました。");
+define("_GT_Account_Request_Form","アカウント要求フォーム");
+define("_GT_Please_complete_the_following","以下の用紙に記入して、アカウントを要求してください。 %s でマークされた項目は必須です。");
+define("_GT_Email_Address","電子メールアドレス");
+define("_GT_Confirm_Password","パスワードの再確認");
+?>
