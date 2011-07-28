@@ -1,3 +1,4 @@
+
 <?php
 
 # $Id: survey_render.inc,v 1.1.1.1 2005/08/10 12:14:03 yoshis Exp $
@@ -68,7 +69,8 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 	$xoopsTpl->assign('survey',$survey);
 	$xoopsTpl->assign('message',$message);
 	if($num_sections>1) {
-		$xoopsTpl->assign('surveyPage',mb_('Page '.number_format($section+1).' of '.number_format($num_sections) ));
+		$xoopsTpl->assign('surveyPage',
+			printf(_GT_Page_d_of_d, number_format($section+1), number_format($num_sections)) );
 	}
 	if($has_required) {
     	$xoopsTpl->assign('has_required',_MD_ASTERISK_REQUIRED);
@@ -111,9 +113,9 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 		//echo "qid[".$qid."]tid[".$tid."]value[".$defval[$qname]."]<BR>";
 		switch($tid) {
 			case '1':	// Yes/No
-				$res['body'] = mkradio($qname,'Y',$defval)." ".mb_('Yes')
-					.mkradio($qname,'N',$defval)." ".mb_('No');
-				if ($xoopsModuleConfig['RESET_RB']) $res['body'] .= '&nbsp;<input type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$qname.'\')" />';
+				$res['body'] = "<label>".mkradio($qname,'Y',$defval)." "._GT_Yes."</label><label>"
+					.mkradio($qname,'N',$defval)." "._GT_No."</label>";//by makinosuke
+				if ($xoopsModuleConfig['RESET_RB']) $res['body'] .= '&nbsp;<input class="bms-bttn-uncheck" type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$qname.'\')" />';//by makinosuke
 				break;
 			case '2':	// single text line
 				$res['body'] = mktext($qname, $size, $prec,$defval);
@@ -123,7 +125,7 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 				break;
 			case '4':	// radio
 				while($choice = mysql_fetch_array($choices_result,MYSQL_ASSOC)) {
-					$res['body'] = $res['body'].mkradio($qname,$choice['id'])." ".$choice['content'];
+					$res['body'] = $res['body']."<label>".mkradio($qname,$choice['id'])." ".$choice['content']."</label>";//by makinosuke
 				}
 				$j=0;
 				while($other = mysql_fetch_array($others_result,MYSQL_ASSOC)) {
@@ -139,7 +141,7 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 					$res['body'] .= ">";
 					$j++;
 				}
-				if ($xoopsModuleConfig['RESET_RB']) $res['body'] .= '&nbsp;<input type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$qname.'\')" />';
+				if ($xoopsModuleConfig['RESET_RB']) $res['body'] .= '&nbsp;<input class="bms-bttn-uncheck" type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$qname.'\')" />';//by makinosuke
 				break;
 			case '5':	// check boxes
 				if ( $prec==0 ) $res['content'] .= _MD_BMSURVEY_CHECKANY; else  $res['content'] .= sprintf(_MD_BMSURVEY_CHECKLIMIT,$prec);
@@ -150,7 +152,7 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 				while($choice = mysql_fetch_array($choices_result,MYSQL_ASSOC)) {	
 					if ( ($num_alt>0) && ($num==$num_alt) ){
 					}
-					$res['body'] = $res['body'].mkcheckbox($qname,$choice['id'])." ".$choice['content'];
+					$res['body'] = $res['body']."<label>".mkcheckbox($qname,$choice['id'])." ".$choice['content']."</label>";//by makinosuke
 					$num++;
 				}
 				$j=0;
@@ -179,12 +181,12 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 				break;
 			case '7':	// rating
 				$res['body'] = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,1)." ".mb_('1').'</td>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,2)." ".mb_('2').'</td>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,3)." ".mb_('3').'</td>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,4)." ".mb_('4').'</td>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,5)." ".mb_('5').'</td>';
-				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,'N/A')." ".mb_('N/A').'</td></tr></table>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,1)." "._GT_1.'</td>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,2)." "._GT_2.'</td>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,3)." "._GT_3.'</td>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,4)." "._GT_4.'</td>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,5)." "._GT_5.'</td>';
+				$res['body'] = $res['body'].'<td width="60">'.mkradio($qname,'N/A')." "._GT_N/A.'</td></tr></table>';
 				break;
 			case '8':	// ranking
 				$patterns = "/\[TH](.*)\[\/TH\]/sU";
@@ -204,7 +206,7 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 				}
 				if ($prec) {
 					$res['body'] = $res['body'].
-						'<td width="20%" align="center" bgcolor="'.$bg.'">'.mb_('N/A').'</td>';
+						'<td width="20%" align="center" bgcolor="'.$bg.'">'._GT_N/A.'</td>';
 				}
 				$res['body'] = $res['body'].'</tr>';
 				while($choice = mysql_fetch_array($choices_result,MYSQL_ASSOC)) {
@@ -213,7 +215,7 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 					
 					$res['body'] .= '<tr><td width="20%" align="right">'.$choice['content'];
 					if ($xoopsModuleConfig['RESET_RB'])
-						$res['body'] .= '&nbsp;<input type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$str.'\')" />';
+						$res['body'] .= '&nbsp;<input type="button" name="Button" value="' . _MD_BMSURVEY_CHECKRESET . '" onclick="uncheckRadio(\''.$str.'\')" />';//by makinosuke
 					$res['body'] .= '</td>';
 					$bg = '#eeeeee';
 					for ($j = 0; $j < $size; $j++) {
@@ -250,8 +252,8 @@ function survey_render_smarty($sid, $section = 1, $message = '') {
 	}
 	// end of questions
 	if($num_sections>1) {
-		$res['body'] = $res['body'].'<font size="-1" class="surveyPage">'.mb_('Page')
-			.number_format($section+1).mb_('of').number_format($num_sections);
+		$res['body'] = $res['body'].'<font size="-1" class="surveyPage">'._GT_Page
+			.number_format($section+1)._GT_of.number_format($num_sections);
 	}
 	return $formbody;
 }
@@ -304,20 +306,20 @@ function survey_render($sid, $section = 1, $message = '') {
 <?php echo($survey["title"]); ?>
 <?php echo("&nbsp;&nbsp;".$survey["subtitle"]); ?>
 <?php if($num_sections>1) { ?>
-	<font size="-1" class="surveyPage"><?php printf(mb_('Page %d of %d'), $section+1, $num_sections); ?></font>
+	<font size="-1" class="surveyPage"><?php printf(_GT_Page_d_of_d, $section+1, $num_sections); ?></font>
 <?php } ?>
 </th></tr>
 <?php 
 	if ($survey["info"] || $message){
 		echo ('<tr><td colspan="3">');
-		mb_echo($survey["info"]."&nbsp;".$message);
+		echo($survey["info"]."&nbsp;".$message);
 		echo ('</td></tr>');
 	}
 ?>
 <tr><td class="footer" colspan="3">
 <?php
 	if($has_required) {
-    	mb_echo(_MD_ASTERISK_REQUIRED);
+    	echo(_MD_ASTERISK_REQUIRED);
 	}
 ?>
 </td></tr>
@@ -386,11 +388,11 @@ function survey_render($sid, $section = 1, $message = '') {
                         	<tbody>
                           	<tr>
                             		<td><?php echo(mkradio($qid,'Y')); ?></td>
-                            		<td><?php mb_echo('Yes'); ?></td>
+                            		<td><?php echo(_GT_Yes); ?></td>
                           	</tr>
                           	<tr>
                             		<td><?php echo(mkradio($qid,'N')); ?></td>
-                            		<td><?php mb_echo('No'); ?></td>
+                            		<td><?php echo(_GT_No); ?></td>
                           	</tr>
                         	</tbody>
                       		</table>
@@ -505,12 +507,12 @@ function survey_render($sid, $section = 1, $message = '') {
 					<table border="0" cellspacing="0" cellpadding="0">
 					<tbody>
 						<tr>
-							<td width="60"><?php echo(mkradio($qid,1)); ?> <?php mb_echo('1'); ?></td>
-							<td width="60"><?php echo(mkradio($qid,2)); ?> <?php mb_echo('2'); ?></td>
-							<td width="60"><?php echo(mkradio($qid,3)); ?> <?php mb_echo('3'); ?></td>
-							<td width="60"><?php echo(mkradio($qid,4)); ?> <?php mb_echo('4'); ?></td>
-							<td width="60"><?php echo(mkradio($qid,5)); ?> <?php mb_echo('5'); ?></td>
-							<td width="60"><?php echo(mkradio($qid,'N/A')); ?> <?php mb_echo('N/A'); ?></td>
+							<td width="60"><?php echo(mkradio($qid,1)); ?> <?php echo(_GT_1); ?></td>
+							<td width="60"><?php echo(mkradio($qid,2)); ?> <?php echo(_GT_2); ?></td>
+							<td width="60"><?php echo(mkradio($qid,3)); ?> <?php echo(_GT_3); ?></td>
+							<td width="60"><?php echo(mkradio($qid,4)); ?> <?php echo(_GT_4); ?></td>
+							<td width="60"><?php echo(mkradio($qid,5)); ?> <?php echo(_GT_5); ?></td>
+							<td width="60"><?php echo(mkradio($qid,'N/A')); ?> <?php echo(_GT_N/A); ?></td>
 						</tr>
 					</tbody>
 					</table>
@@ -533,7 +535,7 @@ function survey_render($sid, $section = 1, $message = '') {
 				}
 				if ($prec) {
 ?>
-							<td width="40" align="center" bgcolor="<?php echo($bg); ?>"><?php mb_echo('N/A'); ?></td>
+							<td width="40" align="center" bgcolor="<?php echo($bg); ?>"><?php echo(_GT_N/A); ?></td>
 <?php
 				}
 ?>
@@ -593,9 +595,9 @@ function survey_render($sid, $section = 1, $message = '') {
 </table>
 </div>
 <?php if($num_sections>1) { ?>
-	<font size="-1" class="surveyPage"><?php mb_echo('Page'); ?>
+	<font size="-1" class="surveyPage"><?php echo(_GT_Page); ?>
 	<?php echo($section+1); ?>
-	<?php mb_echo('of'); ?>
+	<?php echo(_GT_of); ?>
 	<?php echo($num_sections); ?></font><br>
 <?php } ?>
 <?php
@@ -655,6 +657,7 @@ function survey_render_email($sid, $section = 1, $message = '', $hide_question =
 	}
 */
 	$body = "";
+	//$i = $qnum = 1;
 	while($question = mysql_fetch_array($questions_result,MYSQL_ASSOC)) {
 		// process each question
 		$qnum = &$question['position'];
@@ -663,7 +666,7 @@ function survey_render_email($sid, $section = 1, $message = '', $hide_question =
 		$size = &$question['length'];
 		$prec = &$question['precise'];
 		if ($tid == 100) {
-			$body.= $question['content'];
+			$body.= "// " . $question['content'] . "\r\n";
 			continue;
 		}
 		++$i;
@@ -684,17 +687,17 @@ function survey_render_email($sid, $section = 1, $message = '', $hide_question =
 		else
 			$content = '';
 		//'Q'.  $qnum + 1 . ':' . $question['content'];	//$qid 
-		$body .= sprintf("Q%u:%s",$qnum + 1,$content);
+		$body .= sprintf("Q%u:%s",$qnum+1 ,$content);
 		switch($tid) {
 			case '1':	// Yes/No
 				$body.=" 1.()Yes";
 				$body.=" 2.()No";
 				break;
 			case '2':	// single text line
-				$body .= " []";//mktext($qid, $size, $prec);
+				$body .= sprintf(" []M%uL%u",$size,$prec);
 				break;
 			case '3':	// essay
-				$body .= " []";//mktextarea($qid, $prec, $size, 'VIRTUAL');
+				$body .= sprintf(" []R%uC%u",$size,$prec);
 				break;
 			case '4':	// radio
 				$j=1;
@@ -775,13 +778,10 @@ function survey_render_email($sid, $section = 1, $message = '', $hide_question =
 				}
 				break;
 			case '9':	// date
-				$body.= ' ['.date(_SHORTDATESTRING, time()).']';
+				$body .= sprintf(" [%s]M%uL%uN",date(_SHORTDATESTRING, time()),$size,$prec);
 				break;
 			case '10':	// numeric
-					$size++; // for sign
-					if($prec)
-						$size += 1 + $prec;
-					$body.=(mktext($qid, $size, $size));
+				$body .= sprintf(" []M%uL%uN",$size,$prec);
 				break;
 			case '40':	// Attache
 				//$body.=(mktext($qid, $size, $prec));

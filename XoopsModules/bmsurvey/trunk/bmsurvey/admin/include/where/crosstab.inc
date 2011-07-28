@@ -38,21 +38,21 @@
         if (empty($qid) && empty($cids)){
                 if (!empty($qidc) && !empty($qidr)){
                         if ($qidc == $qidr){
-                                $errmsg = mkerror(_('Error cross-tabulating.').
-                                ' '. mb_('Please ensure that your column and row selections are not of the same question.'));
+                                $errmsg = mkerror(_GT_Error_cross-tabulating.
+                                ' '. _GT_Error_same_question);
                         }
                         else {
                                 process($sid,$qidc,$qidr);
                         }
                 }
                 else if (!empty($qidc) || !empty($qidr)){
-                        $errmsg = mkerror(_('Error cross-tabulating.').
-                        ' '. mb_('Please ensure you make both a column and row selection.'));
+                        $errmsg = mkerror(_GT_Error_cross-tabulating.
+                        ' '. _GT_Error_column_and_row);
                 }
         }
         else {
-                $errmsg = mkerror(_('Error cross-tabulating.'). ' '.
-                mb_('You are attempting to cross analyze and tabulate at the same time. This is not possible!'));
+                $errmsg = mkerror(_GT_Error_cross_tabulating. ' '.
+                _GT_Error_analyse_and_tabulate);
         }
         if (!empty($errmsg)){
                 echo($errmsg);

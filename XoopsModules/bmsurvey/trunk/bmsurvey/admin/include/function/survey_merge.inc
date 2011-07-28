@@ -16,12 +16,12 @@ if(empty($GLOBALS['ESPCONFIG']['DEBUG_MERGE']))
 function survey_merge($sids, $precision = 1, $showTotals = 1) {
 	// sanity check arguments
 	if(!is_array($sids)) {
-		$errmsg = mb_('Invalid argument.') ." [ ${sids} ]";
+		$errmsg = _GT_Invalid_argument ." [ ${sids} ]";
 		return($errmsg);
 	}
 	$num = count($sids);
 	if($num < 1) {
-		$errmsg = mb_('Invalid argument.') .' [ '. join(',',$sids) .' ]';
+		$errmsg = _GT_Invalid_argument .' [ '. join(',',$sids) .' ]';
 		return($errmsg);
 	}
 
@@ -39,7 +39,7 @@ function survey_merge($sids, $precision = 1, $showTotals = 1) {
 	$sql = "SELECT * FROM ".TABLE_SURVEY." WHERE id=${sid}";
 	if($GLOBALS['ESPCONFIG']['DEBUG_MERGE']) echo("<!-- \$sql = ${sql} -->\n");
 	if(!($result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening survey.') ." [ ID:${sid} R:" . mysql_num_rows($result) ."] [ ".mysql_error()."]";
+		$errmsg = _GT_Error_opening_survey ." [ ID:${sid} R:" . mysql_num_rows($result) ."] [ ".mysql_error()."]";
 		return($errmsg);
 	}
 	$survey = mysql_fetch_array($result, MYSQL_ASSOC);
@@ -49,13 +49,13 @@ function survey_merge($sids, $precision = 1, $showTotals = 1) {
 	$sql = "SELECT R.id FROM ".TABLE_RESPONSE." R WHERE R.survey_id ${sidstr} AND R.complete='Y'";
 	if($GLOBALS['ESPCONFIG']['DEBUG_MERGE'])	echo("<!-- \$sql = ${sql} -->\n");
 	if(!($result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening surveys.') ." [ ID: ${sidstr} ] [ ".mysql_error()."]";
+		$errmsg = _GT_Error_opening_surveys ." [ ID: ${sidstr} ] [ ".mysql_error()."]";
 		return($errmsg);
 	}
 	$total = mysql_num_rows($result);
 	if($total < 1) {
-		$errmsg = mb_('Error opening surveys.') ." ".
-			_('No responses found.') ." [ ID: ${sidstr} ] [ ". mb_('TOTAL') .": ${total} ]";
+		$errmsg = _GT_Error_opening_surveys ." ".
+			_GT_No_responses_found ." [ ID: ${sidstr} ] [ ". _GT_TOTAL .": ${total} ]";
 		mysql_free_result($result);
 		return($errmsg);
 	}
@@ -74,7 +74,7 @@ function survey_merge($sids, $precision = 1, $showTotals = 1) {
 		if($GLOBALS['ESPCONFIG']['DEBUG_MERGE'])	echo("<!-- \$sql = ${sql} -->\n");
 		$questions[$i] = mysql_query($sql);
 		if(!$questions[$i]) {
-			$errmsg = mb_('Error opening surveys.') .' '. mb_('No questions found.') . " [ ID:${sid} ] [ ".mysql_error()."]";
+			$errmsg = _GT_Error_opening_surveys .' '. _GT_No_questions_found . " [ ID:${sid} ] [ ".mysql_error()."]";
 			return($errmsg);
 		}
 	}

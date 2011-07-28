@@ -24,7 +24,7 @@ function survey_auth($sid, $username, $password) {
 	// Default to _unauthorized_
 	$auth = false;
 	if (isset($GLOBALS['_GET']['auth_options']) || isset($GLOBALS['_POST']['auth_options'])) {
-		$GLOBALS['errmsg'] = mkerror(_('Error processing survey: Security violation.'));
+		$GLOBALS['errmsg'] = mkerror(_GT_Error_processing_survey_Security_violation);
 		return(FALSE);
 	}
    
@@ -39,7 +39,7 @@ function survey_auth($sid, $username, $password) {
 	// Execute the query and put results in $accres
 	$accres = mysql_query( $sql );
 	if(!$accres) {
-		$GLOBALS['errmsg'] = mkerror(_('Unable to execute query for access.'));
+		$GLOBALS['errmsg'] = mkerror(_GT_Unable_to_execute_access);
 		return(false);
 	}
 
@@ -84,8 +84,8 @@ function survey_auth($sid, $username, $password) {
 	// no matching authorization ... send a 401
 	if ( ! $auth ) {
 		header( "WWW-Authenticate: Basic realm=\"$realm\"" );
-		header( 'HTTP/1.0 401 '. mb_('Unauthorized'));
-		$GLOBALS['errmsg'] = mkerror(_('Incorrect User ID or Password, or your account has been disabled/expired.'));
+		header( 'HTTP/1.0 401 '. _GT_Unauthorized);
+		$GLOBALS['errmsg'] = mkerror(_GT_Incorrect_User_ID_or_Password);
 		return(false);
 	}
 
@@ -102,8 +102,8 @@ function survey_auth($sid, $username, $password) {
 	}
 	if( !$auth ) {
 		header( "WWW-Authenticate: Basic realm=\"$realm\"" );
-		header( 'HTTP/1.0 401 '. mb_('Unauthorized'));
-		$GLOBALS['errmsg'] = mkerror(_('Your account has been disabled or you have already completed this survey.'));
+		header( 'HTTP/1.0 401 '. _GT_Unauthorized);
+		$GLOBALS['errmsg'] = mkerror(_GT_Your_account_has_been_disabled);
 		return(false);
 	}
 	return(true);
@@ -175,11 +175,11 @@ function manage_auth($username, $password) {
 		// Execute the query and put results in $accres
 		$accres = mysql_query( $sql );
 		if(!$accres) {
-			header( 'HTTP/1.0 503 '. mb_('Service Unavailable'));
-			echo('<html><head><title>'. mb_('Service Unavailable') .
+			header( 'HTTP/1.0 503 '. _GT_Service_Unavailable);
+			echo('<html><head><title>'. _GT_Service_Unavailable .
 				'</title></head><body><h1>HTTP 503 '.
-				_('Service Unavailable') .'</h1>'.
-				mkerror(_('Unable to load ACL.') .' ('. mysql_error() .')') .
+				_GT_Service_Unavailable .'</h1>'.
+				mkerror(_GT_Unable_to_load_ACL .' ('. mysql_error() .')') .
 				'</body></html>');
 			return(false);
 		}
@@ -219,11 +219,11 @@ function manage_auth($username, $password) {
 
 	// no matching authorization ... send a 401
 	if ( ! $auth ) {
-		header( 'WWW-Authenticate: Basic realm="'. mb_('Management Interface') .'"' );
-		header( 'HTTP/1.0 401 '. mb_('Unauthorized'));
-		echo("<html>\n<head><title>401 ". mb_('Unauthorized') ."</title></head>\n".
-			"<body><h1>401 ". mb_('Unauthorized') ."</h1>\n".
-			mkerror(_('Incorrect User ID or Password, or your account has been disabled/expired.')) .
+		header( 'WWW-Authenticate: Basic realm="'. _GT_Management_Interface .'"' );
+		header( 'HTTP/1.0 401 '. _GT_Unauthorized);
+		echo("<html>\n<head><title>401 ". _GT_Unauthorized ."</title></head>\n".
+			"<body><h1>401 ". _GT_Unauthorized ."</h1>\n".
+			mkerror(_GT_Incorrect_User_ID_or_Password) .
 			"</body>\n</html>\n");
 		exit;
 		return(false);
@@ -309,9 +309,9 @@ function auth_get_survey_realm($sid) {
    Returns true if user should be allowed to continue.
    Returns false (or exits) if access should be denied. */
 function auth_no_access($description) {
-	echo(mkerror(sprintf(_('This account does not have permission %s.'), $description)));
+	echo(mkerror(_GT_This_account_does_not_have_permission . " " . $description));
 	echo("\n<br>\n");
-	echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+	echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 	return false;
 }
 /* }}} */

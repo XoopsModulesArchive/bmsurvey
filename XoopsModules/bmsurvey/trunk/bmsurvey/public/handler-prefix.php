@@ -1,6 +1,6 @@
 <?php
 
-# $Id: handler-prefix.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+# $Id: handler-prefix.php,v0.8 2008/07/18 12:42:04 yoshis Exp $
 
 // Written by James Flemer
 // For eGrad2000.com
@@ -52,12 +52,12 @@
     $GLOBALS['errmsg'] = '';
 
     if(isset($_GET['sid'])) {
-        $GLOBALS['errmsg'] = "handler-prefix[54]".mkerror(_('Error processing survey: Security violation.'));
+        $GLOBALS['errmsg'] = "handler-prefix[54]".mkerror(_GT_Error_processing_survey_Security_violation);
         return;
     }
 
     if(isset($_GET['results']) || isset($_POST['results'])) {
-        $GLOBALS['errmsg'] = "handler-prefix[59]".mkerror(_('Error processing survey: Security violation.'));
+        $GLOBALS['errmsg'] = "handler-prefix[59]".mkerror(_GT_Error_processing_survey_Security_violation);
         return;
     }
 
@@ -67,7 +67,7 @@
         $sid = intval($_POST['sid']);
 
     if(!isset($sid) || empty($sid)) {
-        $GLOBALS['errmsg'] = "handler-prefix[69]".mkerror(mb_('Error processing survey: Survey not specified.'));
+        $GLOBALS['errmsg'] = "handler-prefix[69]".mkerror( _GT_Survey_not_specified );
         return;
     }
 
@@ -89,8 +89,8 @@
     }
 
     if(empty($_POST['referer']))
-        $_POST['referer'] = isset($_SERVER['HTTP_REFERER']) ?
-            $_SERVER['HTTP_REFERER'] : '';
+        $_POST['referer'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	$_POST['referer'] = htmlspecialchars ( $_POST['referer'] , ENT_QUOTES );
 
     if (empty($_POST['rid']))
         $_POST['rid'] = '';

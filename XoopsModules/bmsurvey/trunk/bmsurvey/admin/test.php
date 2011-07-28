@@ -136,7 +136,7 @@ function check_version()
     </li>
     <li>GNU Gettext test: <?php
         esp_setlocale('en_US');
-        check_string(_('%%%% Gettext Test Failed'), 'Passed'); ?></li>
+        check_string( _GT_Gettext_Test_Failed , 'Passed'); ?></li>
     <li>Catalog Open Test: <?php
         $ret = fopen($ESPCONFIG['locale_path'] . '/en_US/LC_MESSAGES/messages.mo', 'r');
         check_bool($ret !== false, true);

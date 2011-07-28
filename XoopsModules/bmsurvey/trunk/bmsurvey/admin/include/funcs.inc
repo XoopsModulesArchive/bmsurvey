@@ -33,7 +33,7 @@
         if(!file_exists($cfg['include_path'].'/where/'.$where.$cfg['extension']))
             $where = 'index';
         if(!file_exists($cfg['include_path'].'/where/'.$where.$cfg['extension'])) {
-            echo('<b>'. mb_('Unable to open include file. Check INI settings. Aborting.'). '</b>');
+            echo('<b>'. _GT_Unable_to_open_include_file. '</b>');
             exit;
         }
         return($cfg['include_path'].'/where/'.$where.$cfg['extension']);
@@ -78,11 +78,8 @@ to continue.</blockquote>
 ?>
 <blockquote class="thankbody">
 <?php echo
-_('Your progress has been saved.  You may return at any
-time to complete this survey.  To do so, simply bookmark
-the link below.  You may be prompted for your username
-and password to complete the survey.') ?></blockquote>
-<a class="returnlink" href="<?php echo $url; ?>"><?php echo mb_('Resume survey'); ?></a>
+_GT_Your_progress_has_been_saved ?></blockquote>
+<a class="returnlink" href="<?php echo $url; ?>"><?php echo _GT_Resume_survey ?></a>
 <?php
         return;
     }

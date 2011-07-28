@@ -79,6 +79,9 @@ if (preg_match("/^([0-9])/",$sid)){
 //
 // Get Respondent rec
 //
+if (isset($_GET['username'])) {
+	$wstr = "and username='".htmlspecialchars( $_GET['username'], ENT_QUOTES )."' ";
+}
 $sql = 'select username,email,survey_id from '.TABLE_RESPONDENT.' where disabled=2 '.$wstr.' order by survey_id asc';
 if(!$db_result = $xoopsDB->query($sql)){
 	return false;
@@ -111,7 +114,7 @@ while(list($uname, $mailto, $sid) = $xoopsDB->fetchRow($db_result)){
 //
 $admin = isset($_GET['admin']) ? $_GET['admin'] : 0;
 if ($admin)
-	redirect_header($SurveyCNF['admin'],3,$JUST_POPED);
+	redirect_header($SurveyCNF['admin'],3,"Survey sent.");
 
 /*
 ** Display form body. Call Render with Smarty
@@ -119,6 +122,7 @@ if ($admin)
 function cast_mail($username,$mailto,$sid,$title,$body,$ticket,$cast_from) {
 	global $xoopsConfig;
 
+	$subj = "Q,INP;".$title;
 	$xoopsMailer =& getMailer();
 	$xoopsMailer->useMail();
 	$xoopsMailer->setTemplateDir(XOOPS_ROOT_PATH."/modules/bmsurvey/language/".$xoopsConfig['language']."/mail_template/");
@@ -127,16 +131,18 @@ function cast_mail($username,$mailto,$sid,$title,$body,$ticket,$cast_from) {
 	$xoopsMailer->assign('USERNAME', $username);
 	$xoopsMailer->assign('SURVEYID', $sid);
 	$xoopsMailer->assign('TICKET', $ticket);
-	$xoopsMailer->assign('FORMBODY',$body);
+	$xoopsMailer->assign('FORMBODY',$subj . "\r\n" . $body);
 	$xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
 	$xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-	$xoopsMailer->assign("SITEURL", $xoopsConfig['xoops_url']."/");
+	$xoopsMailer->assign("SITEURL", XOOPS_URL);
 	$xoopsMailer->setFromEmail($cast_from);
 	$xoopsMailer->setFromName($xoopsConfig['sitename']);
-	$subj = "Q,INP;".$title;
 	if ( function_exists('mb_encode_mimeheader') )
 		$subj = mb_encode_mimeheader( $subj, bmsurveyUtils::get_mailcode(), "B" );
 	$xoopsMailer->setSubject($subj);
-	$xoopsMailer->send();
+	if (!$xoopsMailer->send()) {
+		echo $xoopsMailer->getErrors();
+		return false;
+	}
 }
 ?>

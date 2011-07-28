@@ -6,7 +6,6 @@
 // For eGrad2000.com
 // <jflemer@alum.rpi.edu>
 
-
     $bg = '';
 
 	/* load names and titles of all surveys available to
@@ -16,21 +15,29 @@
 		FROM '.TABLE_SURVEY.' s ORDER BY s.id DESC';
 		//FROM '.TABLE_SURVEY.' s WHERE s.status = 0 ORDER BY s.id DESC';
 	} else {
+		$realms = $xoopsModuleConfig['PSTATUS'] ? array_to_insql(
+			array_intersect(
+				$_SESSION['acl']['pall'],
+				array_merge(
+					$_SESSION['acl']['pall'],
+					$_SESSION['acl']['pdesign']))) : NULL;
 		$sql = "SELECT s.id, s.name, s.title, s.owner, s.realm FROM "
-			.TABLE_SURVEY." s WHERE s.owner =".$xoopsUser->uid()." ORDER BY s.id DESC";
+			.TABLE_SURVEY." s WHERE (s.owner ='".$xoopsUser->uid()."'";
+		$sql .= is_null($realms) ? "" : " || s.realm $realms";
+		$sql .= ") ORDER BY s.id DESC";
 	}
 	$result = mysql_query($sql);
 
 ?>
-<h2><?php mb_echo('Edit a Survey'); ?></h2>
-<?php mb_echo('Pick Survey to Edit'); ?>
+<h2><?php echo(_GT_Edit_a_Survey); ?></h2>
+<?php echo(_GT_Pick_Survey_to_Edit); ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
 	</tr>
 <?php
 	while(list($sid,$name,$title,$owner,$realm) = mysql_fetch_row($result)) {
@@ -53,4 +60,4 @@
 	mysql_free_result($result);
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

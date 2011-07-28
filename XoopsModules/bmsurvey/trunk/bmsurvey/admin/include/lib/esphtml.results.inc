@@ -53,7 +53,7 @@ function mkrespercent($counts,$total,$precision,$showTotals) {
 		else
 			$bg = $GLOBALS['ESPCONFIG']['bgalt_color2'];
 		echo "<tr bgcolor=".$bg.">";
-		echo "<td align='right'><b>".mb_('TOTAL');
+		echo "<td align='right'><b>"._GT_TOTAL;
 		echo "</b></td>";
 		echo "<td width=\"10%\" align='left'><b>(".$total;
 		printf(")&nbsp;%.${precision}f%%",$percent);
@@ -78,7 +78,7 @@ function mkrespercent($counts,$total,$precision,$showTotals) {
    Builds HTML showing RANK results. */
 function mkresrank($counts,$total,$precision,$showTotals) {
 	$bg='';
-	echo "<table border=\"0\"><tr><td align='left' colspan=4><b>".mb_('Rank')."</b></td><tr>";
+	echo "<table border=\"0\"><tr><td align='left' colspan=4><b>"._GT_Rank."</b></td><tr>";
 	arsort($counts);
 	$i=0; $pt=0;
 	while(list($content,$num) = each($counts)) {
@@ -107,7 +107,7 @@ function mkresrank($counts,$total,$precision,$showTotals) {
 			$bg = $GLOBALS['ESPCONFIG']['bgalt_color2'];
 ?>
 	<tr bgcolor="<?php echo($bg); ?>">
-		<td colspan=2 align='left'><b><?php mb_echo('TOTAL'); ?></b></td>
+		<td colspan=2 align='left'><b><?php echo(_GT_TOTAL); ?></b></td>
 		<td align='left'><b><?php printf("%.${precision}f%%",$pt); ?></b></td>
 		<td align='left'><b><?php echo($total); ?></b></td>
 	</tr>
@@ -146,7 +146,7 @@ function mkrescount($counts,$total,$precision,$showTotals) {
 			$bg = $GLOBALS['ESPCONFIG']['bgalt_color2'];
 ?>
 	<tr bgcolor="<?php echo($bg); ?>">
-		<td align='left'><b><?php mb_echo('TOTAL'); ?></b></td>
+		<td align='left'><b><?php echo(_GT_TOTAL); ?></b></td>
 		<td align='left'><b><?php echo($total); ?></b></td>
 		<td align='left'><b>(<?php if($i) printf("%.${precision}f",$i/$total*100.0); ?>%)</b></td>
 	</tr>
@@ -163,7 +163,7 @@ function mkreslist($counts,$total,$precision,$showTotals) {
 	$bg='';
 ?>
 <table width="90%" border="0" cellpadding="1">
-	<tr><th align='left'><?php mb_echo('#'); ?></th><th><?php mb_echo('Response'); ?></th></tr>
+	<tr><th align='left'><?php echo(_GT_Num); ?></th><th><?php echo(_GT_Response); ?></th></tr>
 <?php
 	while(list($text,$num) = each($counts)) {
 		if($bg != $GLOBALS['ESPCONFIG']['bgalt_color1'])
@@ -186,7 +186,7 @@ function mkresavg($counts,$total,$precision,$showTotals,$length) {
 	echo '<table border="0" cellspacing="0" cellpadding="0">';
 	echo "<tr><td align='left'></td>";
 	printf ("<td align='center' colspan='%u' >", $length+2 );
-	echo mb_('Average rank') . "</td></tr>";
+	echo _GT_Average_rank . "</td></tr>";
 	echo "<tr><td align='left'></td>";
 	for ($i = 0; $i < $length; ){
 		echo( "<td align='right' width='".$width."'>". ++$i ."</td>\n");

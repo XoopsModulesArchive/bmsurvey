@@ -49,7 +49,7 @@
   if ($signup_realm == null || empty($signup_realm))
     $signup_realm = $GLOBALS['ESPCONFIG']['signup_realm'];
   if ($signup_realm == null || empty($signup_realm)) {
-    echo mkerror(_('Sorry, the account request form is disabled.'));
+    echo mkerror(_GT_Sorry_the_account_request_form_is_disabled);
     return;
   }
   
@@ -58,7 +58,7 @@
     /* check for required fields */
     foreach ($rqd_fields as $f) {
       if (!isset($post[$f]) || empty($post[$f])) {
-        $msg = '<font color="red">'. mb_('Please complete all required fields.') . '</font>';
+        $msg = '<font color="red">'. _GT_Please_complete_all_required_fields . '</font>';
         break;
       }
     }
@@ -67,7 +67,7 @@
     
     /* make sure passwords match */
     if ($post['password'] != $post['password2']) {
-      $msg = '<font color="red">'. mb_('Passwords do not match.') . '</font>';
+      $msg = '<font color="red">'. _GT_Passwords_do_not_match . '</font>';
       break;
     }
     
@@ -95,14 +95,14 @@
     /* execute statement */
     $res = mysql_query($sql);
     if (!$res) {
-      $msg = '<font color="red">'. mb_('Request failed, please choose a different username.') .'</font>';
+      $msg = '<font color="red">'. _GT_Request_failed .'</font>';
       if ($GLOBALS['ESPCONFIG']['DEBUG'])
         $msg .= mkerror(mysql_errno() . ': ' . mysql_error());
       break;
     }
     
     $msg = '<font color="blue">'. 
-        sprintf(_('Your account, %s, has been created!'), htmlspecialchars($post['username'])) . '</font>';
+        sprintf( _GT_Your_account_has_been_created , htmlspecialchars($post['username'])) . '</font>';
 
     foreach ($fields as $f) {
       $post[$f] = null;
@@ -116,44 +116,43 @@
 <html>
 <head>
 <!-- $Id: signup.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $ -->
-<title><?php echo mb_('Account Request Form'); ?></title>
+<title><?php echo _GT_Account_Request_Form; ?></title>
 </head>
 <body>
 <?php } // !$embed ?>
 <form method="post">
-  <p><?php printf(
-_('Please complete the following form to request an account.
-Items marked with a %s are required.'), $rqd); ?></p>
+  <p><?php printf( 
+   _GT_Please_complete_the_following, $rqd); ?></p>
 <?php if (isset($msg) && !empty($msg)) echo "<p>$msg</p>\n"; ?>
   <table border="0"><tbody align="left">
   <tr>
     <td>&nbsp;</td>
-    <th><?php echo mb_('First Name'); ?>:</th>
+    <th><?php echo _GT_First_Name; ?>:</th>
     <td><?php echo mktext('fname', 16, 16); ?></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <th><?php echo mb_('Last Name'); ?>:</th>
+    <th><?php echo _GT_Last_Name; ?>:</th>
     <td><?php echo mktext('lname', 24, 24); ?></td>
   </tr>
   <tr>
     <td><?php echo $rqd; ?></td>
-    <th><?php echo mb_('Email Address'); ?>:</th>
+    <th><?php echo _GT_Email_Address; ?>:</th>
     <td><?php echo mktext('email', 30, 64); ?></td>
   </tr>
   <tr>
     <td><?php echo $rqd; ?></td>
-    <th><?php echo mb_('Username'); ?>:</th>
+    <th><?php echo _GT_Username; ?>:</th>
     <td><?php echo mktext('username', 16, 16); ?></td>
   </tr>
   <tr>
     <td><?php echo $rqd; ?></td>
-    <th><?php echo mb_('Password'); ?>:</th>
+    <th><?php echo _GT_Password; ?>:</th>
     <td><?php echo mkpass('password'); ?></td>
   </tr>
   <tr>
     <td><?php echo $rqd; ?></td>
-    <th><?php echo mb_('Confirm Password'); ?>:</th>
+    <th><?php echo _GT_Confirm_Password; ?>:</th>
     <td><?php echo mkpass('password2'); ?></td>
   </tr>
   <tr>

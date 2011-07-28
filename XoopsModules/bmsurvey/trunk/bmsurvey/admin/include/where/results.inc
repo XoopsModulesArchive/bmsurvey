@@ -25,10 +25,10 @@
 					!in_array($srealm, array_intersect(
 							$_SESSION['acl']['pdesign'],
 							$_SESSION['acl']['pall'])) &&
-					!auth_no_access(_('to access this survey'))) {
+					!auth_no_access(_GT_to_access_this_survey)) {
 				return;
 			}
-			echo("<p><b>". mb_('Testing Survey...') ."</b> (". mb_('SID') ." = $sid)</p>\n");
+			echo("<p><b>". _GT_Testing_Survey ."</b> (". _GT_SID ." = $sid)</p>\n");
 		} else {
 			/* check ACL to see if user is allowed to get results to
 			 * _this_ survey */
@@ -37,13 +37,13 @@
 					!in_array($srealm, array_intersect(
 							$_SESSION['acl']['pdata'],
 							$_SESSION['acl']['pall'])) &&
-					!auth_no_access(_('to access this survey'))) {
+					!auth_no_access(_GT_to_access_this_survey)) {
 				return;
 			}
 		}
 if (isset($_GET['type'])) {
 	if ($_GET['type'] == "cross") {
-		echo('<h2>'. mb_('Cross Tabulation') ."</h2>\n");
+		echo('<h2>'. _GT_Cross_Tabulation ."</h2>\n");
 	}
 }
 ?>
@@ -106,7 +106,7 @@ if (isset($_GET['type'])) {
 ?>
 <?php
 		if(!empty($_GET['test'])) {
-			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=test&sid=". $_GET['sid'] ."\">". mb_('Test Survey') ."</a><br>\n");
+			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=test&sid=". $_GET['sid'] ."\">". _GT_Test_Survey ."</a><br>\n");
 		}
 
 
@@ -114,14 +114,14 @@ if (isset($_GET['type'])) {
 ?>
 </td></tr>
 <tr><td align="center">
-<input type="reset" value="<?php echo mb_('Reset'); ?>" />
-<?php echo mksubmit('cross', mb_('Cross Tabulate')); ?>
+<input type="reset" value="<?php echo _GT_Reset; ?>" />
+<?php echo mksubmit('cross', _GT_Cross_Tabulate); ?>
 <br />
 <?php
         }
 ?>
 </td></tr></table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php
 		return;
 	}
@@ -150,32 +150,32 @@ if (isset($_GET['type'])) {
 
     if (empty($_GET['type'])) {
 ?>
-<h2><?php mb_echo('View Survey Results'); ?></h2>
-<?php mb_echo('Pick Survey to View'); ?>
+<h2><?php echo(_GT_View_Survey_Results); ?></h2>
+<?php echo(_GT_Pick_Survey_to_View); ?>
 
 <input type="hidden" name="rid" value="" />
 <input type="hidden" name="sid" value="" />
 <input type="hidden" name="where" value="results" />
 <?php
     } else {
-        echo('<h2>'. mb_('Cross Tabulation') ."</h2>\n");
-        mb_echo('Pick Survey to Cross Tabulate');
+        echo('<h2>'. _GT_Cross_Tabulation ."</h2>\n");
+        echo(_GT_Pick_Survey_to_Cross_Tabulate);
     }
 ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
 		<?php if (empty($_GET['type'])) { ?>
-			<th align="left"><?php mb_echo('Respondent'); ?></th>
+			<th align="left"><?php echo(_GT_Respondent); ?></th>
 		<?php }
 		      else { ?>
 			<th align="left"></th>
 		<?php }?>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo('Resp'); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Resp); ?></th>
 	</tr>
 <?php
     $count = 0;
@@ -245,4 +245,4 @@ if (isset($_GET['type'])) {
 	mysql_free_result($result);
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

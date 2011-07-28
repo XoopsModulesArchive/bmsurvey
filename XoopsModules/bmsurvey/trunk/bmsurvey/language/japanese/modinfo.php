@@ -26,7 +26,7 @@
 //  ------------------------------------------------------------------------ //
 // The name of this module
 define("_MI_SURVEY_NAME","ＢＭサーベイ");
-define("_MI_SURVEY_ADMIN","管理メニュー");
+define("_MI_SURVEY_ADMIN","管理画面");
 // A brief description of this module
 define("_MI_SURVEY_BNAME1","入力フォーム");
 define("_MI_SURVEY_DESC","Bluemoon.Multi-Survey");
@@ -59,6 +59,8 @@ define('_MI_MSURVEY_CASTKEY', '質問配信用認証コード');
 define('_MI_MSURVEY_CASTKEY_DESC', 'cast.php を実行するときのkey文字列を設定します');
 define('_MI_MSURVEY_MANAGEGROUP', '管理メニュー利用グループ');
 define('_MI_MSURVEY_MANAGEGROUP_DESC', '管理メニューを利用できるグループを設定します');
+define('_MI_MSURVEY_MGPSTATUS', '管理グループの権限');
+define('_MI_MSURVEY_MGPSTATUS_DESC', '管理グループによる編集・アクティベート・終了を許可します');
 define('_MI_MSURVEY_BLOCKLIST', 'ブロックリスト数');
 define('_MI_MSURVEY_BLOCKLIST_DESC', 'ブロック中に表示するアンケートの数を設定します');
 define('_MI_MSURVEY_ADDINFO', '回答に付加情報を付加');

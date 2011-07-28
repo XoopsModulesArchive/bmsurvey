@@ -44,7 +44,7 @@ function survey_results_navbar($sid, $curr_rid) {
 
 	$display_pos = 1;
 	if ($prev_rid != null)
-		array_push($linkarr, "<a href=\"$url&rid=$prev_rid\">".mb_('Previous').'</a>');
+		array_push($linkarr, "<a href=\"$url&rid=$prev_rid\">"._GT_Previous.'</a>');
 	for ($i = 0; $i < $curr_pos; $i++) {
 		array_push($linkarr, "<a href=\"$url&rid=".$rids[$i]."\">$display_pos</a>");
 		$display_pos++;
@@ -55,11 +55,11 @@ function survey_results_navbar($sid, $curr_rid) {
 		array_push($linkarr, "<a href=\"$url&rid=".$rids[$i]."\">$display_pos</a>");
 	}
 	if ($next_rid != null)
-		array_push($linkarr, "<a href=\"$url&rid=$next_rid\">".mb_('Next').'</a>');
+		array_push($linkarr, "<a href=\"$url&rid=$next_rid\">"._GT_Next.'</a>');
 
 	?>
 		<center>
-		<h2><?php echo mb_('Navigate Individual Respondent Submissions'); ?></h2>
+		<h2><?php echo _GT_Navigate_Individual_Respondent_Submissions ?></h2>
 		</center>
 		<br />
 		<?php echo implode(' | ', $linkarr); ?>
@@ -107,7 +107,7 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 	$sql = "SELECT id,has_choices,response_table FROM ".TABLE_QUESTION_TYPE." ORDER BY id";
 	if(!($result = mysql_query($sql))) {
         $errmsg = sprintf('%s [ %s: question_type ]',
-                mb_('Error system table corrupt.'), mb_('Table'));
+                _GT_Error_system_table_corrupt, _GT_Table);
 		return($errmsg);
 	}
 	while($row = mysql_fetch_row($result)) {
@@ -119,7 +119,7 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 	// load survey title (and other globals)
 	$sql = "SELECT * FROM ".TABLE_SURVEY." WHERE id='${sid}'";
 	if(!($result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening survey.') ." [ ID:${sid} R:" . mysql_num_rows($result) ."]";
+		$errmsg = _GT_Error_opening_survey ." [ ID:${sid} R:" . mysql_num_rows($result) ."]";
 		return($errmsg);
 	}
 	$survey = mysql_fetch_array($result, MYSQL_ASSOC);
@@ -128,7 +128,7 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 	// load survey questions
 	$sql = "SELECT * FROM ".TABLE_QUESTION." WHERE survey_id='${sid}' AND deleted='N' ORDER BY position,id";
 	if(!($questions_result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening survey.') .' '. mb_('No questions found.') ." [ ID:${sid} ]";
+		$errmsg = _GT_Error_opening_survey .' '. _GT_No_questions_found ." [ ID:${sid} ]";
 		return($errmsg);
 	}
 
@@ -140,7 +140,7 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 		$responseTable = TABLE_RESPONSE;
 		mysql_free_result($result);
 		if(!in_array($crossTable, array('response_single',TABLE_RESPONSE_BOOL,'response_multiple'))) {
-			$errmsg = mb_('Error cross-analyzing. Question not valid type.') .' [ '. mb_('Table') .": ${crossTable} ]";
+			$errmsg = _GT_Error_cross_analyzing_Question_not_valid_type .' [ '. _GT_Table .": ${crossTable} ]";
 			return($errmsg);
 		}
 	}
@@ -179,12 +179,12 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 				     ORDER BY R.id";
 	    }
 	    if(!($result = mysql_query($sql))) {
-		    $errmsg = mb_('Error opening survey.') ." [ ID:${sid} ] [ ".mysql_error()."]";
+		    $errmsg = _GT_Error_opening_survey ." [ ID:${sid} ] [ ".mysql_error()."]";
 		    return($errmsg);
 	    }
 	    $total = mysql_num_rows($result);
 	    if($total < 1) {
-		    $errmsg = mb_('Error opening survey.') .' '. mb_('No responses found.') ." [ ID:${sid} ]";
+		    $errmsg = _GT_Error_opening_survey .' '. _GT_No_responses_found ." [ ID:${sid} ]";
 			    return($errmsg);
             if ($GLOBALS['ESPCONFIG']['DEBUG'])
                 echo("<!-- \$errmsg = '$errmsg' -->\n");
@@ -214,7 +214,7 @@ function survey_results($sid, $precision = 1, $showTotals = 1, $qid = '', $cids 
 <?php
 	echo _MD_RESPONDENT." : ".$curr_uname;
 	if($cross) {
-		echo("<blockquote>" .mb_('Cross analysis on QID:') ." ${qid}</blockquote>\n");
+		echo("<blockquote>" ._GT_Cross_analysis_on_QID ." ${qid}</blockquote>\n");
 	}
 ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -289,14 +289,14 @@ $counts = array();
 switch ($table) {
 // -------------------------------- response_bool --------------------------------
 		case TABLE_RESPONSE_BOOL:
-            $counts = array(mb_('Yes') => 0, mb_('No') => 0);
+            $counts = array(_GT_Yes => 0, _GT_No => 0);
 			$sql = "SELECT A.choice_id, COUNT(A.response_id) FROM ${table} A 
 				WHERE A.question_id='${qid}' AND A.response_id ${ridstr} AND A.choice_id != '' GROUP BY A.choice_id";
 			if($GLOBALS['ESPCONFIG']['DEBUG_RESULTS'])	echo("<!-- \$sql = '$sql' -->\n");
 			if($result = mysql_query($sql)) {
 				while(list($ccontent,$count) = mysql_fetch_row($result)) {
-					if ($ccontent == 'Y') $ccontent = mb_('Yes');
-					else $ccontent = mb_('No');
+					if ($ccontent == 'Y') $ccontent = _GT_Yes;
+					else $ccontent = _GT_No;
 					$counts[$ccontent] = $count;
 				}
 //var_dump($counts);

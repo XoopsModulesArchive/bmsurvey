@@ -29,11 +29,11 @@
 		/* check acl */
 		if($xoopsUser->isAdmin() ||
 			in_array($r, $_SESSION['acl']['pgroup']) ||
-			auth_no_access(_('to access this group'))) {
+			auth_no_access(_GT_to_access_this_group) ) {
 			$sql = "DELETE FROM ".TABLE_DESIGNER." WHERE username='$u' AND realm='$r'";
 			if(!mysql_query($sql) || mysql_affected_rows() < 1) {
 				/* unsucessfull -- abort */
-				$errstr .= mkerror(_('Cannot delete account.') .' ('.
+				$errstr .= mkerror(_GT_Cannot_delete_account .' ('.
 					mysql_error() .')');
 			}
 		}
@@ -98,7 +98,7 @@
 		$result = mysql_query($sql);
 		if(!$result || mysql_num_rows($result) < 1) {
 			if(empty($u) || empty($r) || empty($password)) {
-				$errstr .= mkerror(_('Username, Password, and Group are required.'));
+				$errstr .= mkerror(_GT_Username_are_required);
 			} else {
 				$sql = "INSERT INTO ".TABLE_DESIGNER."
 					(username,realm,password)
@@ -106,7 +106,7 @@
 				if(!mysql_query($sql)) {
 					$u = '';
 					$r = '';
-					$errstr .= mkerror(_('Error adding account.') .' ('.
+					$errstr .= mkerror(_GT_Error_adding_account .' ('.
 						mysql_error() .')');
 				}
 			}
@@ -141,7 +141,7 @@
 			WHERE username='$u' AND realm='$r'";
 			if(!mysql_query($sql)) {
 				/* unsucessfull -- abort */
-				$errstr .= mkerror(_('Cannot change account data.') .' ('.
+				$errstr .= mkerror(_GT_Cannot_change_account_data .' ('.
 					mysql_error() .')');
 			}
 		}
@@ -188,19 +188,19 @@
 				$ex_day   = '';
 			}
 		} else {
-			$errstr .= mkerror(_('Account not found.') .' ('.
+			$errstr .= mkerror(_GT_Account_not_found .' ('.
 				mysql_error() .')');
 		}
 	}
 
 ?>
-<h2><?php mb_echo('Designer Account Administration'); ?></h2>
+<h2><?php echo(_GT_Designer_Account_Administration); ?></h2>
 <?php if(!empty($errstr)) echo("<p>$errstr</p>\n"); ?>
 <input type="hidden" name="where" value="admdesigner">
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>">
 	<tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Username') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Username ."</th>\n");
 	if(empty($u))
 		$u = mktext('u', 16, 16, $GLOBALS);
 	else
@@ -209,12 +209,12 @@
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Password') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Password ."</th>\n");
 	echo("<td bgcolor=\"$bg1\">". mkpass('password') ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Group') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Group ."</th>\n");
 	if(empty($r)) {
 		$r = '<select name="r"><option></option>';
 		$groups = array();
@@ -239,78 +239,78 @@
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('First Name') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_First_Name ."</th>\n");
 	echo("<td bgcolor=\"$bg1\">". mktext('fname', 16, 16, $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Last Name') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Last_Name ."</th>\n");
 	echo("<td bgcolor=\"$bg1\">". mktext('lname', 24, 24, $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Email') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Email ."</th>\n");
 	echo("<td bgcolor=\"$bg1\">". mktext('email', 24, 64, $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Expiration') ."</th>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Expiration ."</th>\n");
 	echo("<td bgcolor=\"$bg1\">".
 		mktext('ex_year',4,4, $GLOBALS) .' '.
 		mktext('ex_month',2,2, $GLOBALS) .' '.
 		mktext('ex_day',2,2, $GLOBALS) .' ('.
-			_('year') .' '.
-			_('month') .' '.
-			_('day'). ")</td>\n");
+			_GT_year .' '.
+			_GT_month .' '.
+			_GT_day. ")</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Disabled') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('disabled',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) ."</td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Disabled ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('disabled',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) ."</td>\n");
 ?>
 	</tr><!-- <tr>
 		<th colspan="2" bgcolor="<?php echo($bg2); ?>">
-			<input type="submit" name="submit" value="<?php mb_echo('Update'); ?>">&nbsp;
-			<input type="submit" name="cancel" value="<?php mb_echo('Cancel'); ?>">&nbsp;
-			<input type="submit" name="delete" value="<?php mb_echo('Delete'); ?>"></th>
+			<input type="submit" name="submit" value="<?php echo(_GT_Update); ?>">&nbsp;
+			<input type="submit" name="cancel" value="<?php echo(_GT_Cancel); ?>">&nbsp;
+			<input type="submit" name="delete" value="<?php echo(_GT_Delete); ?>"></th>
 	</tr>--><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Design Surveys') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('pdesign',array('Y' => mb_('Yes'), 'N' => mb_('No'), $GLOBALS) ."</td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Design_Surveys ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('pdesign',array('Y' => _GT_Yes, 'N' => _GT_No, $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Change Survey Status') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('pstatus',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) .
-		'<!-- ('. mb_('Activate/End') .") --></td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Change_Survey_Status ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('pstatus',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) .
+		'<!-- ('. _GT_Activate_End .") --></td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Export Survey Data') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('pdata',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) ."</td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Export_Survey_Data ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('pdata',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Group Editor') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('pall',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) .
-		'<!-- ('. mb_('may edit <b>all</b> forms owned by this group') .") --></td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Group_Editor ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('pall',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) .
+		'<!-- ('. _GT_may_edit .") --></td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Administer Group Members') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('pgroup',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) ."</td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Administer_Group_Members ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('pgroup',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 <?php
-	echo("<th bgcolor=\"$bg2\" align=\"right\">". mb_('Administer Group Respondents') ."</th>\n");
-	echo("<td bgcolor=\"$bg1\">". mkselect('puser',array('Y' => mb_('Yes'), 'N' => mb_('No')), $GLOBALS) ."</td>\n");
+	echo("<th bgcolor=\"$bg2\" align=\"right\">". _GT_Administer_Group_Respondents ."</th>\n");
+	echo("<td bgcolor=\"$bg1\">". mkselect('puser',array('Y' => _GT_Yes, 'N' => _GT_No), $GLOBALS) ."</td>\n");
 ?>
 	</tr><tr>
 		<th colspan="2" bgcolor="<?php echo($bg2); ?>">
-			<input type="submit" name="submit" value="<?php mb_echo('Update'); ?>">&nbsp;
-			<input type="submit" name="cancel" value="<?php mb_echo('Cancel'); ?>">&nbsp;
-			<input type="submit" name="delete" value="<?php mb_echo('Delete'); ?>">
+			<input type="submit" name="submit" value="<?php echo(_GT_Update); ?>">&nbsp;
+			<input type="submit" name="cancel" value="<?php echo(_GT_Cancel); ?>">&nbsp;
+			<input type="submit" name="delete" value="<?php echo(_GT_Delete); ?>">
 		</th>
 	</tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

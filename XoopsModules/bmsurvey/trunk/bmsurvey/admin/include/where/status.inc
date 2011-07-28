@@ -5,7 +5,26 @@
 // Written by James Flemer
 // For eGrad2000.com
 // <jflemer@alum.rpi.edu>
+// ----
+// For Xoops
+//   $owner = Suevey owner xoops user id
+//   $realm = Permitted xoops group id at survey edit
+//   $checkstatus = Check permission of status change by module admin
+function xoopsGroupStatus($owner,$realm,$checkstatus=0){
+	global $xoopsUser,$xoopsModuleConfig;
 
+	if ( $xoopsUser->isAdmin() || $owner == $xoopsUser->uid() ) return TRUE;
+    $groups = $xoopsUser->getGroups();
+    if (in_array($realm ,$groups)){
+    	if (!$checkstatus || ( $checkstatus && $xoopsModuleConfig['PSTATUS'])){
+			return TRUE;
+    	}
+    }
+	return FALSE;
+}
+//
+// Main proc start
+//
 	if(!empty($_GET['sid']))
 		$sid = intval($_GET['sid']);
 
@@ -32,24 +51,26 @@
 					break;
 				case 't':	// test
 					/* only the owner or a group editor+design */
-					if($owner == $xoopsUser->uid() ||
+					/*if($owner == $xoopsUser->uid() ||
 						in_array($realm, array_intersect(
 							$_SESSION['acl']['pall'],
 							$_SESSION['acl']['pdesign']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm);
 					$status = $old_status | STATUS_TEST;
 					if($old_status & ( STATUS_DELETED | STATUS_DONE | STATUS_ACTIVE ) )
 						$err = true;
 					break;
 				case 'm':	// Edit
 					/* only the owner or a group editor+design */
-					if($owner == $xoopsUser->uid() ||
+					/*if($owner == $xoopsUser->uid() ||
 						in_array($realm, array_intersect(
 							$_SESSION['acl']['pall'],
 							$_SESSION['acl']['pdesign']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm);
 					$status = $old_status & ~STATUS_TEST;
 					if($old_status & ( STATUS_DELETED | STATUS_DONE | STATUS_ACTIVE ) )
 						$err = true;
@@ -58,11 +79,12 @@
 					break;
 				case 'a':	// activate
 					/* only the owner+stauts or a group editor+status */
-					if(in_array($realm, $_SESSION['acl']['pstatus']) &&
+					/*if(in_array($realm, $_SESSION['acl']['pstatus']) &&
 						($owner == $xoopsUser->uid() ||
 						in_array($realm, $_SESSION['acl']['pall']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm,1);
 					$status = STATUS_ACTIVE;	//$old_status | STATUS_ACTIVE;
 					if($old_status & ( STATUS_DELETED | STATUS_DONE ) )
 						$err = true;
@@ -71,71 +93,73 @@
 					break;
 				case 'e':	// End
 					/* only the owner+stauts or a group editor+status */
-					if(in_array($realm, $_SESSION['acl']['pstatus']) &&
+					/*if(in_array($realm, $_SESSION['acl']['pstatus']) &&
 						($owner == $xoopsUser->uid() ||
 						in_array($realm, $_SESSION['acl']['pall']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm,1);
 					$status = $old_status | STATUS_DONE;
 					if($old_status & STATUS_DELETED )
 						$err = true;
 					break;
 				case 'd':	// Delete
 					/* only the owner+stauts or a group editor+status */
-					if(in_array($realm, $_SESSION['acl']['pstatus']) &&
+					/*if(in_array($realm, $_SESSION['acl']['pstatus']) &&
 						($owner == $xoopsUser->uid() ||
 						in_array($realm, $_SESSION['acl']['pall']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm,1);
 					$status = $old_status | STATUS_DELETED;
 					break;
 				case 'r':	// Re Activate
 					/* only the owner+stauts or a group editor+status */
-					if(in_array($realm, $_SESSION['acl']['pstatus']) &&
+					/*if(in_array($realm, $_SESSION['acl']['pstatus']) &&
 						($owner == $xoopsUser->uid() ||
 						in_array($realm, $_SESSION['acl']['pall']))) {
 						$access = true;
-					}
+					}*/
+					$access = xoopsGroupStatus($owner,$realm,1);
 					$status = STATUS_ACTIVE;	//$old_status | STATUS_ACTIVE;
 					if(!$old_status & ( STATUS_DELETED | STATUS_DONE ) )
 						$err = true;
-					echo $status.$err;
 					break;
 			}
 			/* superuser overrides all */
 			if($xoopsUser->isAdmin()) $access = true;
 			$sql = "UPDATE ".TABLE_SURVEY." SET status='${status}' WHERE id='${sid}'";
-			if($access || auth_no_access(_('to access this survey'))) {
+			if($access || auth_no_access(_GT_to_access_this_survey)) {
 				if(!$err) {
 					mysql_query($sql);
 				} else {
-					mkwarn(_('Can not set survey status.'));
-					mkerror(_('Status') .': '. $old_status);
+					mkwarn(_GT_Can_not_set_survey_status);
+					mkerror(_GT_Status .': '. $old_status);
 				}
 			}
 		}
 	}
 ?>
-<h2><?php mb_echo('Survey Status'); ?></h2>
+<h2><?php echo(_GT_Survey_Status); ?></h2>
 <div align="left">
 
 <ul>
-<li><?php mb_echo('<b>Test</b> transitions a survey into testing mode. At which point you may perform a live test by taking the survey, and viewing the results. You will not be able to make any further changes to the survey once you have switched to test mode.'); ?></li>
-<li><?php mb_echo('<b>Activate</b> transitions a survey into active mode. In this mode the survey is open for production use, and may be put online. This will clear any results from testing mode (if any). No further editing of survey is allowed.'); ?></li>
-<li><?php mb_echo('<b>End</b> transitions a survey into ended mode. In this mode, no edits are possible, no users may take the survey (it is inactive), but results are still viewable from the results menu.'); ?></li>
-<li><?php mb_echo('<b>Archive</b> removes this survey. It is still stored in the database, but no further interaction is allowed. You may <b>not</b> view the results of an archived survey.'); ?></li>
+<li><?php echo(_GT_Test_transitions); ?></li>
+<li><?php echo(_GT_Activate_transitions); ?></li>
+<li><?php echo(_GT_End_transitions); ?></li>
+<li><?php echo(_GT_Archive_removes); ?></li>
 </ul>
 </div>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>&nbsp;/&nbsp;\n"); ?>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=purge\">" . mb_('Purge Surveys') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>&nbsp;/&nbsp;\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=purge\">" . _GT_Purge_Surveys . "</a>\n"); ?>
 <table border="0" align="center" cellspacing="0" cellpadding="4" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo('Status'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Status); ?></th>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -154,9 +178,8 @@
 					$_SESSION['acl']['pall'],
 					$_SESSION['acl']['pdesign'])));
 		$sql = "SELECT id,name,title,status,owner,realm
-			FROM ".TABLE_SURVEY." WHERE (owner = ".
-			$xoopsUser->uid()." || realm $realms) ORDER BY id DESC";
-			//$xoopsUser->uid() ."' || realm $realms) ORDER BY id DESC";
+			FROM ".TABLE_SURVEY." WHERE (owner ='".
+			$xoopsUser->uid()."' || realm $realms) ORDER BY id DESC";
 	}
 	$result = mysql_query($sql);
 
@@ -167,26 +190,26 @@
 				$_SESSION['acl']['pstatus']));
 
 	while(list($sid,$name,$title,$status,$owner,$realm) = mysql_fetch_row($result)) {
-		$stat = mb_('Editing');
-		$test = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=t&sid=${sid}\">". mb_('Test') ."</a>";
-		$act  = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=a&sid=${sid}\">". mb_('Activate') ."</a>";
-		$done = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=e&sid=${sid}\">". mb_('End') ."</a>";
-		$del  = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=d&sid=${sid}\">". mb_('Archive') ."</a>";
+		$stat = _GT_Editing;
+		$test = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=t&sid=${sid}\">". _GT_Test ."</a>";
+		$act  = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=a&sid=${sid}\">". _GT_Activate ."</a>";
+		$done = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=e&sid=${sid}\">". _GT_End ."</a>";
+		$del  = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=d&sid=${sid}\">". _GT_Archive ."</a>";
 
 		if($status & STATUS_DELETED) {
-			$stat = mb_('Archived');
+			$stat = _GT_Archived;
 			$test = $act = $done = $del = '&nbsp;';
 			continue;
 		} elseif($status & STATUS_DONE) {
-			$stat = mb_('Ended');
+			$stat = _GT_Ended;
 			$test = $act = $done = '&nbsp;';
 		} elseif($status & STATUS_ACTIVE) {
-			$stat = mb_('Active');
+			$stat = _GT_Active;
 			$test = $act = '&nbsp;';
 		} elseif($status & STATUS_TEST) {
-			$stat = mb_('Testing');
+			$stat = _GT_Testing;
 			$done = '&nbsp;';
-			$test = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=m&sid=${sid}\">". mb_('Edit') ."</a>";
+			$test = "<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=m&sid=${sid}\">". _GT_Edit ."</a>";
 		} else {
 			$done = '&nbsp;';
 		}
@@ -221,4 +244,4 @@
 	}
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

@@ -35,7 +35,7 @@
 	<tr><td colspan="2"><hr></td></tr>
 	<tr>
 		<td valign=TOP colspan="2">
-			<?php printf(mb_('Enter the possible answers (if applicable). Enter %s on an line by itself to create a fill-in-the-blank answer at the end of this question. Any blank lines will be suppressed.'), '<tt>!other</tt>'); ?>
+			<?php printf( _GT_Enter_the_possible_answers, '<tt>!other</tt>'); ?>
 			<input type="hidden" name="num_choices" value="<?php echo($num_choices); ?>">
 		</td>
 	</tr>
@@ -64,7 +64,7 @@
 	<tr>
 		<td>&nbsp;</td>
 		<td>
-		<input type="submit" name="extra_choices" value="<?php mb_echo('Add another answer line'); ?>"> 
+		<input type="submit" name="extra_choices" value="<?php echo(_GT_Add_another_answer_line); ?>"> 
 		<input type="button" name="clear" value="Clear all answer lines" onClick="clearTextInputs()"> 
 		</td>
 	</tr>

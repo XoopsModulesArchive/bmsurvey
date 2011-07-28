@@ -1,9 +1,10 @@
 <?php
-// $Id: manage.php,v 1.1.1.1 2005/08/10 12:14:03 yoshis Exp $
+// $Id: manage.php,v 0.92 2008/08/18 17:49:03 yoshis Exp $
 //  ------------------------------------------------------------------------ //
 //                Bluemoon.Multi-Survey                                      //
 //                    Copyright (c) 2005 Yoshi.Sakai @ Bluemoon inc.         //
 //                       <http://www.bluemooninc.biz/>                       //
+//                    Based by phpESP v1.6.1 ( James Flemer )                //
 // ------------------------------------------------------------------------- //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -24,15 +25,23 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Original phpESP by James Flemer For eGrad2000.com <jflemer@alum.rpi.edu>
-require('../../../mainfile.php');
-include '../../../include/cp_header.php';
-if(!$xoopsUser || !is_object($xoopsUser)){
+require('../../mainfile.php');
+require_once XOOPS_ROOT_PATH.'/header.php';
+/*
+** Check Module Admin
+*/
+if (is_object($xoopsUser)) {
+    $groups = $xoopsUser->getGroups();
+    if (array_intersect($xoopsModuleConfig['MANAGERS'], $groups)==FALSE){
+		redirect_header(XOOPS_URL.'/modules/bmsurvey/',2,_MD_BMSURVEY_CAN_WRITE_USER_ONLY);
+		exit();
+    }
+} else {
 	redirect_header(XOOPS_URL.'/modules/bmsurvey/',2,_MD_BMSURVEY_CAN_WRITE_USER_ONLY);
 	exit();
 }
-include '../conf.php';
-include_once('../class/bmsurveyUtils.php');
+include './conf.php';
+include_once('./class/bmsurveyUtils.php');
 /*
 ** Get parameter as command.
 */
@@ -43,14 +52,7 @@ $sid = 0;
 if(isset($_POST['sid'])) $sid = intval($_POST['sid']);
 elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 
-
-	if ($where == 'test' && $sid) 
-		redirect_header(XOOPS_URL.'/modules/bmsurvey/manage.php' . );
-
-	if (!defined('ESP_BASE'))
-		define('ESP_BASE', dirname(dirname(__FILE__)) .'/');
-
- 	$CONFIG = ESP_BASE . '/admin/phpESP.ini.php';
+ 	$CONFIG = './admin/phpESP.ini.php';
 
 	$ESPCONFIG['csv_charset']  = bmsurveyUtils::getXoopsModuleConfig('CSV_CHARSET');
 
@@ -90,19 +92,12 @@ elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 		);
 		//$member_handler->getGroupsByUser( $xoopsUser->uid() )
 	}
-	$where = '';
-	if(isset($_POST['where']))
-		$where = $_POST['where'];
-	elseif(isset($_GET['where']))
-		$where = $_GET['where'];
 
 	if ($where == 'download') {
 		include(esp_where($where));
 		exit;
-	}else{
-		xoops_cp_header();
-		include 'adminmenu.php';
-		echo "<div style='float: left; width:100%;'>";
+	}elseif ($where == 'test' && $sid) {
+		$xoopsOption['template_main'] = 'bmsurvey_survey.html';
 	}
 	if($ESPCONFIG['DEBUG']) {
 		include($ESPCONFIG['include_path']."/debug".$ESPCONFIG['extension']);
@@ -119,9 +114,8 @@ elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 	// This is the body admin
 	//echo "manage include:".esp_where($where);
 	include(esp_where($where));
-	//echo $_SESSION['survey_id'];
 	if(file_exists($ESPCONFIG['include_path']."/foot".$ESPCONFIG['extension']))
 		include($ESPCONFIG['include_path']."/foot".$ESPCONFIG['extension']);
 	
-	xoops_cp_footer();
+	include(XOOPS_ROOT_PATH.'/footer.php');
 ?>

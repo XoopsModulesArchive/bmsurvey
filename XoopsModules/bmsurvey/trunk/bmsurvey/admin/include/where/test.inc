@@ -30,7 +30,7 @@
 		if($_SESSION['acl']['superuser'] != 'Y' &&
 				$owner != $xoopsUser->uid() &&
 				!in_array($realm, $realms) &&
-				!auth_no_access(_('to access this survey'))) {
+				!auth_no_access(_GT_to_access_this_survey)) {
 			return;
 		}
 		if (($status & STATUS_TEST) &&
@@ -45,7 +45,7 @@
 						$GLOBALS['ESPCONFIG']['css_url'].$theme . '" type="text/css">');
 			*/
 			$xoopsTpl->assign('test_title',
-				mb_('Testing Survey...').mb_('SID')." = $sid");
+				_GT_Testing_Survey._GT_SID." = $sid");
 			/* set things up for the handler to take over ... */
 			$test = true;
 			unset($_GET['sid']);
@@ -64,10 +64,10 @@
 			//undefine('ESP-AUTH-OK');
 			$xoopsTpl->assign('view_results',
 				"<a href=\"".$ESPCONFIG['ME']."?where=results&sid=".$sid."&test=1\">".
-				mb_('View Results')."</a>");
+				_GT_View_Results ."</a>");
 			$xoopsTpl->assign('go_management',
 				"<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" 
-				. mb_('Go back to Management Interface') . "</a>"); 
+				. _GT_Go_back_to_Management_Interface . "</a>"); 
 			$xoopsOption['template_main'] = 'bmsurvey_test.html';
 			mysql_free_result($result);
 			return;
@@ -94,18 +94,18 @@
 	$result = mysql_query($sql);
 
 ?>
-<h2><?php mb_echo('Test a Survey'); ?></h2>
-<?php mb_echo('Pick Survey to Test'); ?>
+<h2><?php echo(_GT_Test_a_Survey); ?></h2>
+<?php echo(_GT_Pick_Survey_to_Test); ?>
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-		<th align="left"><?php mb_echo('Export'); ?></th>
+		<th align="left"><?php echo(_GT_Export); ?></th>
 	</tr>
 <?php
 	while(list($sid,$name,$title,$owner,$realm) = mysql_fetch_row($result)) {
@@ -121,15 +121,15 @@
 		<td><?php echo($title); ?></td>
 		<td><?php echo($owner); ?></td>
 		<td><?php echo($realm); ?></td>
-		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=test&sid=${sid}"); ?>"><?php mb_echo('Test'); ?></a></td>
-		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=results&test=1&sid=${sid}"); ?>"><?php mb_echo('Results'); ?></a></td>
-		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=csv&test=1&sid=${sid}"); ?>"><?php mb_echo('CSV'); ?></a>
-		    (<a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=csv&test=1&sid=${sid}"); ?>"><?php mb_echo('download'); ?></a>)
-			<!-- / <a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=dbf&test=1&sid=${sid}"); ?>"><?php mb_echo('DBF'); ?></a> -->
+		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=test&sid=${sid}"); ?>">                  <?php echo(_GT_Test); ?></a></td>
+		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=results&test=1&sid=${sid}"); ?>">        <?php echo(_GT_Results); ?></a></td>
+		<td><a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=csv&test=1&sid=${sid}"); ?>"><?php echo(_GT_CSV); ?></a>
+		    (<a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=download&type=csv&test=1&sid=${sid}"); ?>"><?php echo(_GT_download); ?></a>)
+			<!-- / <a href="<?php echo("". $GLOBALS['ESPCONFIG']['ME'] ."?where=export&type=dbf&test=1&sid=${sid}"); ?>"><?php echo(_GT_DBF); ?></a> -->
 		</td>
 	</tr>
 <?php
 	}
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

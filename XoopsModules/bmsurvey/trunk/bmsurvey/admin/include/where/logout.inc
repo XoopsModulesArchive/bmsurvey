@@ -11,7 +11,7 @@
 <table border="0" cellspacing="0" cellpadding="4" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr>
 		<td>Logged out.<br>
-			<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Log back in.') . "</a>\n"); ?>
+			<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Log_back_in . "</a>\n"); ?>
 		</td>
 	</tr>
 </table>

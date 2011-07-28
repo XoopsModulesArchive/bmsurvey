@@ -78,7 +78,7 @@
 
 		if ($op == 'a') {
 			if (empty($_POST['realm'])) {
-				$errstr = mkerror(_('Please select a group.'));
+				$errstr = mkerror(_GT_Please_select_a_group);
 			} else {
 				$sql = "INSERT INTO ".TABLE_ACCESS." (survey_id, realm, maxlogin, resume, navigate)
 					VALUES ('$sid', '$arealm', '$max', '$resume', '$navigate')";
@@ -99,9 +99,9 @@
 	}
 	if ($sid) {
 		if ($public == 'N')
-			$public = mb_('Private');
+			$public = _GT_Private;
 		else
-			$public = mb_('Public');
+			$public = _GT_Public;
 
 		$r = '<select name="realm"><option></option>';
 		$groups = array();
@@ -127,37 +127,37 @@
 		$r .= '</select>';
 	}
 ?>
-<h2><?php mb_echo('Survey Access'); ?></h2>
+<h2><?php echo(_GT_Survey_Access); ?></h2>
 
 <?php if(!empty($errstr)) echo("<p>$errstr</p>\n"); ?>
 
 <div align="left">
 <p><?php
-	mb_echo('This lets you control who has access to fill out a form. Public surveys let anyone submit data. Private surveys are restricted by Respondent Groups.'); ?></p>
+	echo(_GT_This_lets_you_control); ?></p>
 
-<p><b><?php mb_echo('Note'); ?>:</b>
-<?php printf( mb_('You must use %s when using private surveys.'),
+<p><b><?php echo(_GT_Note); ?>:</b>
+<?php printf( _GT_You_must_use,
 	'<tt>'. substr(strrchr($ESPCONFIG['handler_prefix'], '/'), 1) .
 	' &amp; '. substr(strrchr($ESPCONFIG['handler'], '/'), 1) . '</tt>'); ?></p>
 </div>
 
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php if ($sid) { ?>
 <input type="hidden" name="where" value="access">
 <input type="hidden" name="sid" value="<?php echo($sid); ?>">
 <input type="hidden" name="op" value="a">
 <table border="0" align="center" cellspacing="0" cellpadding="4" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('ID'); ?></th><td colspan="5"><?php echo($sid); ?></td></tr>
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('Name'); ?></th><td colspan="5"><?php echo($name); ?></tr>
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('Title'); ?></th><td colspan="5"><?php echo($title); ?></tr>
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('Owner'); ?></th><td colspan="5"><?php echo($owner); ?></tr>
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('Group'); ?></th><td colspan="5"><?php echo($realm); ?></tr>
-	<tr bgcolor="#dddddd"><th align="left"><?php mb_echo('Public'); ?></th><td colspan="5"><?php echo($public); ?></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_ID); ?></th><td colspan="5"><?php echo($sid); ?></td></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_Name); ?></th><td colspan="5"><?php echo($name); ?></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_Title); ?></th><td colspan="5"><?php echo($title); ?></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_Owner); ?></th><td colspan="5"><?php echo($owner); ?></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_Group); ?></th><td colspan="5"><?php echo($realm); ?></tr>
+	<tr bgcolor="#dddddd"><th align="left"><?php echo(_GT_Public); ?></th><td colspan="5"><?php echo($public); ?></tr>
 	<tr bgcolor="#dddddd"><td colspan="6"><hr></td></tr>
-	<tr><th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo('Max Responses'); ?></th>
-		<th align="left"><?php mb_echo('Save/Restore'); ?></th>
-		<th align="left"><?php mb_echo('Back/Forward'); ?></th>
+	<tr><th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Max_Responses); ?></th>
+		<th align="left"><?php echo(_GT_Save_Restore); ?></th>
+		<th align="left"><?php echo(_GT_Back_Forward); ?></th>
 		<td>&nbsp;</td></tr>
 <?php
 	$result = mysql_query($sql1);
@@ -168,30 +168,30 @@
 ?>
 	<tr><td><?php echo($groupName); ?></td>
 		<td><?php echo($amax); ?></td>
-		<td><?php echo(($aresume == 'Y') ? mb_('Yes') : mb_('No')); ?></td>
-		<td><?php echo(($anavigate == 'Y') ? mb_('Yes') : mb_('No')); ?></td>
+		<td><?php echo(($aresume == 'Y') ? _GT_Yes : _GT_No); ?></td>
+		<td><?php echo(($anavigate == 'Y') ? _GT_Yes : _GT_No); ?></td>
 		<td><a href="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=access&sid=$sid&op=r&realm=" . urlencode($arealm)); ?>">
-		<?php mb_echo('Remove'); ?></a></td></tr>
+		<?php echo(_GT_Remove); ?></a></td></tr>
 <?php	} ?>
 	<tr><td><?php echo($r); ?></td>
 		<td><input type="text" name="max" size="5"></td>
 		<td><input type="checkbox" name="resume" /></td>
 		<td><input type="checkbox" name="navigate" /></td>
-		<td><input type="submit" value="<?php mb_echo('Add'); ?>"></td></tr>
+		<td><input type="submit" value="<?php echo(_GT_Add); ?>"></td></tr>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>
 <?php
 		return;
 	}
 ?>
 <table border="0" align="center" cellspacing="0" cellpadding="4" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
-		<th align="left"><?php mb_echo('Public'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
+		<th align="left"><?php echo(_GT_Public); ?></th>
 		<td>&nbsp;</td>
 	</tr>
 <?php
@@ -219,11 +219,11 @@
 			$bg = $ESPCONFIG['bgalt_color2'];
 
 		if ($public == 'N') {
-			$public = mb_('Private');
-			$op     = '<a href="'. $GLOBALS['ESPCONFIG']['ME'] ."?where=access&sid=$sid&op=p\">". mb_('Make Public') .'</a>';
+			$public = _GT_Private;
+			$op     = '<a href="'. $GLOBALS['ESPCONFIG']['ME'] ."?where=access&sid=$sid&op=p\">". _GT_Make_Public .'</a>';
 		} else {
-			$public = mb_('Public');
-			$op     = '<a href="'. $GLOBALS['ESPCONFIG']['ME'] ."?where=access&sid=$sid&op=v\">". mb_('Make Private') .'</a>';
+			$public = _GT_Public;
+			$op     = '<a href="'. $GLOBALS['ESPCONFIG']['ME'] ."?where=access&sid=$sid&op=v\">". _GT_Make_Private .'</a>';
 		}
 ?>
 	<tr bgcolor="<?php echo($bg); ?>">
@@ -239,4 +239,4 @@
 	}
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

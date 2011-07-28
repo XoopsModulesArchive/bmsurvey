@@ -26,8 +26,8 @@
 
 		/* copy the survey */
 		if(!survey_copy($sid)) {
-			echo(mkerror(_('Error copying survey.') ." (". mysql_error() .")") . "<br>\n");
-			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n");
+			echo(mkerror(_GT_Error_copying_survey ." (". mysql_error() .")") . "<br>\n");
+			echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n");
 			return;
 		}
 ?>
@@ -36,7 +36,7 @@ window.location="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=manage"); ?>"
 //-->
 </script>
 <?php
-		echo("<noscript><a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a></noscript>\n");
+		echo("<noscript><a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a></noscript>\n");
 		return;
 	}
 
@@ -48,7 +48,9 @@ window.location="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=manage"); ?>"
 		$realms = array_to_insql(
 			array_intersect(
 				$_SESSION['acl']['pall'],
-				$_SESSION['acl']['pdesign']));
+				array_merge(
+					$_SESSION['acl']['pall'],
+					$_SESSION['acl']['pdesign'])));
 		$sql = "SELECT id,name,title,status,owner,realm FROM ".TABLE_SURVEY.
 			" WHERE NOT (status & ". STATUS_DELETED .") AND (owner = '".
 			$xoopsUser->uid() ."' || realm $realms) ORDER BY id DESC";
@@ -56,30 +58,30 @@ window.location="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=manage"); ?>"
 	$result = mysql_query($sql);
 	$bg = '';
 ?>
-<h2><?php mb_echo('Copy Survey'); ?></h2>
-<?php echo mb_("Choose a survey of which to make a copy. The copy will have the same status of a newly created survey. You will be able to edit the survey, and will have to activate it before use.");
+<h2><?php echo(_GT_Copy_Survey); ?></h2>
+<?php echo (_GT_Choose_a_survey);
 ?>
 <table border="0" cellpadding="4" cellspacing="0" align="center" bgcolor="<?php echo($ESPCONFIG['active_bgcolor']); ?>" width="95%">
 	<tr bgcolor="#dddddd">
-		<th align="left"><?php mb_echo('ID'); ?></th>
-		<th align="left"><?php mb_echo('Name'); ?></th>
-		<th align="left"><?php mb_echo('Title'); ?></th>
-		<th align="left"><?php mb_echo('Status'); ?></th>
-		<th align="left"><?php mb_echo('Owner'); ?></th>
-		<th align="left"><?php mb_echo('Group'); ?></th>
+		<th align="left"><?php echo(_GT_ID); ?></th>
+		<th align="left"><?php echo(_GT_Name); ?></th>
+		<th align="left"><?php echo(_GT_Title); ?></th>
+		<th align="left"><?php echo(_GT_Status); ?></th>
+		<th align="left"><?php echo(_GT_Owner); ?></th>
+		<th align="left"><?php echo(_GT_Group); ?></th>
 	</tr>
 <?php
 	while(list($sid,$name,$title,$status,$owner,$realm) = mysql_fetch_row($result)) {
 		if($status & STATUS_DELETED) {
-			$stat = mb_('Archived');
+			$stat = _GT_Archived;
 		} elseif($status & STATUS_DONE) {
-			$stat = mb_('Ended');
+			$stat = _GT_Ended;
 		} elseif($status & STATUS_ACTIVE) {
-			$stat = mb_('Active');
+			$stat = _GT_Active;
 		} elseif($status & STATUS_TEST) {
-			$stat = mb_('Testing');
+			$stat = _GT_Testing;
 		} else {
-			$stat = mb_('Editing');
+			$stat = _GT_Editing;
 		}
 		
 		if($bg != $ESPCONFIG['bgalt_color1'])
@@ -95,7 +97,7 @@ window.location="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=manage"); ?>"
 		<td><?php echo($stat); ?>
 <?
 		if( $status & ( STATUS_DELETED | STATUS_DONE ) )
-			echo "&nbsp<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=r&sid=${sid}\">". mb_('Activate') ."</a>";
+			echo "&nbsp<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=status&op=r&sid=${sid}\">". _GT_Activate ."</a>";
 ?></td>
 		<td><?php echo($owner); ?></td>
 		<td><?php echo($realm); ?></td>
@@ -105,4 +107,4 @@ window.location="<?php echo($GLOBALS['ESPCONFIG']['ME'] ."?where=manage"); ?>"
 	mysql_free_result($result);
 ?>
 </table>
-<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . mb_('Go back to Management Interface') . "</a>\n"); ?>
+<?php echo("<a href=\"". $GLOBALS['ESPCONFIG']['ME'] ."?where=manage\">" . _GT_Go_back_to_Management_Interface . "</a>\n"); ?>

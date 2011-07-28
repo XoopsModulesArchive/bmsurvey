@@ -16,7 +16,7 @@ function survey_report($sid, $details = 0, $format = '') {
 	$response_table = array();
 	$sql = "SELECT id,has_choices,response_table FROM ".TABLE_QUESTION_TYPE." ORDER BY id";
 	if(!($result = mysql_query($sql))) {
-		$errmsg = mb_('Error system table corrupt.') ." [ ". mb_('Table') .": question_type ]";
+		$errmsg = _GT_Error_system_table_corrupt ." [ ". _GT_Table .": question_type ]";
 		return($errmsg);
 	}
 	while($row = mysql_fetch_row($result)) {
@@ -28,7 +28,7 @@ function survey_report($sid, $details = 0, $format = '') {
 	// load survey title (and other globals)
 	$sql = "SELECT * FROM ".TABLE_SURVEY." WHERE id='$sid'";
 	if(!($result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening survey.') ." [ ID:${sid} R:" . mysql_num_rows($result) ."]";
+		$errmsg = _GT_Error_opening_survey ." [ ID:${sid} R:" . mysql_num_rows($result) ."]";
 		return($errmsg);
 	}
 	$survey = mysql_fetch_array($result, MYSQL_ASSOC);
@@ -39,20 +39,20 @@ function survey_report($sid, $details = 0, $format = '') {
 			 WHERE survey_id='$sid' AND deleted='N'
 			 ORDER BY position";
 	if(!($questions_result = mysql_query($sql))) {
-		$errmsg = mb_('Error opening survey.') .' '. mb_('No questions found.') ." [ ID:${sid} ]";
+		$errmsg = _GT_Error_opening_survey .' '. _GT_No_questions_found ." [ ID:${sid} ]";
 		return($errmsg);
 	}
 ?>
-<h2><?php mb_echo('Report for'); echo (': '. $survey["title"] .' ['. mb_('ID') .': '. $survey['id'] .']'); ?></h2>
+<h2><?php echo(_GT_Report_for); echo (': '. $survey["title"] .' ['. _GT_ID .': '. $survey['id'] .']'); ?></h2>
 <h3><?php echo($survey["subtitle"]); ?></h3>
 <blockquote><?php echo($survey["info"]); ?></blockquote>
 <table border="0" cellspacing="2" cellpadding="0" width="100%">
 <tr>
-	<th align="left"><?php mb_echo('#'); ?></th>
-	<th align="left"><?php mb_echo('ID'); ?></th>
-	<th align="left"><?php mb_echo("Req'd"); ?></th>
-	<th align="left"><?php mb_echo('Public'); ?></th>
-	<th align="left" colspan="2"><?php mb_echo('Content'); ?></th>
+	<th align="left"><?php echo(_GT_Num); ?></th>
+	<th align="left"><?php echo(_GT_ID); ?></th>
+	<th align="left"><?php echo(_GT_Req_d); ?></th>
+	<th align="left"><?php echo(_GT_Public); ?></th>
+	<th align="left" colspan="2"><?php echo(_GT_Content); ?></th>
 </tr>
 <?php
 	$i = 0;
@@ -61,9 +61,9 @@ function survey_report($sid, $details = 0, $format = '') {
 		$qid   = &$question['id'];
 		$tid   = &$question['type_id'];
 		$reqd  = ($question['required'] == 'Y') ?
-					mb_('Yes') : mb_('No');
+					_GT_Yes : _GT_No;
 		$publ  = ($question['public'] == 'Y') ?
-					mb_('Yes') : mb_('No');
+					_GT_Yes : _GT_No;
 		$table = &$response_table[$tid];
 
 		if ($tid == 99) {

@@ -23,9 +23,9 @@
             }
         }
         if ($cfg['db_conn'] === false) {
-            header('HTTP/1.0 503 '. mb_('Service Unavailable'));
-            echo('<html><head><title>HTTP 503 '. mb_('Service Unavailable') .'</title></head>');
-            echo('<body><h1>HTTP 503 '. mb_('Service Unavailable') .'</h1>');
+            header('HTTP/1.0 503 '. _GT_Service_Unavailable);
+            echo('<html><head><title>HTTP 503 '. _GT_Service_Unavailable .'</title></head>');
+            echo('<body><h1>HTTP 503 '. _GT_Service_Unavailable .'</h1>');
             echo(mkerror(_('Connection to database failed. Please check configuration.')));
             if ($cfg['DEBUG'])
                 echo("<br>\n". mkerror(mysql_errno().": ".mysql_error()));

@@ -139,7 +139,7 @@ function mkfile ($_name) {
    Returns HTML format for a submit button. */
 function mksubmit($_name, $_value = null) {
     if ($_value == null)
-        $_value = mb_('Submit');
+        $_value = _GT_Submit;
     if (!empty($_value))
         $_value = ' value="'.htmlspecialchars($_value).'"';
     return '<input type="submit" name="'.htmlspecialchars($_name).'"'.$_value.' />';

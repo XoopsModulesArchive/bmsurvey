@@ -26,26 +26,16 @@
 //  ------------------------------------------------------------------------ //
 // Original phpESP by James Flemer For eGrad2000.com <jflemer@alum.rpi.edu>
 require('../../../mainfile.php');
+//require(XOOPS_ROOT_PATH.'/header.php');
 include '../../../include/cp_header.php';
-if(!$xoopsUser || !is_object($xoopsUser)){
-	redirect_header(XOOPS_URL.'/modules/bmsurvey/',2,_MD_BMSURVEY_CAN_WRITE_USER_ONLY);
-	exit();
-}
 include '../conf.php';
 include_once('../class/bmsurveyUtils.php');
-/*
-** Get parameter as command.
-*/
-$where = '';
-if(isset($_POST['where'])) $where = htmlspecialchars ( $_POST['where'] , ENT_QUOTES );
-elseif(isset($_GET['where'])) $where = htmlspecialchars ( $_GET['where'] , ENT_QUOTES );
-$sid = 0;
-if(isset($_POST['sid'])) $sid = intval($_POST['sid']);
-elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 
+	if(!$xoopsUser || !is_object($xoopsUser)){
+		redirect_header(XOOPS_URL.'/modules/bmsurvey/',2,_MD_BMSURVEY_CAN_WRITE_USER_ONLY);
+		exit();
+	}
 
-	if ($where == 'test' && $sid) 
-		redirect_header(XOOPS_URL.'/modules/bmsurvey/manage.php' . );
 
 	if (!defined('ESP_BASE'))
 		define('ESP_BASE', dirname(dirname(__FILE__)) .'/');
@@ -99,6 +89,8 @@ elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 	if ($where == 'download') {
 		include(esp_where($where));
 		exit;
+	}elseif ($where == 'test' && $_GET['sid']) {
+		$xoopsOption['template_main'] = 'bmsurvey_survey.html';
 	}else{
 		xoops_cp_header();
 		include 'adminmenu.php';
@@ -123,5 +115,11 @@ elseif(isset($_GET['sid'])) $sid = intval($_GET['sid']);
 	if(file_exists($ESPCONFIG['include_path']."/foot".$ESPCONFIG['extension']))
 		include($ESPCONFIG['include_path']."/foot".$ESPCONFIG['extension']);
 	
-	xoops_cp_footer();
+	if ($where == 'test' && $sid) 
+		include(XOOPS_ROOT_PATH.'/footer.php');
+	else
+		xoops_cp_footer();
+
+//	include(XOOPS_ROOT_PATH.'/footer.php');
+//	exit;
 ?>
