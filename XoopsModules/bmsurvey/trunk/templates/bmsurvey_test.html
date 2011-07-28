@@ -1,0 +1,40 @@
+<script language="javascript">
+function other_check(name){
+  other = name.split("_");
+  var f = document.phpesp_response;
+  for (var i=0; i<=f.elements.length; i++) {
+    if (f.elements[i].value == "other_"+other[1]) {
+      f.elements[i].checked=true;
+      break;
+    }
+  }
+}
+function uncheckRadio(rbname){
+	for(x=0; x<document.phpesp_response.elements[rbname].length; x++){
+		document.phpesp_response.elements[rbname][x].checked = false;
+	}
+}
+</script>
+<form enctype="multipart/form-data" method="post" name="phpesp_response" action="<{$formheader.action}>">
+<input type="hidden" name="referer" value="<{$formheader.referer}>">
+<input type="hidden" name="userid" value="<{$formheader.userid}>">
+<input type="hidden" name="sid" value="<{$formheader.sid}>">
+<input type="hidden" name="rid" value="<{$formheader.rid}>">
+<input type="hidden" name="sec" value="<{$formheader.sec}>">
+<{$test_title}>
+<table width="100%" class="outer" cellspacing="1" >
+    <tr><th colspan="3" align="center"><{$survey.title}><input type="hidden" name="survey_id" value="<{$formheader.surveyId}>" /><{$formheader.question}></th></tr>
+    <tr class="head"><td colspan="3" align="center"><{$message}><{$survey.subtitle}></td></tr>
+    <tr class="head"><td colspan="3" align="center"><{$survey.info}>&nbsp<{$surveyPage}>&nbsp<{$has_required}></td></tr>
+    <{foreach item=body from=$formbody}>
+	<tr>
+      <td class="even" align="right" width="5"><{$body.number}></td>
+      <td class="even" align="right"><{$body.content}></td>
+      <td class="odd" align="left"><{$body.body}></td>
+    </tr>
+    <{/foreach}>
+</table>
+<p align="center"><{$auth_response}>
+<input type="submit" name="<{$formfooter.name}>" value="<{$formfooter.value}>">
+</form>
+<{$view_results}> / <{$go_management}>

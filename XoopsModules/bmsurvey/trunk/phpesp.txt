@@ -1,0 +1,56 @@
+phpESP (php Easy Survey Package)
+========================================================================
+Copyright (c) 2003 James Flemer
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+========================================================================
+Written by James Flemer <jflemer@alum.rpi.edu>
+[Originally for eGrad2000.com]
+
+phpESP is a package for PHP that provides an easy to use web-based
+interface to designing surveys, deploying them on your web site, and
+exporting data.  It features multiple users and user groups, with data
+isolation and hiding between groups.  It is suitable for use by a
+single person, a department, or an entire organization.  The surveys
+created by phpESP can be easily embedded into existing HTML templates
+with one or two new lines.
+
+-----
+FILES
+-----
+admin/        Administration interface and support files
+docs/         Documentation files
+examples/     Example files for themes
+images/       Image files
+locale/       Language files
+public/       Public interface to taking surveys
+scripts/      Database and other scripts
+LICENSE       The license, please read this.
+
+For installation instructions please read the INSTALL file in the docs/
+directory.
+
+---
+$Id: phpesp.txt,v 1.1.1.1 2005/08/10 12:14:03 yoshis Exp $
