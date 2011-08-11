@@ -55,8 +55,8 @@ function checkPermit(){
 	$modpath = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname();
 	$permit_err = array();
 	$_check_list = array(
-		XOOPS_ROOT_PATH."/uploads/",
-		XOOPS_ROOT_PATH."/uploads/thumbs",
+		XOOPS_ROOT_PATH."/uploads/bmsurvey/",
+		XOOPS_ROOT_PATH."/uploads/bmsurvey/thumbs",
 		$modpath."/log/"
 		);
 

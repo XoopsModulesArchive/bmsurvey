@@ -11,9 +11,9 @@ $SurveyCNF['path'] = XOOPS_ROOT_PATH."/modules/bmsurvey/";	// mod root path
 // Attached file section
 //
 $SurveyCNF['gd_ver'] = 2;							// PHP GD Version (0:No, 1:Ver 1, 2:Ver 2)
-$SurveyCNF['uploads'] = XOOPS_ROOT_PATH.'/uploads/';	// Upload folder. You should set more secure folder (ex.'c:/upload/').
-$SurveyCNF['img_dir'] = "/uploads/";			// Attach and direct image file folder. Work with XOOPS_ROOT_PATH,XOOPS_URL
-$SurveyCNF['thumb_dir'] = "/uploads/thumbs/";	// Thumbnail folder. Work with XOOPS_ROOT_PATH,XOOPS_URL
+$SurveyCNF['uploads'] = XOOPS_ROOT_PATH.'/uploads/bmsurvey/';	// Upload folder. You should set more secure folder (ex.'c:/upload/').
+$SurveyCNF['img_dir'] = "/uploads/bmsurvey/image/";			// Attach and direct image file folder. Work with XOOPS_ROOT_PATH,XOOPS_URL
+$SurveyCNF['thumb_dir'] = "/uploads/bmsurvey/thumbs/";	// Thumbnail folder. Work with XOOPS_ROOT_PATH,XOOPS_URL
 $SurveyCNF['w'] = 140;								// Thumbnail width pixsel 
 $SurveyCNF['h'] = 160;								// Thumbnail height pixsel 
 $SurveyCNF['img_ext'] = "gif|jpe?g|png|bmp|swf|3gp|avi|mov|ra?m|mpe?g|wmv";	// rename method for multimedia
