@@ -53,7 +53,7 @@ $ESPCONFIG['css_url'] = $ESPCONFIG['base_url'] . 'public/css/';
 //
 
 // Upload Folder. It work with XOOPS_ROOT_PATH or XOOPS_URL
-$ESPCONFIG['attach_path'] = '/uploads/';
+$ESPCONFIG['attach_path'] = '/uploads/bmsurvey/';
 
 // Acceptable MIME Type
 $ESPCONFIG['subtype'] = "gif|jpe?g|png|bmp|zip|lzh|pdf|excel|powerpoint|octet-stream|x-pmd|x-mld|x-mid|x-smd|x-smaf|x-mpeg";

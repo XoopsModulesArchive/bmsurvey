@@ -30,7 +30,7 @@
 
 	$bg = $ESPCONFIG['bgalt_color2'];
 ?>
-<h2><?php echo(_GT_Purge Surveys); ?></h2>
+<h2><?php echo(_GT_Purge_Surveys); ?></h2>
 
 <p><?php echo(_GT_This_page_is_not_directly); ?></p>
 
@@ -87,7 +87,7 @@
 		<td colspan="8" align="center">
 			<input type="hidden" name="where" value="purge">
 			<input type="reset" name="reset" value="<?php echo(_GT_Clear_Checkboxes); ?>">
-			<input type="submit" name="submit" value="<?php echo(_GT_Purge Surveys); ?>">
+			<input type="submit" name="submit" value="<?php echo(_GT_Purge_Surveys); ?>">
 		</td>
 	</tr>
 </table>
