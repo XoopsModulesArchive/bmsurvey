@@ -1,5 +1,5 @@
 <?php
-// $Id: doc_updateinfo.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+// $Id$
 
 include '../../../../mainfile.php';
 

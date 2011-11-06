@@ -1,5 +1,5 @@
 <?php
-// $Id: pop.ini.php,v 1.1.1.1 2005/08/10 12:14:03 yoshis Exp $
+// $Id$
 
 //
 // URL and Path

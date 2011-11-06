@@ -1,5 +1,5 @@
 <?php
-// # $Id: phpESP.ini.php,v 1.5 2005/11/16 10:20:17 yoshis Exp $
+// # $Id$
 //  ------------------------------------------------------------------------ //
 //                Bluemoon.Multi-Survey                                      //
 //                    Copyright (c) 2005 Yoshi.Sakai @ Bluemoon inc.         //

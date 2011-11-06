@@ -1,6 +1,6 @@
 <?php
 
-// $Id: test.php,v 1.1.1.1 2005/08/10 12:14:03 yoshis Exp $
+// $Id$
 
 // Written by James Flemer
 // <jflemer@alum.rpi.edu>

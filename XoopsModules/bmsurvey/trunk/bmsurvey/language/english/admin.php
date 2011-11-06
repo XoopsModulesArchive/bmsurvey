@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php,v 1.2 2007/07/24 10:17:04 yoshis Exp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                Bluemoon.Multi-Survey                                      //
 //                    Copyright (c) 2005 Yoshi.Sakai @ Bluemoon inc.         //

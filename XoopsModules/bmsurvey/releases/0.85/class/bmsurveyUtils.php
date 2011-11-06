@@ -1,5 +1,5 @@
 <?php
-// $Id: bmsurveyUtils.php,v0.83 2008/01/08 18:38:03 yoshis Exp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                      BmSurvey - Bluemoon Multi-Survey                     //
 //                   Copyright (c) 2005 - 2007 Bluemoon inc.                 //

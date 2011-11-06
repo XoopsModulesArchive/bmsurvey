@@ -1,6 +1,6 @@
 <?php
 
-# $Id: handler-prefix.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+# $Id$
 
 // Written by James Flemer
 // For eGrad2000.com

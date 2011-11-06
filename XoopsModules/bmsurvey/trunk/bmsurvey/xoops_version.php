@@ -1,5 +1,5 @@
 <?php
-// $Id: xoops_version.php,v 0.97 2009/01/10 17:58:22 yoshis Exp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                      BmSurvey - Bluemoon Multi-Survey                     //
 //                   Copyright (c) 2005 - 2007 Bluemoon inc.                 //

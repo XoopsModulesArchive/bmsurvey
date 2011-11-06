@@ -1,5 +1,5 @@
 <?php
-// $Id: main.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+// $Id$
 //%%%%%%	File Name pollresults.php 	%%%%%
 define('_MD_BMSURVEY_FORMATERR', ' is not correctly input.');
 define('_MD_BMSURVEY_DIGITERR', ' is not digit.');
