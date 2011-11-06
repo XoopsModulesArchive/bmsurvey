@@ -1,5 +1,5 @@
 <?php
-# $Id: signup.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+# $Id$
 
 // Written by James E Flemer
 // <jflemer@alum.rpi.edu>
@@ -115,7 +115,7 @@
 <?php if (!$embed) { ?>
 <html>
 <head>
-<!-- $Id: signup.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $ -->
+<!-- $Id$ -->
 <title><?php echo _GT_Account_Request_Form; ?></title>
 </head>
 <body>

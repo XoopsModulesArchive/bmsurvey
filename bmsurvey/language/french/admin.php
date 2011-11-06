@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php,v 1.1.1.1 2005/08/10 12:14:04 yoshis Exp $
+// $Id$
 //%%%%%%	Admin Module Name  Survey 	%%%%%
 define("_AM_DBUPDATED","Base de Données mis à jour avec succès!");
 define("_AM_SURVEYCONF","Configuration d'aperçu");

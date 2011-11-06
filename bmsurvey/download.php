@@ -9,7 +9,7 @@
     email                : webmaster@bluemooninc.biz
     Special Thanks to    : Nat Sakimura,funran7
 
-    $Id: download.php,v 0.85 2008/04/10 11:47:36 yoshis Exp $
+    $Id$
 
  ***************************************************************************/
 
