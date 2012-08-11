@@ -24,7 +24,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-define("_AM_BMSURVEY_ERROR01", "Error: not writable");
+define("_AM_BMSURVEY_ERROR01","Error: not writable");
 // Admin Top Menu
 define("_AM_PREFERENCES","Preferences");
 define("_AM_BMSURVEY_GOMOD","Public Page");
