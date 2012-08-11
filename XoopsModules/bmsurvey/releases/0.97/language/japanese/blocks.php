@@ -24,9 +24,9 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-define('_MB_BMSURVEY_LIST_CHECKED', 'ºÑ');
-define('_MB_BMSURVEY_LIST_TITLE', '¥Õ¥©¡¼¥àÌ¾¾Î');
-define('_MB_BMSURVEY_LIST_SUBTITLE', 'È÷¹Í');
-define('_MB_BMSURVEY_LIST_UNAME', 'ºîÀ®¼Ô');
-define('_MB_BMSURVEY_LIST_DATE', 'ÅÐÏ¿ÆüÉÕ');
+define('_MB_BMSURVEY_LIST_CHECKED','ï¿½ï¿½');
+define('_MB_BMSURVEY_LIST_TITLE','ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½');
+define('_MB_BMSURVEY_LIST_SUBTITLE','ï¿½ï¿½ï¿½ï¿½');
+define('_MB_BMSURVEY_LIST_UNAME','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+define('_MB_BMSURVEY_LIST_DATE','ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½');
 ?>
