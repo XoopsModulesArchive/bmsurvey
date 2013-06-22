@@ -1,5 +1,0 @@
-{FORMBODY}
-----
-u:{USERNAME}
-s:{SURVEYID}
-t:{TICKET}
