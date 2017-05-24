@@ -474,7 +474,7 @@ class bmsurveyUtils {
 	
 	
 	function convert2sqlString($text){
-		$ts =& MyTextSanitizer::getInstance();
+		$ts = MyTextSanitizer::getInstance();
 		if(!is_object($ts)){
 			exit();
 		}
